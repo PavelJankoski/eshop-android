@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">eshop</string>
+    <string name="splash_screen_text">Shopping made easy!</string>
 </resources>
