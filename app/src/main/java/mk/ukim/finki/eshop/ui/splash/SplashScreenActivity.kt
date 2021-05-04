@@ -19,9 +19,9 @@ class SplashScreenActivity : AppCompatActivity() {
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
-        binding.splashScreenTextView.startAnimation(AnimationUtils.loadAnimation(this,
+        /*binding.splashScreenTextView.startAnimation(AnimationUtils.loadAnimation(this,
             R.anim.fade_animation
-        ))
+        ))*/
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
