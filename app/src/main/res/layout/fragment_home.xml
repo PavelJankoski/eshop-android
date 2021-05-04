@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal"
+        android:elevation="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" >
@@ -26,7 +27,7 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:tabGravity="start"
             app:tabIndicatorColor="@color/black"
-            app:tabSelectedTextColor="@color/black" />
+            app:tabSelectedTextColor="@color/black"/>
     </RelativeLayout>
 
     <androidx.viewpager2.widget.ViewPager2
