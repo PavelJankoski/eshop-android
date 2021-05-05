@@ -1,8 +1,6 @@
-package mk.ukim.finki.eshop.adapters
+package mk.ukim.finki.eshop.adapter
 
-import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class HomePagerAdapter(

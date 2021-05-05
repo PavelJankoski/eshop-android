@@ -6,7 +6,7 @@
 
     <item android:id="@+id/categoriesFragment"
         android:title="@string/categories"
-        android:icon="@drawable/ic_category" />
+        android:icon="@drawable/ic_hanger" />
 
     <item android:id="@+id/wishlistFragment"
         android:title="@string/wishlist"

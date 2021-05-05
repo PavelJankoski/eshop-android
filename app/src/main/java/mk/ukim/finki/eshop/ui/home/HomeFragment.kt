@@ -5,11 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import mk.ukim.finki.eshop.R
-import mk.ukim.finki.eshop.adapters.HomePagerAdapter
-import mk.ukim.finki.eshop.databinding.FragmentCategoriesBinding
+import mk.ukim.finki.eshop.adapter.HomePagerAdapter
 import mk.ukim.finki.eshop.databinding.FragmentHomeBinding
 import mk.ukim.finki.eshop.ui.home.men.MenFragment
 import mk.ukim.finki.eshop.ui.home.women.WomenFragment
