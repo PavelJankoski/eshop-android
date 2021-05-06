@@ -1,18 +1,16 @@
-package mk.ukim.finki.eshop.ui.home.men
+package mk.ukim.finki.eshop.ui.home.woman
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import mk.ukim.finki.eshop.R
-import mk.ukim.finki.eshop.databinding.FragmentHomeBinding
-import mk.ukim.finki.eshop.databinding.FragmentMenBinding
+import mk.ukim.finki.eshop.databinding.FragmentHomeWomanBinding
 
 
-class MenFragment : Fragment() {
+class HomeWomanFragment : Fragment() {
 
-    private var _binding: FragmentMenBinding? = null
+    private var _binding: FragmentHomeWomanBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -20,7 +18,7 @@ class MenFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentMenBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeWomanBinding.inflate(inflater, container, false)
         return binding.root
     }
 

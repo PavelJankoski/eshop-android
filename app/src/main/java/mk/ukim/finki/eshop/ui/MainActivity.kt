@@ -33,22 +33,13 @@ class MainActivity : AppCompatActivity() {
     private fun setupBottomNavigation() {
         navController = findNavController(R.id.navHostFragment)
         val appBarConfig = AppBarConfiguration(setOf(
-            R.id.homeFragment,
+            /*R.id.homeFragment,*/
             R.id.categoriesFragment,
             R.id.wishlistFragment,
             R.id.accountFragment
         ))
         binding.bottomNavigationView.setupWithNavController(navController)
         setupActionBarWithNavController(navController, appBarConfig)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_toolbar_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onSupportNavigateUp(): Boolean {

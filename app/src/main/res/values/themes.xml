@@ -25,4 +25,8 @@
         <item name="itemIconTint">@color/bottom_nav_view_item_color</item>
         <item name="itemTextColor">@color/bottom_nav_view_item_color</item>
     </style>
+
+    <style name="CategoryCardViewStyle" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/lightGray</item>
+    </style>
 </resources>

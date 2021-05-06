@@ -6,16 +6,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.home.HomeFragment">
 
+    <View
+        android:id="@+id/greyBorder_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lightMediumGray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <RelativeLayout
         android:id="@+id/tab_relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:elevation="5dp"
+        android:elevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toBottomOf="@+id/greyBorder_view" >
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
