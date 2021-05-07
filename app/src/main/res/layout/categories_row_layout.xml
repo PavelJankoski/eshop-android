@@ -41,7 +41,7 @@
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:textAllCaps="true"
-                    android:text="@{category.name}"
+                    android:text="@{category.type}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -51,11 +51,12 @@
                     android:layout_width="175dp"
                     android:scaleType="centerCrop"
                     android:layout_height="150dp"
-                    loadImageFromUrl="@{category.url}"
+                    loadImageFromUrl="@{category.imageUrl}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    tools:srcCompat="@tools:sample/avatars"
+                    android:contentDescription="@string/category_image" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>

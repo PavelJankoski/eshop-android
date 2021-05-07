@@ -4,17 +4,27 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.PagerAdapter
 import mk.ukim.finki.eshop.databinding.FragmentCategoriesBinding
 import mk.ukim.finki.eshop.ui.categories.man.CategoriesManFragment
 import mk.ukim.finki.eshop.ui.categories.woman.CategoriesWomanFragment
+import mk.ukim.finki.eshop.util.NetworkResult
+import mk.ukim.finki.eshop.util.Utils
+import java.util.*
 
 
+@AndroidEntryPoint
 class CategoriesFragment : Fragment() {
     private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
+    private val categoriesViewModel: CategoriesViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,10 +32,15 @@ class CategoriesFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.vm = categoriesViewModel
         setHasOptionsMenu(true)
         setupViewPager()
+        categoriesViewModel.getCategories()
         return binding.root
     }
+
+
 
     private fun setupViewPager() {
         val fragments = arrayListOf<Fragment>(CategoriesManFragment(), CategoriesWomanFragment())
@@ -52,15 +67,22 @@ class CategoriesFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.shoppingCart_menuItem -> {
-                Toast.makeText(requireContext(), "Cart clicked", Toast.LENGTH_LONG).show()
+                Utils.showToast(requireContext(), "Bag clicked!", Toast.LENGTH_SHORT)
                 true
             }
             R.id.search_menuItem -> {
-                Toast.makeText(requireContext(), "Search clicked", Toast.LENGTH_LONG).show()
+                Utils.showToast(requireContext(), "Search clicked!", Toast.LENGTH_SHORT)
                 true
             }
             else -> return super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun errorCategories(message: String) {
+        binding.viewPager.visibility = View.INVISIBLE
+        binding.shoppingBagErrorLottie.visibility = View.VISIBLE
+        binding.errorCategoriesTextView.text = message
+        binding.errorCategoriesTextView.visibility = View.VISIBLE
     }
 
     override fun onDestroyView() {
