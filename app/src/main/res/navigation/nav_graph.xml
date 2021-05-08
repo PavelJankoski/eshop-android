@@ -14,7 +14,15 @@
         android:id="@+id/categoriesFragment"
         android:name="mk.ukim.finki.eshop.ui.categories.CategoriesFragment"
         android:label="Categories"
-        tools:layout="@layout/fragment_categories" />
+        tools:layout="@layout/fragment_categories" >
+        <action
+            android:id="@+id/action_categoriesFragment_to_productsFragment"
+            app:destination="@id/productsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
     <fragment
         android:id="@+id/wishlistFragment"
         android:name="mk.ukim.finki.eshop.ui.wishlist.WishlistFragment"
@@ -25,4 +33,17 @@
         android:name="mk.ukim.finki.eshop.ui.account.AccountFragment"
         android:label="Account"
         tools:layout="@layout/fragment_account" />
+    <fragment
+        android:id="@+id/productsFragment"
+        android:name="mk.ukim.finki.eshop.ui.products.ProductsFragment"
+        android:label="{categoryType}"
+        tools:layout="@layout/fragment_products" >
+        <argument
+            android:name="categoryId"
+            app:argType="long" />
+        <argument
+            android:name="categoryType"
+            app:argType="string"
+            android:defaultValue="Products" />
+    </fragment>
 </navigation>

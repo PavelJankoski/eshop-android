@@ -23,13 +23,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setupToolbar()
-        setupBottomNavigation()
-    }
-
-    private fun setupToolbar() {
         setSupportActionBar(binding.toolbar)
-        binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.black))
+        setupBottomNavigation()
     }
 
     private fun setupBottomNavigation() {

@@ -38,7 +38,7 @@ class CategoriesManFragment : Fragment() {
                 is NetworkResult.Success -> {
                     hideShimmerEffect()
                     if(response.data != null) {
-                        mAdapter.setData(response.data.filter { it.gender.toLowerCase(Locale.ROOT) == "male" })
+                        mAdapter.setData(response.data.filter { it.gender.lowercase() == "male" })
                     }
                 }
                 is NetworkResult.Error -> {
@@ -70,7 +70,7 @@ class CategoriesManFragment : Fragment() {
         lifecycleScope.launch {
             categoriesViewModel.readCategories.observe(viewLifecycleOwner, {table ->
                 if(!table.isNullOrEmpty()) {
-                    mAdapter.setData(table[0].categories.filter { it.gender.toLowerCase(Locale.ROOT) == "male" })
+                    mAdapter.setData(table[0].categories.filter { it.gender.lowercase() == "male" })
                 }
             })
         }

@@ -5,17 +5,13 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.PagerAdapter
 import mk.ukim.finki.eshop.databinding.FragmentCategoriesBinding
 import mk.ukim.finki.eshop.ui.categories.man.CategoriesManFragment
 import mk.ukim.finki.eshop.ui.categories.woman.CategoriesWomanFragment
-import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 import java.util.*
 
@@ -56,7 +52,7 @@ class CategoriesFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.main_toolbar_menu, menu)
+        inflater.inflate(R.menu.categories_toolbar_menu, menu)
         val menuItem = menu.findItem(R.id.shoppingCart_menuItem)
         menuItem.actionView.setOnClickListener {
             onOptionsItemSelected(menuItem)
@@ -76,13 +72,6 @@ class CategoriesFragment : Fragment() {
             }
             else -> return super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun errorCategories(message: String) {
-        binding.viewPager.visibility = View.INVISIBLE
-        binding.shoppingBagErrorLottie.visibility = View.VISIBLE
-        binding.errorCategoriesTextView.text = message
-        binding.errorCategoriesTextView.visibility = View.VISIBLE
     }
 
     override fun onDestroyView() {
