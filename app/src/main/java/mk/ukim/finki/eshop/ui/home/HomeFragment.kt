@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import mk.ukim.finki.eshop.R
-import mk.ukim.finki.eshop.adapters.PagerAdapter
+import mk.ukim.finki.eshop.adapters.CategoriesPagerAdapter
 import mk.ukim.finki.eshop.databinding.FragmentHomeBinding
 import mk.ukim.finki.eshop.ui.home.man.HomeManFragment
 import mk.ukim.finki.eshop.ui.home.woman.HomeWomanFragment
@@ -31,7 +31,7 @@ class HomeFragment : Fragment() {
     private fun setupViewPager() {
         val fragments = arrayListOf<Fragment>(HomeManFragment(), HomeWomanFragment())
         val tabLayoutTitles = arrayListOf<String>("Man", "Woman")
-        val pagerAdapter = PagerAdapter(fragments, this)
+        val pagerAdapter = CategoriesPagerAdapter(fragments, this)
         binding.viewPager.apply {
             adapter = pagerAdapter
         }

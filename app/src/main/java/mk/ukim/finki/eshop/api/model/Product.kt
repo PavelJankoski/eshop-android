@@ -1,8 +1,12 @@
 package mk.ukim.finki.eshop.api.model
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
 
+@Parcelize
 data class Product(
     @SerializedName("brand")
     val brand: String,
@@ -12,12 +16,14 @@ data class Product(
     val description: String,
     @SerializedName("id")
     val id: Int,
+    @SerializedName("starRating")
+    val rating: Float,
     @SerializedName("images")
-    val images: List<Image>,
+    val images: @RawValue List<Image>,
     @SerializedName("price")
     val price: Double,
     @SerializedName("productCode")
     val productCode: String,
     @SerializedName("productName")
-    val productName: String,
-)
+    val name: String,
+) : Parcelable

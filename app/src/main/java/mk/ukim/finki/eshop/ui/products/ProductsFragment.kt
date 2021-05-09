@@ -41,23 +41,29 @@ class ProductsFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentProductsBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
-        productsViewModel.listingType.observe(viewLifecycleOwner, {type ->
-            if(type) {
-                binding.productsRecyclerView.adapter = mAdapterList
-                binding.productsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-            }
-            else {
-                binding.productsRecyclerView.adapter = mAdapterGrid
-                binding.productsRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
-            }
-        })
+        getAndObserveProductsResponse()
+        observeTypeMenuItemValue()
+        return binding.root
+    }
 
+
+
+    private fun setupSortingDropdown() {
+        val sortingCriteria = resources.getStringArray(R.array.sorting_products)
+        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.sorting_dropdown_item, sortingCriteria)
+        binding.sortingAutocomplete.setAdapter(arrayAdapter)
+        binding.sortingAutocomplete.setOnItemClickListener { _, _, position, _ ->
+            productsViewModel.orderProductsByCriteria(position)
+        }
+    }
+
+    private fun getAndObserveProductsResponse() {
         productsViewModel.getProductsForCategory(args.categoryId)
         productsViewModel.productsResponse.observe(viewLifecycleOwner, {response ->
             when(response) {
                 is NetworkResult.Success -> {
                     hideShimmerEffect()
-                    if(response.data != null) {
+                    if(!response.data.isNullOrEmpty()) {
                         mAdapterList.setData(response.data)
                         mAdapterGrid.setData(response.data)
                     }
@@ -70,13 +76,21 @@ class ProductsFragment : Fragment() {
                 }
             }
         })
-        return binding.root
+
     }
 
-    private fun setupSortingDropdown() {
-        val sortingCriteria = resources.getStringArray(R.array.sorting_products)
-        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.sorting_dropdown_item, sortingCriteria)
-        binding.sortingAutocomplete.setAdapter(arrayAdapter)
+
+
+    private fun observeTypeMenuItemValue() {
+        productsViewModel.listingType.observe(viewLifecycleOwner, { type ->
+            if (type) {
+                binding.productsRecyclerView.adapter = mAdapterList
+                binding.productsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+            } else {
+                binding.productsRecyclerView.adapter = mAdapterGrid
+                binding.productsRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+            }
+        })
     }
 
 

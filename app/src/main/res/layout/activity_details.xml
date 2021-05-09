@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="product"
+            type="mk.ukim.finki.eshop.api.model.Product" />
+    </data>
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg"
+        app:layoutDescription="@xml/activity_details_xml_constraintlayout_scene"
+        tools:context=".ui.details.DetailsActivity">
+
+        <com.denzcoskun.imageslider.ImageSlider
+            android:id="@+id/imageSlider"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:iss_delay="0"
+            app:iss_error_image="@drawable/ic_error"
+            app:iss_period="1000"
+            app:iss_placeholder="@drawable/ic_placeholder_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view7"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:background="@drawable/gradient_overlay"
+            app:layout_constraintBottom_toBottomOf="@+id/imageSlider"
+            app:layout_constraintEnd_toEndOf="@+id/imageSlider"
+            app:layout_constraintStart_toStartOf="@+id/imageSlider"
+            app:layout_constraintTop_toTopOf="@+id/imageSlider"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/back_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:elevation="4dp"
+            android:src="@drawable/ic_baseline_arrow_back"
+            app:backgroundTint="@color/white"
+            app:borderWidth="0dp"
+            app:elevation="4dp"
+            app:fabSize="normal"
+            app:layout_constraintStart_toStartOf="@id/imageSlider"
+            app:layout_constraintTop_toTopOf="@id/imageSlider" />
+
+        <FrameLayout
+            android:id="@+id/bag_frameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:clipToPadding="false"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="@id/imageSlider"
+            app:layout_constraintTop_toTopOf="@id/imageSlider">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/shoppingBag_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="4dp"
+                android:src="@drawable/ic_shopping_bag"
+                app:backgroundTint="@color/white"
+                app:borderWidth="0dp"
+                app:elevation="4dp"
+                app:fabSize="normal" />
+
+            <TextView
+                android:id="@+id/cart_badge"
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_gravity="end|top"
+                android:background="@drawable/badge_background"
+                android:elevation="10dp"
+                android:gravity="center"
+                android:text="3"
+                android:textColor="@color/white" />
+
+        </FrameLayout>
+
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toTopOf="@+id/detailActions_linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageSlider">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/productName_textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{product.name}"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Timberland Casual T-shirt" />
+
+                <TextView
+                    android:id="@+id/productPrice_textView"
+                    priceToString="@{product.price}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/productName_textView"
+                    app:layout_constraintTop_toBottomOf="@+id/productName_textView"
+                    tools:text="100" />
+
+                <TextView
+                    android:id="@+id/priceType_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/mkd"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/productPrice_textView"
+                    app:layout_constraintStart_toEndOf="@id/productPrice_textView"
+                    app:layout_constraintTop_toTopOf="@id/productPrice_textView" />
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="@+id/productName_textView"
+                    app:layout_constraintTop_toBottomOf="@+id/productName_textView"
+                    app:srcCompat="@drawable/ic_star_full"
+                    app:tint="@color/black" />
+
+                <TextView
+                    android:id="@+id/rating_textView"
+                    ratingToString="@{product.rating}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView7"
+                    app:layout_constraintTop_toTopOf="@+id/imageView7"
+                    tools:text="4.9/5" />
+
+                <LinearLayout
+                    android:id="@+id/titlePriceAndSize_linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/lightGray"
+                    android:gravity="center_vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/productPrice_textView">
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/size_available" />
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.chip.ChipGroup
+                                android:id="@+id/mealType_chipGroup"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:selectionRequired="true"
+                                app:singleLine="true"
+                                app:singleSelection="true">
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/xs_chip"
+                                    style="@style/CustomChipStyle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="XS" />
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/s_chip"
+                                    style="@style/CustomChipStyle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="S" />
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/m_chip"
+                                    style="@style/CustomChipStyle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="M" />
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/l_chip"
+                                    style="@style/CustomChipStyle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="L" />
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/xl_chip"
+                                    style="@style/CustomChipStyle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="XL" />
+                            </com.google.android.material.chip.ChipGroup>
+                        </LinearLayout>
+
+                    </HorizontalScrollView>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/tabDetails_relativeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/titlePriceAndSize_linearLayout">
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/details_tabLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:foregroundGravity="left"
+                        app:layout_scrollFlags="scroll|enterAlways"
+                        app:tabGravity="start"
+                        app:tabIndicatorColor="@color/black"
+                        app:tabPaddingEnd="30dp"
+                        app:tabPaddingStart="30dp"
+                        app:tabSelectedTextColor="@color/black" />
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/greyBorder_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lightMediumGray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tabDetails_relativeLayout" />
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/details_viewPager"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/greyBorder_view" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <LinearLayout
+            android:id="@+id/detailActions_linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:background="@color/white"
+            android:elevation="4dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:backgroundTint="@color/white"
+                app:srcCompat="@drawable/ic_heart" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:backgroundTint="@color/black"
+                    android:text="@string/add_to_bag" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+</layout>

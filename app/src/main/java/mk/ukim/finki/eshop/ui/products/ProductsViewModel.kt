@@ -25,6 +25,23 @@ class ProductsViewModel @Inject constructor(
         listingType.value = !listingType.value!!
     }
 
+    fun orderProductsByCriteria(position: Int) {
+        if(productsResponse.value?.data != null) {
+            when(position) {
+                0 -> {
+                    productsResponse.value = NetworkResult.Success(productsResponse.value?.data!!.sortedBy { it.description })
+                }
+                1 -> {
+                    productsResponse.value = NetworkResult.Success(productsResponse.value?.data!!.sortedBy { it.price })
+                }
+                2-> {
+                    productsResponse.value = NetworkResult.Success(productsResponse.value?.data!!.sortedByDescending { it.price })
+                }
+            }
+        }
+
+    }
+
     /** RETROFIT */
     var productsResponse: MutableLiveData<NetworkResult<List<Product>>> = MutableLiveData()
 
@@ -39,7 +56,6 @@ class ProductsViewModel @Inject constructor(
             try {
                 val response = repository.remote.getProductsByCategory(categoryId)
                 productsResponse.value = handleProductsResponse(response)
-                val categories = productsResponse.value!!.data
 
             } catch (e: Exception) {
                 productsResponse.value = NetworkResult.Error("Products not found.")
