@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import android.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
@@ -129,15 +130,15 @@ class ProductsFragment : Fragment() {
     }
 
     private fun showShimmerEffect() {
-        binding.productsshimmerFrameLayout.startShimmer()
-        binding.productsshimmerFrameLayout.visibility = View.VISIBLE
+        binding.productsShimmerFrameLayout.startShimmer()
+        binding.productsShimmerFrameLayout.visibility = View.VISIBLE
         binding.productsRecyclerView.visibility = View.GONE
     }
 
     private fun hideShimmerEffect() {
-        if(binding.productsshimmerFrameLayout.isShimmerVisible) {
-            binding.productsshimmerFrameLayout.visibility = View.GONE
-            binding.productsshimmerFrameLayout.stopShimmer()
+        if(binding.productsShimmerFrameLayout.isShimmerVisible) {
+            binding.productsShimmerFrameLayout.visibility = View.GONE
+            binding.productsShimmerFrameLayout.stopShimmer()
         }
         binding.productsRecyclerView.visibility = View.VISIBLE
     }
