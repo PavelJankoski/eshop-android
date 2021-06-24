@@ -129,11 +129,17 @@ class ProductsFragment : Fragment() {
     }
 
     private fun showShimmerEffect() {
-        binding.productsRecyclerView.showShimmer()
+        binding.productsshimmerFrameLayout.startShimmer()
+        binding.productsshimmerFrameLayout.visibility = View.VISIBLE
+        binding.productsRecyclerView.visibility = View.GONE
     }
 
     private fun hideShimmerEffect() {
-        binding.productsRecyclerView.hideShimmer()
+        if(binding.productsshimmerFrameLayout.isShimmerVisible) {
+            binding.productsshimmerFrameLayout.visibility = View.GONE
+            binding.productsshimmerFrameLayout.stopShimmer()
+        }
+        binding.productsRecyclerView.visibility = View.VISIBLE
     }
 
     override fun onDestroyView() {

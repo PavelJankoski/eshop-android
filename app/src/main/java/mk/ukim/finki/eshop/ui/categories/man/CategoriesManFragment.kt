@@ -77,11 +77,17 @@ class CategoriesManFragment : Fragment() {
     }
 
     private fun showShimmerEffect() {
-        binding.manCategoriesRecyclerView.showShimmer()
+        binding.manCategoriesShimmerFrameLayout.startShimmer()
+        binding.manCategoriesShimmerFrameLayout.visibility = View.VISIBLE
+        binding.manCategoriesRecyclerView.visibility = View.GONE
     }
 
     private fun hideShimmerEffect() {
-        binding.manCategoriesRecyclerView.hideShimmer()
+        if(binding.manCategoriesShimmerFrameLayout.isShimmerVisible) {
+            binding.manCategoriesShimmerFrameLayout.visibility = View.GONE
+            binding.manCategoriesShimmerFrameLayout.stopShimmer()
+        }
+        binding.manCategoriesRecyclerView.visibility = View.VISIBLE
     }
 
 

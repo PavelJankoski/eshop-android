@@ -71,13 +71,18 @@ class CategoriesWomanFragment : Fragment() {
     }
 
     private fun showShimmerEffect() {
-        binding.womanCategoriesRecyclerView.showShimmer()
+        binding.womanCategoriesShimmerFrameLayout.startShimmer()
+        binding.womanCategoriesShimmerFrameLayout.visibility = View.VISIBLE
+        binding.womanCategoriesRecyclerView.visibility = View.GONE
     }
 
     private fun hideShimmerEffect() {
-        binding.womanCategoriesRecyclerView.hideShimmer()
+        if(binding.womanCategoriesShimmerFrameLayout.isShimmerVisible) {
+            binding.womanCategoriesShimmerFrameLayout.visibility = View.GONE
+            binding.womanCategoriesShimmerFrameLayout.stopShimmer()
+        }
+        binding.womanCategoriesRecyclerView.visibility = View.VISIBLE
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
