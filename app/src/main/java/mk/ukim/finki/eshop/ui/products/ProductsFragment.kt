@@ -8,6 +8,7 @@ import android.widget.Toast
 import android.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,6 +45,9 @@ class ProductsFragment : Fragment() {
         setHasOptionsMenu(true)
         getAndObserveProductsResponse()
         observeTypeMenuItemValue()
+        binding.filterButton.setOnClickListener {
+            findNavController().navigate(R.id.action_productsFragment_to_filterBottomSheetFragment)
+        }
         return binding.root
     }
 
@@ -59,7 +63,12 @@ class ProductsFragment : Fragment() {
     }
 
     private fun getAndObserveProductsResponse() {
-        productsViewModel.getProductsForCategory(args.categoryId)
+        if(args.priceRangeDto != null) {
+            productsViewModel.getProductsInPriceRange(args.priceRangeDto!!)
+        }
+        else {
+            productsViewModel.getProductsForCategory(args.categoryId)
+        }
         productsViewModel.productsResponse.observe(viewLifecycleOwner, {response ->
             when(response) {
                 is NetworkResult.Success -> {

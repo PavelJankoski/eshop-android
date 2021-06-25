@@ -111,4 +111,6 @@ dependencies {
     // Lottie animations
     implementation "com.airbnb.android:lottie:$lottie_version"
 
+    implementation 'com.github.MohammedAlaaMorsi:RangeSeekBar:1.0.6'
+
 }

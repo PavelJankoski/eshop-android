@@ -52,6 +52,13 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_productsFragment_to_filterBottomSheetFragment"
+            app:destination="@id/filterBottomSheetFragment" />
+        <argument
+            android:name="priceRangeDto"
+            app:argType="mk.ukim.finki.eshop.api.dto.PriceRangeDto"
+            app:nullable="true" />
     </fragment>
     <activity
         android:id="@+id/detailsActivity"
@@ -62,4 +69,15 @@
             android:name="product"
             app:argType="mk.ukim.finki.eshop.api.model.Product" />
     </activity>
+    <dialog
+        android:id="@+id/filterBottomSheetFragment"
+        android:name="mk.ukim.finki.eshop.ui.products.filter.FilterBottomSheetFragment"
+        android:label="fragment_filter_bottom_sheet"
+        tools:layout="@layout/fragment_filter_bottom_sheet" >
+        <action
+            android:id="@+id/action_filterBottomSheetFragment_to_productsFragment"
+            app:destination="@id/productsFragment"
+            app:popUpTo="@id/productsFragment"
+            app:popUpToInclusive="true" />
+    </dialog>
 </navigation>

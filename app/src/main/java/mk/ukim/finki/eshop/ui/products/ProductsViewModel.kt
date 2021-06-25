@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import mk.ukim.finki.eshop.api.dto.PriceRangeDto
 import mk.ukim.finki.eshop.api.model.Product
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.util.NetworkResult
@@ -45,9 +46,12 @@ class ProductsViewModel @Inject constructor(
     /** RETROFIT */
     var productsResponse: MutableLiveData<NetworkResult<List<Product>>> = MutableLiveData()
 
-
     fun getProductsForCategory(categoryId: Long) = viewModelScope.launch {
         getProductsSafeCall(categoryId)
+    }
+
+    fun getProductsInPriceRange(dto: PriceRangeDto) = viewModelScope.launch {
+        getProductsInPriceRangeSafeCall(dto)
     }
 
     private suspend fun getProductsSafeCall(categoryId: Long) {
@@ -55,6 +59,19 @@ class ProductsViewModel @Inject constructor(
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {
                 val response = repository.remote.getProductsByCategory(categoryId)
+                productsResponse.value = handleProductsResponse(response)
+
+            } catch (e: Exception) {
+                productsResponse.value = NetworkResult.Error("Products not found.")
+            }
+        }
+    }
+
+    private suspend fun getProductsInPriceRangeSafeCall(dto: PriceRangeDto) {
+        productsResponse.value = NetworkResult.Loading()
+        if(Utils.hasInternetConnection(getApplication<Application>())) {
+            try {
+                val response = repository.remote.getProductsInPriceRange(dto)
                 productsResponse.value = handleProductsResponse(response)
 
             } catch (e: Exception) {

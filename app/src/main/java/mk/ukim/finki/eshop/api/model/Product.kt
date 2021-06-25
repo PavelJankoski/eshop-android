@@ -19,7 +19,7 @@ data class Product(
     @SerializedName("starRating")
     val rating: Float,
     @SerializedName("images")
-    val images: @RawValue List<Image>,
+    val images: @RawValue List<Image>?,
     @SerializedName("price")
     val price: Double,
     @SerializedName("productCode")

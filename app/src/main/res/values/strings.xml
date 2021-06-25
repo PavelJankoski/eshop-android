@@ -20,6 +20,8 @@
     <string name="no_products_for_this_category">No products for this category</string>
     <string name="mkd">MKD</string>
     <string name="size_available">Size available:</string>
+    <string name="apply">Apply</string>
+    <string name="price">Price</string>
 
     <string-array name="sorting_products">
         <item>Recommended</item>

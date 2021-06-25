@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.products.filter.FilterBottomSheetFragment">
+
+
+    <TextView
+        android:id="@+id/filter_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/filter"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.mohammedalaa.seekbar.DoubleValueSeekBarView
+        android:id="@+id/priceRange_seekbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintTop_toTopOf="@+id/textView11"
+        app:r2CurrentMaxValue="800"
+        app:r2CurrentMinValue="200"
+        app:r2barHeight="5dp"
+        app:r2baseColor="@color/light_gray"
+        app:r2circleFillColor="@color/black"
+        app:r2circleRadius="15dp"
+        app:r2fillColor="@color/black"
+        app:r2maxValue="1000"
+        app:r2maxValueStep="1"
+        app:r2minValue="0"
+        app:r2minValueStep="1"
+        app:r2circleTextColor="@color/black"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/apply_button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/black"
+        android:text="@string/apply"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/priceRange_seekbar" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/price"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/filter_textView"
+        app:layout_constraintTop_toBottomOf="@+id/filter_textView" />
+
+    <TextView
+        android:id="@+id/minValue_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="100"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/priceRange_seekbar"
+        app:layout_constraintStart_toStartOf="@+id/priceRange_seekbar" />
+
+    <TextView
+        android:id="@+id/maxValue_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="3000"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/priceRange_seekbar"
+        app:layout_constraintEnd_toEndOf="@+id/priceRange_seekbar" />
+</androidx.constraintlayout.widget.ConstraintLayout>

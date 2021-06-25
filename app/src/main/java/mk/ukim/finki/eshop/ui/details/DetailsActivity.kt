@@ -34,7 +34,11 @@ class DetailsActivity : AppCompatActivity() {
         binding.backFab.setOnClickListener {
             finish()
         }
-        binding.imageSlider.setImageList(args.product.images.map { SlideModel(it.imageUrl, ScaleTypes.CENTER_CROP) })
+        args.product.images?.map { SlideModel(it.imageUrl, ScaleTypes.CENTER_CROP) }?.let {
+            binding.imageSlider.setImageList(
+                it
+            )
+        }
         setupViewPager()
     }
 

@@ -1,6 +1,7 @@
 package mk.ukim.finki.eshop.data.source
 
 import mk.ukim.finki.eshop.api.WebServices
+import mk.ukim.finki.eshop.api.dto.PriceRangeDto
 import mk.ukim.finki.eshop.api.model.Category
 import mk.ukim.finki.eshop.api.model.Product
 import retrofit2.Response
@@ -15,6 +16,10 @@ class RemoteDataSource @Inject constructor(
 
         suspend fun getProductsByCategory(categoryId: Long): Response<List<Product>> {
                 return webServices.getProductsByCategory(categoryId)
+        }
+
+        suspend fun getProductsInPriceRange(dto: PriceRangeDto): Response<List<Product>> {
+                return webServices.getProductsInPriceRange(dto)
         }
 
 }
