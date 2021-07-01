@@ -2,11 +2,15 @@ package mk.ukim.finki.eshop.ui.details
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navArgs
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import mk.ukim.finki.eshop.R
@@ -19,12 +23,16 @@ import mk.ukim.finki.eshop.ui.categories.woman.CategoriesWomanFragment
 import mk.ukim.finki.eshop.ui.details.moredetails.MoreDetailsFragment
 import mk.ukim.finki.eshop.ui.details.reviews.ReviewsFragment
 import mk.ukim.finki.eshop.ui.products.ProductsFragmentArgs
+import mk.ukim.finki.eshop.ui.products.ProductsViewModel
 import mk.ukim.finki.eshop.util.Constants.Companion.PRODUCT_RESULT_KEY
+import mk.ukim.finki.eshop.util.Utils
 
 @AndroidEntryPoint
 class DetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailsBinding
     private val args by navArgs<DetailsActivityArgs>()
+    private val detailsViewModel by viewModels<DetailsViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailsBinding.inflate(layoutInflater)
@@ -39,8 +47,35 @@ class DetailsActivity : AppCompatActivity() {
                 it
             )
         }
+        setupAddToWishlistBtn()
         setupViewPager()
     }
+
+    private fun setupAddToWishlistBtn() {
+        binding.addToWishlistFab.setColorFilter(ContextCompat.getColor(binding.addToWishlistFab.context, R.color.black))
+        if(args.product.isFavourite) {
+            binding.addToWishlistFab.setImageResource(R.drawable.ic_heart_full)
+        }
+        else {
+            binding.addToWishlistFab.setImageResource(R.drawable.ic_heart)
+        }
+        binding.addToWishlistFab.setOnClickListener {
+            if(args.product.isFavourite) {
+                binding.addToWishlistFab.setImageResource(R.drawable.ic_heart)
+                args.product.isFavourite = false
+                detailsViewModel.deleteProductFromWishlist(args.product.id)
+                Utils.showSnackbar(binding.addToWishlistFab, "Removed product from wishlist!", Snackbar.LENGTH_SHORT)
+            }
+            else {
+                binding.addToWishlistFab.setImageResource(R.drawable.ic_heart_full)
+                args.product.isFavourite = true
+                detailsViewModel.insertProductInWishlist(args.product)
+                Utils.showSnackbar(binding.addToWishlistFab, "Added product to wishlist!", Snackbar.LENGTH_SHORT)
+            }
+        }
+    }
+
+
 
     private fun setupViewPager() {
         val fragments = arrayListOf<Fragment>(MoreDetailsFragment(), ReviewsFragment())

@@ -4,10 +4,11 @@ class Constants {
     companion object {
         const val PRODUCT_RESULT_KEY = "productBundle"
 
-        const val BASE_URL = "http://192.168.100.7:8080"
+        const val BASE_URL = "http://192.168.100.8:8080"
 
         // ROOM Database
         const val DATABASE_NAME = "clothing_eshop_db"
         const val CATEGORY_TABLE = "categories"
+        const val WISHLIST_TABLE = "wishlist"
     }
 }

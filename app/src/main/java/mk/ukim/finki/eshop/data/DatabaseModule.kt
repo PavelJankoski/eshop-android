@@ -28,4 +28,8 @@ object DatabaseModule {
     @Provides
     fun provideCategoriesDao(database: AppDatabase) = database.categoriesDao()
 
+    @Singleton
+    @Provides
+    fun provideWishlistDao(database: AppDatabase) = database.wishlistDao()
+
 }

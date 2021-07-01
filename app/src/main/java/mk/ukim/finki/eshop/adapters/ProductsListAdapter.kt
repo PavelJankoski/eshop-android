@@ -6,16 +6,18 @@ import androidx.recyclerview.widget.RecyclerView
 import mk.ukim.finki.eshop.api.model.Product
 import mk.ukim.finki.eshop.databinding.ProductsItemLayoutBinding
 import mk.ukim.finki.eshop.databinding.ProductsRowLayoutBinding
+import mk.ukim.finki.eshop.ui.products.ProductsViewModel
 import mk.ukim.finki.eshop.util.DiffUtil
 
-class ProductsListAdapter(): RecyclerView.Adapter<ProductsListAdapter.MyViewHolder>() {
+class ProductsListAdapter(private val vm: ProductsViewModel): RecyclerView.Adapter<ProductsListAdapter.MyViewHolder>() {
     private var products = emptyList<Product>()
 
     class MyViewHolder(
         private val binding: ProductsRowLayoutBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(product: Product) {
+        fun bind(product: Product, vm: ProductsViewModel) {
             binding.product = product
+            binding.vm = vm
             binding.executePendingBindings()
         }
 
@@ -34,7 +36,7 @@ class ProductsListAdapter(): RecyclerView.Adapter<ProductsListAdapter.MyViewHold
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentProduct = products[position]
-        holder.bind(currentProduct)
+        holder.bind(currentProduct, vm)
     }
 
     override fun getItemCount(): Int {
@@ -42,9 +44,7 @@ class ProductsListAdapter(): RecyclerView.Adapter<ProductsListAdapter.MyViewHold
     }
 
     fun setData(newData: List<Product>) {
-        val diffUtil = DiffUtil(products, newData)
-        val diffUtilResult = androidx.recyclerview.widget.DiffUtil.calculateDiff(diffUtil)
         products = newData
-        diffUtilResult.dispatchUpdatesTo(this)
+        notifyDataSetChanged()
     }
 }

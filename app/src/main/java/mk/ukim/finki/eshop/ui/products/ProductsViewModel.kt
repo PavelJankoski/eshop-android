@@ -5,9 +5,11 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import mk.ukim.finki.eshop.api.dto.PriceRangeDto
 import mk.ukim.finki.eshop.api.model.Product
+import mk.ukim.finki.eshop.data.model.WishlistEntity
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
@@ -41,6 +43,10 @@ class ProductsViewModel @Inject constructor(
             }
         }
 
+    }
+
+    suspend fun isProductInWishlist(id: Int): Boolean {
+        return repository.local.isProductInWishlist(id) != 0
     }
 
     /** RETROFIT */
@@ -90,11 +96,34 @@ class ProductsViewModel @Inject constructor(
             }
             response.isSuccessful -> {
                 val products = response.body()
-                NetworkResult.Success(products!!)
+                products!!.forEach{p ->
+                    viewModelScope.launch(Dispatchers.IO) {
+                        if(isProductInWishlist(p.id)) {
+                            p.isFavourite = true
+                        }
+                    }
+                }
+                NetworkResult.Success(products)
             }
             else -> {
                 NetworkResult.Error(response.message())
             }
+        }
+    }
+
+    fun deleteProductFromWishlist(id: Int) {
+        viewModelScope.launch {
+            productsResponse.value?.data!!.find { it.id == id }?.isFavourite = false
+            productsResponse.value = NetworkResult.Success(productsResponse.value?.data!!)
+            repository.local.deleteProductFromWishlist(id)
+        }
+    }
+
+    fun insertProductInWishlist(product: Product) {
+        viewModelScope.launch {
+            productsResponse.value?.data!!.find { it.id == product.id }?.isFavourite = true
+            productsResponse.value = NetworkResult.Success(productsResponse.value?.data!!)
+            repository.local.insertProductInWishlist(WishlistEntity(product.id, product.brand, product.condition, product.description, product.rating, product.price, product.productCode, product.name))
         }
     }
 }

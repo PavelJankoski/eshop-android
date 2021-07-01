@@ -5,8 +5,6 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import android.widget.Toolbar
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -27,13 +25,14 @@ class ProductsFragment : Fragment() {
     private val binding get() = _binding!!
     private val productsViewModel by viewModels<ProductsViewModel>()
     private var menuItemType = true
-    private val mAdapterList by lazy { ProductsListAdapter() }
-    private val mAdapterGrid by lazy { ProductsGridAdapter() }
+    private val mAdapterList by lazy { ProductsListAdapter(productsViewModel) }
+    private val mAdapterGrid by lazy { ProductsGridAdapter(productsViewModel) }
 
 
     override fun onResume() {
         super.onResume()
         setupSortingDropdown()
+        getProducts()
     }
 
     override fun onCreateView(
@@ -43,11 +42,11 @@ class ProductsFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentProductsBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
-        getAndObserveProductsResponse()
         observeTypeMenuItemValue()
         binding.filterButton.setOnClickListener {
             findNavController().navigate(R.id.action_productsFragment_to_filterBottomSheetFragment)
         }
+        observeProductsResponse()
         return binding.root
     }
 
@@ -62,13 +61,16 @@ class ProductsFragment : Fragment() {
         }
     }
 
-    private fun getAndObserveProductsResponse() {
+    private fun getProducts() {
         if(args.priceRangeDto != null) {
             productsViewModel.getProductsInPriceRange(args.priceRangeDto!!)
         }
         else {
             productsViewModel.getProductsForCategory(args.categoryId)
         }
+    }
+
+    private fun observeProductsResponse() {
         productsViewModel.productsResponse.observe(viewLifecycleOwner, {response ->
             when(response) {
                 is NetworkResult.Success -> {

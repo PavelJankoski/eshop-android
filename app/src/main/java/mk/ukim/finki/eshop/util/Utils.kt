@@ -4,7 +4,9 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.view.View
 import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 
 class Utils {
     companion object {
@@ -24,6 +26,10 @@ class Utils {
 
         fun showToast(context: Context, message: String, duration: Int) {
             Toast.makeText(context, message, duration).show()
+        }
+
+        fun showSnackbar(view: View, message: String, duration: Int) {
+            Snackbar.make(view, message, duration).setAction("Okay") {}.show()
         }
     }
 }
