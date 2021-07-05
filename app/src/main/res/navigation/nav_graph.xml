@@ -27,7 +27,11 @@
         android:id="@+id/wishlistFragment"
         android:name="mk.ukim.finki.eshop.ui.wishlist.WishlistFragment"
         android:label="Wishlist"
-        tools:layout="@layout/fragment_wishlist" />
+        tools:layout="@layout/fragment_wishlist" >
+        <action
+            android:id="@+id/action_wishlistFragment_to_detailsActivity"
+            app:destination="@id/detailsActivity" />
+    </fragment>
     <fragment
         android:id="@+id/accountFragment"
         android:name="mk.ukim.finki.eshop.ui.account.AccountFragment"

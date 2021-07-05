@@ -15,6 +15,8 @@ import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 import retrofit2.Response
 import java.lang.Exception
+import java.time.LocalDateTime
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -123,7 +125,8 @@ class ProductsViewModel @Inject constructor(
         viewModelScope.launch {
             productsResponse.value?.data!!.find { it.id == product.id }?.isFavourite = true
             productsResponse.value = NetworkResult.Success(productsResponse.value?.data!!)
-            repository.local.insertProductInWishlist(WishlistEntity(product.id, product.brand, product.condition, product.description, product.rating, product.price, product.productCode, product.name))
+            val imagesJoined = product.images?.map{it.imageUrl}?.joinToString(";")
+            repository.local.insertProductInWishlist(WishlistEntity(product.id, LocalDateTime.now(), product.brand, product.condition, product.description, product.rating, product.price, product.productCode, product.name, imagesJoined))
         }
     }
 }

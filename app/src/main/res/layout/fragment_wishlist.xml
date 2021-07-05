@@ -7,6 +7,7 @@
     tools:context=".ui.wishlist.WishlistFragment">
 
     <View
+        android:id="@+id/wishlist_shadowView"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:elevation="4dp"
@@ -14,5 +15,74 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/wishlist_shimmerFrameLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/wishlist_shadowView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/placeholder_wishlist_row_layout" />
+
+            <include layout="@layout/placeholder_wishlist_row_layout" />
+
+            <include layout="@layout/placeholder_wishlist_row_layout" />
+
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/wishlistRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/wishlist_shadowView"/>
+
+    <ImageView
+        android:id="@+id/wishlist_iv"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:src="@drawable/ic_wishlist_empty"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/wishlist_shadowView" />
+
+    <TextView
+        android:id="@+id/wishlistEmpty_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/your_wishlist_is_empty"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/wishlist_iv"
+        app:layout_constraintStart_toStartOf="@+id/wishlist_iv"
+        app:layout_constraintTop_toBottomOf="@+id/wishlist_iv" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/startShopping_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/start_shopping"
+        android:visibility="gone"
+        app:backgroundTint="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/wishlistEmpty_textView"
+        app:layout_constraintStart_toStartOf="@+id/wishlistEmpty_textView"
+        app:layout_constraintTop_toBottomOf="@+id/wishlistEmpty_textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

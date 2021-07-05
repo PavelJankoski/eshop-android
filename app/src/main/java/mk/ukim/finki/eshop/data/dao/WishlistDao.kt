@@ -20,4 +20,7 @@ interface WishlistDao {
     @Query("delete from wishlist where id=:id")
     suspend fun deleteProductFromWishlist(id: Int)
 
+    @Query("select * from wishlist")
+    fun readWishlistProducts(): Flow<List<WishlistEntity>>
+
 }

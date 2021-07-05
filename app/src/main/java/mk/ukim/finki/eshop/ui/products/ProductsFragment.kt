@@ -17,6 +17,8 @@ import mk.ukim.finki.eshop.adapters.ProductsListAdapter
 import mk.ukim.finki.eshop.databinding.FragmentProductsBinding
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
+import mk.ukim.finki.eshop.util.Utils.Companion.hideShimmerEffect
+import mk.ukim.finki.eshop.util.Utils.Companion.showShimmerEffect
 
 @AndroidEntryPoint
 class ProductsFragment : Fragment() {
@@ -74,17 +76,17 @@ class ProductsFragment : Fragment() {
         productsViewModel.productsResponse.observe(viewLifecycleOwner, {response ->
             when(response) {
                 is NetworkResult.Success -> {
-                    hideShimmerEffect()
+                    hideShimmerEffect(binding.productsShimmerFrameLayout, binding.productsRecyclerView)
                     if(!response.data.isNullOrEmpty()) {
                         mAdapterList.setData(response.data)
                         mAdapterGrid.setData(response.data)
                     }
                 }
                 is NetworkResult.Error -> {
-                    hideShimmerEffect()
+                    hideShimmerEffect(binding.productsShimmerFrameLayout, binding.productsRecyclerView)
                 }
                 is NetworkResult.Loading -> {
-                    showShimmerEffect()
+                    showShimmerEffect(binding.productsShimmerFrameLayout, binding.productsRecyclerView)
                 }
             }
         })
@@ -140,19 +142,7 @@ class ProductsFragment : Fragment() {
         }
     }
 
-    private fun showShimmerEffect() {
-        binding.productsShimmerFrameLayout.startShimmer()
-        binding.productsShimmerFrameLayout.visibility = View.VISIBLE
-        binding.productsRecyclerView.visibility = View.GONE
-    }
 
-    private fun hideShimmerEffect() {
-        if(binding.productsShimmerFrameLayout.isShimmerVisible) {
-            binding.productsShimmerFrameLayout.visibility = View.GONE
-            binding.productsShimmerFrameLayout.stopShimmer()
-        }
-        binding.productsRecyclerView.visibility = View.VISIBLE
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

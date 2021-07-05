@@ -19,6 +19,10 @@ class LocalDataSource @Inject constructor(
         return categoriesDao.insertCategories(categoriesEntity)
     }
 
+    fun readWishlistProducts(): Flow<List<WishlistEntity>> {
+        return wishlistDao.readWishlistProducts()
+    }
+
     suspend fun isProductInWishlist(id: Int): Int {
         return wishlistDao.isProductInWishlist(id)
     }

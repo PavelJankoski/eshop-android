@@ -37,29 +37,22 @@
 
     <View
         android:id="@+id/view4"
-        android:layout_width="120dp"
-        android:layout_height="25dp"
-        android:layout_marginBottom="4dp"
+        android:layout_width="64dp"
+        android:layout_height="40dp"
         android:background="@color/mediumGray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/view3" />
 
     <View
         android:id="@+id/view5"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:background="@color/mediumGray"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/view4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view4"
+        app:layout_constraintTop_toTopOf="@+id/view4" />
 
-    <View
-        android:id="@+id/view6"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="8dp"
-        android:background="@color/mediumGray"
-        app:layout_constraintBottom_toBottomOf="@+id/view5"
-        app:layout_constraintEnd_toStartOf="@+id/view5"
-        app:layout_constraintTop_toTopOf="@+id/view5" />
 </androidx.constraintlayout.widget.ConstraintLayout>

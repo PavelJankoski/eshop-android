@@ -17,6 +17,8 @@ import mk.ukim.finki.eshop.databinding.FragmentCategoriesWomanBinding
 import mk.ukim.finki.eshop.databinding.FragmentHomeWomanBinding
 import mk.ukim.finki.eshop.ui.categories.CategoriesViewModel
 import mk.ukim.finki.eshop.util.NetworkResult
+import mk.ukim.finki.eshop.util.Utils.Companion.hideShimmerEffect
+import mk.ukim.finki.eshop.util.Utils.Companion.showShimmerEffect
 import java.util.*
 
 
@@ -37,17 +39,17 @@ class CategoriesWomanFragment : Fragment() {
         categoriesViewModel.categoriesResponse.observe(viewLifecycleOwner, {response ->
             when(response) {
                 is NetworkResult.Success -> {
-                    hideShimmerEffect()
+                    hideShimmerEffect(binding.womanCategoriesShimmerFrameLayout, binding.womanCategoriesRecyclerView)
                     if(response.data != null) {
                         mAdapter.setData(response.data.filter { it.gender.lowercase() == "female" })
                     }
                 }
                 is NetworkResult.Error -> {
-                    hideShimmerEffect()
+                    hideShimmerEffect(binding.womanCategoriesShimmerFrameLayout, binding.womanCategoriesRecyclerView)
                     loadDataFromCache()
                 }
                 is NetworkResult.Loading -> {
-                    showShimmerEffect()
+                    showShimmerEffect(binding.womanCategoriesShimmerFrameLayout, binding.womanCategoriesRecyclerView)
                 }
             }
         })
@@ -57,7 +59,6 @@ class CategoriesWomanFragment : Fragment() {
     private fun setupRecyclerView() {
         binding.womanCategoriesRecyclerView.adapter = mAdapter
         binding.womanCategoriesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        /*mAdapter.setData(categoriesList)*/
     }
 
     private fun loadDataFromCache() {
@@ -70,19 +71,6 @@ class CategoriesWomanFragment : Fragment() {
         }
     }
 
-    private fun showShimmerEffect() {
-        binding.womanCategoriesShimmerFrameLayout.startShimmer()
-        binding.womanCategoriesShimmerFrameLayout.visibility = View.VISIBLE
-        binding.womanCategoriesRecyclerView.visibility = View.GONE
-    }
-
-    private fun hideShimmerEffect() {
-        if(binding.womanCategoriesShimmerFrameLayout.isShimmerVisible) {
-            binding.womanCategoriesShimmerFrameLayout.visibility = View.GONE
-            binding.womanCategoriesShimmerFrameLayout.stopShimmer()
-        }
-        binding.womanCategoriesRecyclerView.visibility = View.VISIBLE
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

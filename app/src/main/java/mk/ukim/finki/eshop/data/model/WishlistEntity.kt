@@ -8,11 +8,13 @@ import kotlinx.parcelize.RawValue
 import mk.ukim.finki.eshop.api.model.Image
 import mk.ukim.finki.eshop.api.model.Product
 import mk.ukim.finki.eshop.util.Constants.Companion.WISHLIST_TABLE
+import java.time.LocalDateTime
 
 @Entity(tableName = WISHLIST_TABLE)
 data class WishlistEntity(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
+    val addedOn: LocalDateTime,
     val brand: String,
     val condition: String,
     val description: String,
@@ -20,4 +22,5 @@ data class WishlistEntity(
     val price: Double,
     val productCode: String,
     val name: String,
+    val images: String?
 )
