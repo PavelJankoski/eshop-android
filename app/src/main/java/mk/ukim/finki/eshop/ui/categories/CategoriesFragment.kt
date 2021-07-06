@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import mk.ukim.finki.eshop.R
@@ -66,7 +67,7 @@ class CategoriesFragment : Fragment() {
                 true
             }
             R.id.search_menuItem -> {
-                Utils.showToast(requireContext(), "Search clicked!", Toast.LENGTH_SHORT)
+                findNavController().navigate(R.id.action_categoriesFragment_to_searchActivity)
                 true
             }
             else -> return super.onOptionsItemSelected(item)

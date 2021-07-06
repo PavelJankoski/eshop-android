@@ -77,7 +77,7 @@ class WishlistFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.categories_toolbar_menu, menu)
+        inflater.inflate(R.menu.wishlist_toolbar_menu, menu)
         val menuItem = menu.findItem(R.id.shoppingCart_menuItem)
         menuItem.actionView.setOnClickListener {
             onOptionsItemSelected(menuItem)
@@ -89,10 +89,6 @@ class WishlistFragment : Fragment() {
         return when (item.itemId) {
             R.id.shoppingCart_menuItem -> {
                 Utils.showToast(requireContext(), "Bag clicked!", Toast.LENGTH_SHORT)
-                true
-            }
-            R.id.search_menuItem -> {
-                Utils.showToast(requireContext(), "Search clicked!", Toast.LENGTH_SHORT)
                 true
             }
             else -> return super.onOptionsItemSelected(item)
