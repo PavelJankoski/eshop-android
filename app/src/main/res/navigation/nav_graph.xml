@@ -88,9 +88,4 @@
             app:popUpTo="@id/productsFragment"
             app:popUpToInclusive="true" />
     </dialog>
-    <activity
-        android:id="@+id/searchActivity"
-        android:name="mk.ukim.finki.eshop.ui.search.SearchActivity"
-        android:label="activity_search"
-        tools:layout="@layout/activity_search" />
 </navigation>

@@ -54,12 +54,12 @@
                 android:inputType="textCapSentences"
                 android:singleLine="true"
                 app:layout_constraintBottom_toBottomOf="@+id/searchBack_iv"
-                app:layout_constraintEnd_toStartOf="@+id/imageView9"
+                app:layout_constraintEnd_toStartOf="@+id/qrCode_imageView"
                 app:layout_constraintStart_toEndOf="@+id/searchBack_iv"
                 app:layout_constraintTop_toTopOf="@+id/searchBack_iv" />
 
             <ImageView
-                android:id="@+id/imageView9"
+                android:id="@+id/qrCode_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"

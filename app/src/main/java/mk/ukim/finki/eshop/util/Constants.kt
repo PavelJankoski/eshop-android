@@ -13,5 +13,7 @@ class Constants {
         const val SEARCH_TABLE = "search_history"
 
         const val SEARCH_HISTORY_EXTRAS = "search_history_extras"
+        const val QR_CODE_PRODUCT_DETAILS_EXTRAS = "qr_code_product_details_extras"
+        const val PRODUCT_CODE_EXTRAS = "product_code_extras"
     }
 }

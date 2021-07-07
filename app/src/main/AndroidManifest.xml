@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:name=".MyApplication"
@@ -15,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Eshop"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.search.SearchActivity"></activity>
+        <activity android:name=".ui.qrcode.QrCodeActivity"></activity>
+        <activity android:name=".ui.search.SearchActivity" />
         <activity android:name=".ui.details.DetailsActivity" />
         <activity android:name=".ui.splash.SplashScreenActivity">
             <intent-filter>
