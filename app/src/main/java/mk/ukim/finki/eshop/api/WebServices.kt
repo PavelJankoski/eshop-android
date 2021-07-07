@@ -4,10 +4,7 @@ import mk.ukim.finki.eshop.api.dto.PriceRangeDto
 import mk.ukim.finki.eshop.api.model.Category
 import mk.ukim.finki.eshop.api.model.Product
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface WebServices {
     @GET("/api/categories")
@@ -18,4 +15,7 @@ interface WebServices {
 
     @POST("/api/products/priceRange")
     suspend fun getProductsInPriceRange(@Body dto: PriceRangeDto): Response<List<Product>>
+
+    @GET("/api/products/filter-products")
+    suspend fun getFilteredProductsForCategory(@Query(value = "categoryId") categoryId: Long, @Query(value = "searchText") searchText: String): Response<List<Product>>
 }

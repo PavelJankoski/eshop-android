@@ -2,15 +2,19 @@ package mk.ukim.finki.eshop.data.source
 
 import kotlinx.coroutines.flow.Flow
 import mk.ukim.finki.eshop.data.dao.CategoriesDao
+import mk.ukim.finki.eshop.data.dao.SearchDao
 import mk.ukim.finki.eshop.data.dao.WishlistDao
 import mk.ukim.finki.eshop.data.model.CategoriesEntity
+import mk.ukim.finki.eshop.data.model.SearchEntity
 import mk.ukim.finki.eshop.data.model.WishlistEntity
 import javax.inject.Inject
 
 class LocalDataSource @Inject constructor(
     private val categoriesDao: CategoriesDao,
-    private val wishlistDao: WishlistDao
+    private val wishlistDao: WishlistDao,
+    private val searchDao: SearchDao
 ){
+    // CATEGORIES
     fun readCategories(): Flow<List<CategoriesEntity>> {
         return categoriesDao.readCategories()
     }
@@ -19,6 +23,7 @@ class LocalDataSource @Inject constructor(
         return categoriesDao.insertCategories(categoriesEntity)
     }
 
+    // WISHLIST
     fun readWishlistProducts(): Flow<List<WishlistEntity>> {
         return wishlistDao.readWishlistProducts()
     }
@@ -33,5 +38,22 @@ class LocalDataSource @Inject constructor(
 
     suspend fun deleteProductFromWishlist(id: Int){
         wishlistDao.deleteProductFromWishlist(id)
+    }
+
+    // SEARCH HISTORY
+    suspend fun insertSearchText(searchEntity: SearchEntity) {
+        return searchDao.insertSearchText(searchEntity)
+    }
+
+    fun readSearchHistory(): Flow<List<SearchEntity>> {
+        return searchDao.readSearchHistory()
+    }
+
+    suspend fun deleteSearchText(id: Int) {
+        return searchDao.deleteSearch(id)
+    }
+
+    suspend fun deleteAllSearchHistory() {
+        return searchDao.deleteAllSearchHistory()
     }
 }

@@ -62,6 +62,10 @@ class ProductsViewModel @Inject constructor(
         getProductsInPriceRangeSafeCall(dto)
     }
 
+    fun getFilteredProductsForCategory(categoryId: Long, searchText: String) = viewModelScope.launch {
+        getFilteredProductsForCategorySafeCall(categoryId, searchText)
+    }
+
     private suspend fun getProductsSafeCall(categoryId: Long) {
         productsResponse.value = NetworkResult.Loading()
         if(Utils.hasInternetConnection(getApplication<Application>())) {
@@ -80,6 +84,19 @@ class ProductsViewModel @Inject constructor(
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {
                 val response = repository.remote.getProductsInPriceRange(dto)
+                productsResponse.value = handleProductsResponse(response)
+
+            } catch (e: Exception) {
+                productsResponse.value = NetworkResult.Error("Products not found.")
+            }
+        }
+    }
+
+    private suspend fun getFilteredProductsForCategorySafeCall(categoryId: Long, searchText: String) {
+        productsResponse.value = NetworkResult.Loading()
+        if(Utils.hasInternetConnection(getApplication<Application>())) {
+            try {
+                val response = repository.remote.getFilteredProductsForCategory(categoryId, searchText)
                 productsResponse.value = handleProductsResponse(response)
 
             } catch (e: Exception) {

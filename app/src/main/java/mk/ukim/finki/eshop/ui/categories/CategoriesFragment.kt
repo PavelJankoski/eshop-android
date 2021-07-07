@@ -5,7 +5,6 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import mk.ukim.finki.eshop.R
@@ -52,7 +51,7 @@ class CategoriesFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.categories_toolbar_menu, menu)
+        inflater.inflate(R.menu.shopping_cart_toolbar_menu, menu)
         val menuItem = menu.findItem(R.id.shoppingCart_menuItem)
         menuItem.actionView.setOnClickListener {
             onOptionsItemSelected(menuItem)
@@ -64,10 +63,6 @@ class CategoriesFragment : Fragment() {
         return when (item.itemId) {
             R.id.shoppingCart_menuItem -> {
                 Utils.showToast(requireContext(), "Bag clicked!", Toast.LENGTH_SHORT)
-                true
-            }
-            R.id.search_menuItem -> {
-                findNavController().navigate(R.id.action_categoriesFragment_to_searchActivity)
                 true
             }
             else -> return super.onOptionsItemSelected(item)

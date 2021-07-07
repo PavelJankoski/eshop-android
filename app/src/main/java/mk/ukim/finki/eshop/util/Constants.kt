@@ -10,5 +10,8 @@ class Constants {
         const val DATABASE_NAME = "clothing_eshop_db"
         const val CATEGORY_TABLE = "categories"
         const val WISHLIST_TABLE = "wishlist"
+        const val SEARCH_TABLE = "search_history"
+
+        const val SEARCH_HISTORY_EXTRAS = "search_history_extras"
     }
 }

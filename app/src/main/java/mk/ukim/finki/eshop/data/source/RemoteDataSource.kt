@@ -22,4 +22,8 @@ class RemoteDataSource @Inject constructor(
                 return webServices.getProductsInPriceRange(dto)
         }
 
+        suspend fun getFilteredProductsForCategory(categoryId: Long, searchText: String): Response<List<Product>> {
+                return webServices.getFilteredProductsForCategory(categoryId, searchText)
+        }
+
 }

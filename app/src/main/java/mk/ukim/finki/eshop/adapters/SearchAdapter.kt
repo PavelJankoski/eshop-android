@@ -3,19 +3,22 @@ package mk.ukim.finki.eshop.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import mk.ukim.finki.eshop.data.model.WishlistEntity
-import mk.ukim.finki.eshop.databinding.WishlistRowLayoutBinding
+import mk.ukim.finki.eshop.api.model.Category
+import mk.ukim.finki.eshop.data.model.SearchEntity
+import mk.ukim.finki.eshop.databinding.CategoriesRowLayoutBinding
+import mk.ukim.finki.eshop.databinding.SearchRowLayoutBinding
+import mk.ukim.finki.eshop.ui.search.SearchViewModel
 import mk.ukim.finki.eshop.ui.wishlist.WishlistViewModel
 import mk.ukim.finki.eshop.util.DiffUtil
 
-class WishlistListAdapter(private val vm: WishlistViewModel): RecyclerView.Adapter<WishlistListAdapter.MyViewHolder>() {
-    private var products = emptyList<WishlistEntity>()
+class SearchAdapter(private val vm: SearchViewModel): RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
+    private var searchTexts = emptyList<SearchEntity>()
 
     class MyViewHolder(
-        private val binding: WishlistRowLayoutBinding
+        private val binding: SearchRowLayoutBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(product: WishlistEntity, vm: WishlistViewModel) {
-            binding.product = product
+        fun bind(search: SearchEntity, vm: SearchViewModel) {
+            binding.search = search
             binding.vm = vm
             binding.executePendingBindings()
         }
@@ -23,7 +26,7 @@ class WishlistListAdapter(private val vm: WishlistViewModel): RecyclerView.Adapt
         companion object {
             fun from(parent: ViewGroup): MyViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = WishlistRowLayoutBinding.inflate(layoutInflater, parent, false)
+                val binding = SearchRowLayoutBinding.inflate(layoutInflater, parent, false)
                 return MyViewHolder(binding)
             }
         }
@@ -34,18 +37,18 @@ class WishlistListAdapter(private val vm: WishlistViewModel): RecyclerView.Adapt
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentProduct = products[position]
-        holder.bind(currentProduct, vm)
+        val currentSearch = searchTexts[position]
+        holder.bind(currentSearch, vm)
     }
 
     override fun getItemCount(): Int {
-        return products.size
+        return searchTexts.size
     }
 
-    fun setData(newData: List<WishlistEntity>) {
-        val diffUtil = DiffUtil(products, newData)
+    fun setData(newData: List<SearchEntity>) {
+        val diffUtil = DiffUtil(searchTexts, newData)
         val diffUtilResult = androidx.recyclerview.widget.DiffUtil.calculateDiff(diffUtil)
-        products = newData
+        searchTexts = newData
         diffUtilResult.dispatchUpdatesTo(this)
     }
 }

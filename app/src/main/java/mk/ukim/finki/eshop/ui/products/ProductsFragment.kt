@@ -1,10 +1,14 @@
 package mk.ukim.finki.eshop.ui.products
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import android.widget.Toolbar
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -15,6 +19,8 @@ import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.ProductsGridAdapter
 import mk.ukim.finki.eshop.adapters.ProductsListAdapter
 import mk.ukim.finki.eshop.databinding.FragmentProductsBinding
+import mk.ukim.finki.eshop.ui.search.SearchActivity
+import mk.ukim.finki.eshop.util.Constants.Companion.SEARCH_HISTORY_EXTRAS
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 import mk.ukim.finki.eshop.util.Utils.Companion.hideShimmerEffect
@@ -29,6 +35,7 @@ class ProductsFragment : Fragment() {
     private var menuItemType = true
     private val mAdapterList by lazy { ProductsListAdapter(productsViewModel) }
     private val mAdapterGrid by lazy { ProductsGridAdapter(productsViewModel) }
+    private var searchedText: String = ""
 
 
     override fun onResume() {
@@ -64,12 +71,30 @@ class ProductsFragment : Fragment() {
     }
 
     private fun getProducts() {
-        if(args.priceRangeDto != null) {
+        if (searchedText.isNotEmpty()) {
+            productsViewModel.getFilteredProductsForCategory(args.categoryId, searchedText)
+        }
+        else if(args.priceRangeDto != null) {
             productsViewModel.getProductsInPriceRange(args.priceRangeDto!!)
         }
         else {
             productsViewModel.getProductsForCategory(args.categoryId)
         }
+    }
+
+    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data: Intent? = result.data
+            val searchText = data?.getStringExtra(SEARCH_HISTORY_EXTRAS)
+            if (searchText != null) {
+                searchedText = searchText
+            }
+        }
+    }
+
+    private fun startSearchActivity() {
+        val intent: Intent = Intent(activity, SearchActivity::class.java)
+        resultLauncher.launch(intent)
     }
 
     private fun observeProductsResponse() {
@@ -124,7 +149,8 @@ class ProductsFragment : Fragment() {
                 true
             }
             R.id.search_menuItem -> {
-                Utils.showToast(requireContext(), "Search clicked!", Toast.LENGTH_SHORT)
+                searchedText = ""
+                startSearchActivity()
                 true
             }
             R.id.type_menuItem -> {

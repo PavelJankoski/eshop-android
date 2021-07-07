@@ -25,6 +25,9 @@
     <string name="move_to_bag">Move to bag</string>
     <string name="start_shopping">Start Shopping</string>
     <string name="your_wishlist_is_empty">Your wishlist is empty</string>
+    <string name="recent_searches">Recent searches</string>
+    <string name="clear">Clear all</string>
+    <string name="search_history_is_empty">Search history is empty</string>
 
     <string-array name="sorting_products">
         <item>Recommended</item>

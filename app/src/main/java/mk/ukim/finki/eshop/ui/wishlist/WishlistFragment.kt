@@ -9,21 +9,19 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import mk.ukim.finki.eshop.R
-import mk.ukim.finki.eshop.adapters.WishlistListAdapter
+import mk.ukim.finki.eshop.adapters.WishlistAdapter
 import mk.ukim.finki.eshop.databinding.FragmentWishlistBinding
 import mk.ukim.finki.eshop.util.Utils
 import mk.ukim.finki.eshop.util.Utils.Companion.hideShimmerEffect
-import mk.ukim.finki.eshop.util.Utils.Companion.showShimmerEffect
 
 @AndroidEntryPoint
 class WishlistFragment : Fragment() {
     private var _binding: FragmentWishlistBinding? = null
     private val binding get() = _binding!!
     private val wishlistViewModel by viewModels<WishlistViewModel>()
-    private val mAdapter by lazy { WishlistListAdapter(wishlistViewModel) }
+    private val mAdapter by lazy { WishlistAdapter(wishlistViewModel) }
 
 
 
@@ -77,7 +75,7 @@ class WishlistFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.wishlist_toolbar_menu, menu)
+        inflater.inflate(R.menu.shopping_cart_toolbar_menu, menu)
         val menuItem = menu.findItem(R.id.shoppingCart_menuItem)
         menuItem.actionView.setOnClickListener {
             onOptionsItemSelected(menuItem)
