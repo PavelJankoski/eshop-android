@@ -29,6 +29,10 @@
     <string name="clear">Clear all</string>
     <string name="search_history_is_empty">Search history is empty</string>
 
+    <string name="facebook_app_id">123017459907446</string>
+    <string name="fb_login_protocol_scheme">fb123017459907446</string>
+
+
     <string-array name="sorting_products">
         <item>Recommended</item>
         <item>Price - Low to High</item>
