@@ -3,7 +3,7 @@ package mk.ukim.finki.eshop.adapters
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class CategoriesPagerAdapter(
+class PagerAdapter(
     private val fragments: ArrayList<Fragment>,
     fragment: Fragment
 ) : FragmentStateAdapter(fragment) {

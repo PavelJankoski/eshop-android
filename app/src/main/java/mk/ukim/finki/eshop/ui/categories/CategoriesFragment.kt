@@ -8,7 +8,7 @@ import androidx.fragment.app.activityViewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import mk.ukim.finki.eshop.R
-import mk.ukim.finki.eshop.adapters.CategoriesPagerAdapter
+import mk.ukim.finki.eshop.adapters.PagerAdapter
 import mk.ukim.finki.eshop.databinding.FragmentCategoriesBinding
 import mk.ukim.finki.eshop.ui.categories.man.CategoriesManFragment
 import mk.ukim.finki.eshop.ui.categories.woman.CategoriesWomanFragment
@@ -40,7 +40,7 @@ class CategoriesFragment : Fragment() {
     private fun setupViewPager() {
         val fragments = arrayListOf<Fragment>(CategoriesManFragment(), CategoriesWomanFragment())
         val tabLayoutTitles = arrayListOf<String>("Man", "Woman")
-        val pagerAdapter = CategoriesPagerAdapter(fragments, this)
+        val pagerAdapter = PagerAdapter(fragments, this)
         binding.viewPager.apply {
             adapter = pagerAdapter
         }

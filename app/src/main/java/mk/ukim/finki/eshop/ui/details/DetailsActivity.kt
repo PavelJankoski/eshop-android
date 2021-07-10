@@ -5,8 +5,6 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import androidx.navigation.navArgs
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
@@ -14,16 +12,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import mk.ukim.finki.eshop.R
-import mk.ukim.finki.eshop.adapters.CategoriesPagerAdapter
 import mk.ukim.finki.eshop.adapters.DetailsPagerAdapter
 import mk.ukim.finki.eshop.databinding.ActivityDetailsBinding
-import mk.ukim.finki.eshop.databinding.ActivityMainBinding
-import mk.ukim.finki.eshop.ui.categories.man.CategoriesManFragment
-import mk.ukim.finki.eshop.ui.categories.woman.CategoriesWomanFragment
 import mk.ukim.finki.eshop.ui.details.moredetails.MoreDetailsFragment
 import mk.ukim.finki.eshop.ui.details.reviews.ReviewsFragment
-import mk.ukim.finki.eshop.ui.products.ProductsFragmentArgs
-import mk.ukim.finki.eshop.ui.products.ProductsViewModel
 import mk.ukim.finki.eshop.util.Constants.Companion.PRODUCT_RESULT_KEY
 import mk.ukim.finki.eshop.util.Utils
 

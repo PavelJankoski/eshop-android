@@ -1,6 +1,10 @@
 package mk.ukim.finki.eshop.api
 
+import mk.ukim.finki.eshop.api.dto.LoginDto
 import mk.ukim.finki.eshop.api.dto.PriceRangeDto
+import mk.ukim.finki.eshop.api.dto.RegisterDto
+import mk.ukim.finki.eshop.api.dto.TokenDto
+import mk.ukim.finki.eshop.api.model.AuthResponse
 import mk.ukim.finki.eshop.api.model.Category
 import mk.ukim.finki.eshop.api.model.Product
 import retrofit2.Response
@@ -18,4 +22,15 @@ interface WebServices {
 
     @GET("/api/products/filter-products")
     suspend fun getFilteredProductsForCategory(@Query(value = "categoryId") categoryId: Long, @Query(value = "searchText") searchText: String): Response<List<Product>>
+
+    @POST("/api/users")
+    suspend fun registerUser(@Body dto: RegisterDto)
+
+    @POST("/api/authenticate")
+    suspend fun login(@Body dto: LoginDto): Response<AuthResponse>
+
+    @POST("/api/authenticate/social-login/facebook")
+    suspend fun loginWithFacebook(@Body dto: TokenDto): Response<AuthResponse>
+
+
 }
