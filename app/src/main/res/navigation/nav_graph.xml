@@ -35,6 +35,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_wishlistFragment_to_loginPrompt"
+            app:destination="@id/loginPrompt" />
     </fragment>
     <fragment
         android:id="@+id/accountFragment"
@@ -87,5 +90,14 @@
             app:destination="@id/productsFragment"
             app:popUpTo="@id/productsFragment"
             app:popUpToInclusive="true" />
+    </dialog>
+    <dialog
+        android:id="@+id/loginPrompt"
+        android:name="mk.ukim.finki.eshop.ui.account.loginPrompt.LoginPrompt"
+        android:label="fragment_login_prompt"
+        tools:layout="@layout/fragment_login_prompt" >
+        <action
+            android:id="@+id/action_loginPrompt_to_wishlistFragment"
+            app:destination="@id/wishlistFragment" />
     </dialog>
 </navigation>
