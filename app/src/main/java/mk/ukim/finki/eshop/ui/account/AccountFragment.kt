@@ -1,6 +1,5 @@
 package mk.ukim.finki.eshop.ui.account
 
-import android.R
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -10,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
@@ -19,17 +19,19 @@ import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.PagerAdapter
 import mk.ukim.finki.eshop.api.dto.TokenDto
 import mk.ukim.finki.eshop.databinding.FragmentAccountBinding
 import mk.ukim.finki.eshop.ui.account.login.LoginFragment
 import mk.ukim.finki.eshop.ui.account.register.RegisterFragment
-import mk.ukim.finki.eshop.util.Constants.Companion.GOOGLE_SIGN_IN_ID
+import mk.ukim.finki.eshop.util.Constants
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 
@@ -41,6 +43,7 @@ class AccountFragment : Fragment() {
     private val binding get() = _binding!!
     private val accountViewModel: AccountViewModel by activityViewModels()
     private lateinit var callbackManager: CallbackManager
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +51,7 @@ class AccountFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentAccountBinding.inflate(inflater, container, false)
-        callbackManager =  CallbackManager.Factory.create();
+        callbackManager =  CallbackManager.Factory.create()
         binding.loginButton.fragment = this
         binding.loginButton.setPermissions(
             listOf("public_profile, email")
@@ -80,36 +83,21 @@ class AccountFragment : Fragment() {
 
     private fun setupGoogleButton() {
         val googleButton = binding.signInButton
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(Constants.GOOGLE_CLIENT_ID)
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+        accountViewModel.setGoogleClient(googleSignInClient)
+        (googleButton.getChildAt(0) as TextView).text = "Sign in with Google"
+        (googleButton.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+
         googleButton.setOnClickListener {
 
-            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestServerAuthCode("647139029513-2ubuvb343grcpcmi6m4s91q3dohlo5ah.apps.googleusercontent.com")
-                .requestEmail()
-                .build()
-
-            val googleApiClient = GoogleSignIn.getClient( activity, gso)
-            accountViewModel.setGoogleClient(googleApiClient)
-
-            val signInIntent: Intent = googleApiClient.signInIntent
+            val signInIntent: Intent = googleSignInClient.getSignInIntent()
             startActivityForResult(signInIntent, RC_SIGN_IN)
         }
 
-        for (i in 0 until googleButton.childCount) {
-            val v = googleButton.getChildAt(i)
-            if (v is TextView) {
-                val tv = v
-                tv.textSize = 14f
-                tv.setTypeface(null, Typeface.NORMAL)
-                tv.text = "Sign in with Google"
-                tv.setTextColor(resources.getColor(R.color.black))
-                tv.isSingleLine = true
-                tv.setPadding(15, 15, 15, 15)
-                val params = tv.getLayoutParams()
-                params.height = 70
-                tv.setLayoutParams(params)
-                return
-            }
-        }
     }
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
@@ -145,23 +133,6 @@ class AccountFragment : Fragment() {
             tab.text = tabLayoutTitles[position]
         }.attach()
 
-    }
-
-    private fun updatePagerHeightForChild(view: View, pager: ViewPager2) {
-        view.post {
-            val widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(
-                view.width, View.MeasureSpec.EXACTLY
-            )
-            val heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(
-                0, View.MeasureSpec.UNSPECIFIED
-            )
-            view.measure(widthMeasureSpec, heightMeasureSpec)
-            if (pager.layoutParams.height != view.measuredHeight) {
-                pager.layoutParams = (pager.layoutParams).also {
-                    it.height = view.measuredHeight
-                }
-            }
-        }
     }
 
 
