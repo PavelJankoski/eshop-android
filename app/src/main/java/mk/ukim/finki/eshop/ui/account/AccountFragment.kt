@@ -1,17 +1,27 @@
 package mk.ukim.finki.eshop.ui.account
 
+import android.R
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
-import com.facebook.*
-import com.facebook.login.LoginManager
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
 import com.facebook.login.LoginResult
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import mk.ukim.finki.eshop.adapters.PagerAdapter
@@ -19,10 +29,14 @@ import mk.ukim.finki.eshop.api.dto.TokenDto
 import mk.ukim.finki.eshop.databinding.FragmentAccountBinding
 import mk.ukim.finki.eshop.ui.account.login.LoginFragment
 import mk.ukim.finki.eshop.ui.account.register.RegisterFragment
-import java.util.*
+import mk.ukim.finki.eshop.util.Constants.Companion.GOOGLE_SIGN_IN_ID
+import mk.ukim.finki.eshop.util.NetworkResult
+import mk.ukim.finki.eshop.util.Utils
+
 
 @AndroidEntryPoint
 class AccountFragment : Fragment() {
+    private val RC_SIGN_IN = 1
     private var _binding: FragmentAccountBinding? = null
     private val binding get() = _binding!!
     private val accountViewModel: AccountViewModel by activityViewModels()
@@ -39,6 +53,9 @@ class AccountFragment : Fragment() {
         binding.loginButton.setPermissions(
             listOf("public_profile, email")
         )
+
+        setupRegistrationObserver()
+
         binding.loginButton
             .registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
                 override fun onSuccess(loginResult: LoginResult?) {
@@ -55,8 +72,65 @@ class AccountFragment : Fragment() {
                 }
             })
 
+        setupGoogleButton()
+
         setupViewPager()
         return binding.root
+    }
+
+    private fun setupGoogleButton() {
+        val googleButton = binding.signInButton
+        googleButton.setOnClickListener {
+
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestServerAuthCode("647139029513-2ubuvb343grcpcmi6m4s91q3dohlo5ah.apps.googleusercontent.com")
+                .requestEmail()
+                .build()
+
+            val googleApiClient = GoogleSignIn.getClient( activity, gso)
+            accountViewModel.setGoogleClient(googleApiClient)
+
+            val signInIntent: Intent = googleApiClient.signInIntent
+            startActivityForResult(signInIntent, RC_SIGN_IN)
+        }
+
+        for (i in 0 until googleButton.childCount) {
+            val v = googleButton.getChildAt(i)
+            if (v is TextView) {
+                val tv = v
+                tv.textSize = 14f
+                tv.setTypeface(null, Typeface.NORMAL)
+                tv.text = "Sign in with Google"
+                tv.setTextColor(resources.getColor(R.color.black))
+                tv.isSingleLine = true
+                tv.setPadding(15, 15, 15, 15)
+                val params = tv.getLayoutParams()
+                params.height = 70
+                tv.setLayoutParams(params)
+                return
+            }
+        }
+    }
+
+    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+            val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)
+            val idToken = account.idToken
+            accountViewModel.loginWithGoogle(TokenDto(idToken))
+        } catch (e: ApiException) {
+            Utils.showToast(
+                requireContext(),
+                "Something went wrong, try again later...",
+                Toast.LENGTH_SHORT
+            )
+        }
+    }
+
+    private fun setupRegistrationObserver() {
+        accountViewModel.registerResponse.observe(viewLifecycleOwner, { response ->
+            if (response is NetworkResult.Success)
+                binding.accountViewPager.setCurrentItem(0, true)
+        })
     }
 
     private fun setupViewPager() {
@@ -93,7 +167,12 @@ class AccountFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        callbackManager.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_SIGN_IN) {
+            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
+        } else {
+            callbackManager.onActivityResult(requestCode, resultCode, data)
+        }
 
     }
 

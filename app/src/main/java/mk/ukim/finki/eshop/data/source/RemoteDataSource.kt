@@ -42,4 +42,12 @@ class RemoteDataSource @Inject constructor(
                 return webServices.loginWithFacebook(dto)
         }
 
+        suspend fun loginWithGoogle(dto: TokenDto): Response<AuthResponse> {
+                return webServices.loginWithGoogle(dto)
+        }
+
+        suspend fun userWithUsernameExist(username: String): Response<Boolean> {
+                return webServices.existsUsername(username)
+        }
+
 }

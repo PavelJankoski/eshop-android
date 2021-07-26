@@ -42,6 +42,11 @@
     <string name="login_prompt_message">To proceed with the action you need to login.</string>
     <string name="login_go_to_message">Go to login/register screen</string>
 
+    <string name="google_server_token_id">
+        647139029513-qf8epdfrqckkrrhprvh8ni95m9mh7ka3.apps.googleusercontent.com
+    </string>
+    <string name="it_seems_that_you_are_not_logged_in">It seems that you are not logged in.</string>
+
 
     <string-array name="sorting_products">
         <item>Recommended</item>

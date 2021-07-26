@@ -7,4 +7,7 @@ data class AuthResponse (
     fun getToken(): String {
         return jwt
     }
+    fun getUserId(): Long {
+        return userId
+    }
 }

@@ -8,6 +8,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('C:\\Users\\DELL\\.android\\debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
@@ -25,6 +33,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {
@@ -120,5 +131,21 @@ dependencies {
 
     // Facebook auth
     implementation 'com.facebook.android:facebook-android-sdk:5.15.3'
+
+    // Google Auth
+    implementation 'com.google.android.gms:play-services-auth:19.2.0'
+
+    // Profile Info
+    //noinspection GradleCompatible
+    implementation 'com.android.support:design:26.1.0'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:percent:26.1.0'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:cardview-v7:26.1.0'
+
+    // Circular image
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+
 
 }

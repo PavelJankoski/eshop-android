@@ -99,5 +99,13 @@
         <action
             android:id="@+id/action_loginPrompt_to_wishlistFragment"
             app:destination="@id/wishlistFragment" />
+        <action
+            android:id="@+id/action_loginPrompt_to_homeAccountFragment"
+            app:destination="@id/homeAccountFragment" />
     </dialog>
+    <fragment
+        android:id="@+id/homeAccountFragment"
+        android:name="mk.ukim.finki.eshop.ui.account.HomeAccountFragment"
+        android:label="Account"
+        tools:layout="@layout/fragment_home_account" />
 </navigation>

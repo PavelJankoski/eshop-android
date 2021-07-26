@@ -12,9 +12,10 @@
         android:title="@string/wishlist"
         android:icon="@drawable/ic_heart" />
 
-    <item android:id="@+id/accountFragment"
-        android:title="@string/account"
-        android:icon="@drawable/ic_account" />
+    <item
+        android:id="@+id/homeAccountFragment"
+        android:icon="@drawable/ic_account"
+        android:title="@string/account" />
 
 
 </menu>

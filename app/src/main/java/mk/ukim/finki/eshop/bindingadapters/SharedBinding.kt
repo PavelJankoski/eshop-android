@@ -22,5 +22,11 @@ class SharedBinding {
         fun onlyFirstLetterCapital(tv: TextView, word: String) {
             tv.text = String.format("%s%s", word.substring(0, 1).uppercase(), word.substring(1).lowercase())
         }
+
+        @BindingAdapter("errorMessage")
+        @JvmStatic
+        fun setErrorMessage(textView: TextView, message: String?) {
+            textView.error = message
+        }
     }
 }

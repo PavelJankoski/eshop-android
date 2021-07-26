@@ -4,9 +4,8 @@ data class User(
     val createDate: String,
     val email: String,
     val id: Int,
-    val image: ImageX,
+    val image: UserProfilePicture,
     val name: String,
-    val roles: List<Role>,
     val surname: String,
     val userName: String
 )

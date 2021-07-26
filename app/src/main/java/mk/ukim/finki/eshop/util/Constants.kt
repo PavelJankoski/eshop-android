@@ -20,8 +20,17 @@ class Constants {
         // DATA STORE - PREFERENCE KEYS
         const val PREFERENCE_NAME = "eshop-preferences"
         const val PREFERENCE_JSON_WEB_TOKEN = "jwt"
+        const val PREFERENCE_USER_ID = "userId"
 
         //DEFAULT VALUES
         const val DEFAULT_JWT = "1111111111111111111111111111111111111"
+        const val DEFAULT_USER_ID = -1
+
+        // STATE KEYS
+        const val LOGIN_STATE = "authenticated"
+
+        // Google sign in
+        const val GOOGLE_TYPE = "google"
+        const val GOOGLE_SIGN_IN_ID = "647139029513-2ubuvb343grcpcmi6m4s91q3dohlo5ah.apps.googleusercontent.com"
     }
 }

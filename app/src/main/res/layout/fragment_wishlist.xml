@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.wishlist.WishlistFragment">
 
     <View
         android:id="@+id/wishlist_shadowView"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:elevation="4dp"
         android:background="@color/white"
+        android:elevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -48,7 +48,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/wishlist_shadowView"/>
+        app:layout_constraintTop_toBottomOf="@id/wishlist_shadowView" />
 
     <ImageView
         android:id="@+id/wishlist_iv"
@@ -73,6 +73,20 @@
         app:layout_constraintStart_toStartOf="@+id/wishlist_iv"
         app:layout_constraintTop_toBottomOf="@+id/wishlist_iv" />
 
+    <TextView
+        android:id="@+id/not_authenticated_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/it_seems_that_you_are_not_logged_in"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/not_authenticated_img"
+        app:layout_constraintStart_toStartOf="@+id/not_authenticated_img"
+        app:layout_constraintTop_toBottomOf="@+id/not_authenticated_img" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/startShopping_btn"
         android:layout_width="wrap_content"
@@ -84,5 +98,17 @@
         app:layout_constraintEnd_toEndOf="@+id/wishlistEmpty_textView"
         app:layout_constraintStart_toStartOf="@+id/wishlistEmpty_textView"
         app:layout_constraintTop_toBottomOf="@+id/wishlistEmpty_textView" />
+
+    <ImageView
+        android:id="@+id/not_authenticated_img"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/ic_forbidden"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

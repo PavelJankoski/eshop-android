@@ -7,6 +7,7 @@ import mk.ukim.finki.eshop.api.dto.TokenDto
 import mk.ukim.finki.eshop.api.model.AuthResponse
 import mk.ukim.finki.eshop.api.model.Category
 import mk.ukim.finki.eshop.api.model.Product
+import mk.ukim.finki.eshop.api.model.User
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -32,5 +33,18 @@ interface WebServices {
     @POST("/api/authenticate/social-login/facebook")
     suspend fun loginWithFacebook(@Body dto: TokenDto): Response<AuthResponse>
 
+    @POST("/api/authenticate/social-login/google")
+    suspend fun loginWithGoogle(@Body dto: TokenDto): Response<AuthResponse>
+
+    @GET("/api/users/{userId}")
+    suspend fun getUserInfo(
+        @Path("userId") userId: Long,
+        @Header("Authorization") token: String
+    ): Response<User>
+
+    @GET("/api/users/exists/{username}")
+    suspend fun existsUsername(
+        @Path("username") username: String
+    ): Response<Boolean>
 
 }
