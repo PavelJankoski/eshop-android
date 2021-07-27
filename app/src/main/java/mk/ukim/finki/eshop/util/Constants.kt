@@ -31,7 +31,7 @@ class Constants {
 
         // Google sign in
         const val GOOGLE_TYPE = "google"
-        const val GOOGLE_SIGN_IN_ID = "647139029513-2ubuvb343grcpcmi6m4s91q3dohlo5ah.apps.googleusercontent.com"
+        // NOTE: CLIENT ID FOR WEB APP SAME ON BACKEND AND IN APP!!!!!!!!!!!!
         const val GOOGLE_CLIENT_ID = "467495057025-lqpkn4mpl6bor6b6ga9d0hdo68prmvi4.apps.googleusercontent.com"
     }
 }
