@@ -90,7 +90,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/imageView3"
             app:layout_constraintEnd_toStartOf="@+id/imageView3"
             app:layout_constraintTop_toTopOf="@+id/imageView3"
-            isProductInShoppingCart="@{product.inShoppingCart}"
+            isProductInShoppingCart="@{product.isInShoppingCart}"
             onAddOrRemoveClickListener="@{product}"
             setViewModel="@{vm}"
             android:clickable="true"

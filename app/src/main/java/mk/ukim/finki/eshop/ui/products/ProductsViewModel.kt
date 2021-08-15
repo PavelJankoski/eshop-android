@@ -6,10 +6,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import mk.ukim.finki.eshop.api.dto.FavCartDto
 import mk.ukim.finki.eshop.api.dto.PriceRangeDto
 import mk.ukim.finki.eshop.api.model.Product
@@ -17,7 +16,6 @@ import mk.ukim.finki.eshop.data.model.WishlistEntity
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.ui.account.LoginManager
 import mk.ukim.finki.eshop.ui.shoppingBag.ShoppingBagManager
-import mk.ukim.finki.eshop.util.Constants
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 import retrofit2.Response
@@ -36,6 +34,7 @@ class ProductsViewModel @Inject constructor(
     var listingType: MutableLiveData<Boolean> = MutableLiveData(true)
     var addOrRemoveProductResponse = shoppingBagManager.addOrRemoveProductResponse
     var addOrRemovedProduct: Int? = null
+    var isRemoveProduct: Boolean? = null
     var categoryId: Int? = null
 
     fun changeListing() {
@@ -81,17 +80,21 @@ class ProductsViewModel @Inject constructor(
 
     fun addProductToShoppingCart(id: Int) {
         addOrRemovedProduct = id
+        isRemoveProduct = false
         shoppingBagManager.addProductToShoppingCart(id)
     }
 
     fun removeProductFromShoppingCart(id: Int) {
         addOrRemovedProduct = id
-        shoppingBagManager.removeProductToShoppingCart(id)
+        isRemoveProduct = true
+        shoppingBagManager.removeProductFromShoppingCart(id)
     }
 
     private suspend fun isInShoppingCartAndFaSafeCall(productId: Int): FavCartDto? {
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {
+                val token = loginManager.readToken()
+                val userId = loginManager.readUserId()
                 val response = repository.remote.isInCartAndFave(userId, productId, token)
                 if (response.isSuccessful)
                     return response.body()!!
@@ -133,8 +136,10 @@ class ProductsViewModel @Inject constructor(
         productsResponse.value = NetworkResult.Loading()
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {
-                val response = repository.remote.getFilteredProductsForCategory(categoryId, searchText)
-                productsResponse.value = handleProductsResponse(response)
+                withContext(Dispatchers.Main) {
+                    val response = repository.remote.getFilteredProductsForCategory(categoryId, searchText)
+                    productsResponse.postValue(handleProductsResponse(response))
+                }
 
             } catch (e: Exception) {
                 productsResponse.value = NetworkResult.Error("Products not found.")
@@ -143,6 +148,7 @@ class ProductsViewModel @Inject constructor(
     }
 
     private fun handleProductsResponse(response: Response<List<Product>>): NetworkResult<List<Product>>{
+
         return when {
             response.message().toString().contains("timeout") -> {
                 NetworkResult.Error("Timeout")
@@ -151,16 +157,20 @@ class ProductsViewModel @Inject constructor(
                 NetworkResult.Error("Products not found.")
             }
             response.isSuccessful -> {
-                val products = response.body()
-                products!!.forEach{p ->
-                    viewModelScope.launch(Dispatchers.IO) {
+
+                    val products = response.body()!!
+                viewModelScope.launch(Dispatchers.IO) {
+                    products.forEach { p ->
+
                         val dto = isInShoppingCartAndFaSafeCall(p.id)
                         if (dto != null) {
-                            p.isFavourite = dto.isFavorite
-                            p.isInShoppingCart = dto.isInShoppingCart
+                            p.isFavourite = dto.isFavorite.toBoolean()
+                            p.isInShoppingCart = dto.isInShoppingCart.toBoolean()
                         }
-                    }
                 }
+                    productsResponse.postValue(NetworkResult.Success(products))
+                }
+
                 NetworkResult.Success(products)
             }
             else -> {
@@ -170,9 +180,9 @@ class ProductsViewModel @Inject constructor(
     }
 
 
-    fun addOrProductToShoppingCart(isInShoppingCart: Boolean) {
+    fun addOrRemoveProductShoppingCart() {
         viewModelScope.launch {
-            productsResponse.value?.data!!.find { it.id == addOrRemovedProduct }?.isInShoppingCart = isInShoppingCart
+            productsResponse.value?.data!!.find { it.id == addOrRemovedProduct }?.isInShoppingCart = !isRemoveProduct!!
             productsResponse.value = NetworkResult.Success(productsResponse.value?.data!!)
         }
     }
@@ -194,50 +204,4 @@ class ProductsViewModel @Inject constructor(
         }
     }
 
-    private var readJwt = false
-    private var readUserId = false
-
-    private var readJWT = loginManager.readToken
-    private var readUserID = loginManager.readUserId
-
-    private var token: String = Constants.DEFAULT_JWT
-    private var userId: Long = Constants.DEFAULT_USER_ID.toLong()
-
-    fun syncUserAuthData() {
-        syncToken()
-        syncUserId()
-    }
-
-    private fun syncToken() {
-        CoroutineScope(Dispatchers.IO).launch {
-            readJsonWebToken()
-        }
-    }
-
-    private fun syncUserId() {
-
-        CoroutineScope(Dispatchers.IO).launch {
-            readUserIdToken()
-        }
-    }
-
-    private suspend fun readJsonWebToken() {
-        readJWT.collect { value ->
-            token = "Bearer ${value.token}"
-            readJwt = (value.token != Constants.DEFAULT_JWT)
-            if (readJwt && readUserId) {
-
-            }
-        }
-    }
-
-    private suspend fun readUserIdToken() {
-        readUserID.collect { value ->
-            userId = value
-            readUserId = (value != Constants.DEFAULT_USER_ID.toLong())
-            if (readJwt && readUserId) {
-
-            }
-        }
-    }
 }

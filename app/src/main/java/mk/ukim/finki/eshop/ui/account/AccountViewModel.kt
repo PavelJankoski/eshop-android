@@ -128,31 +128,11 @@ class AccountViewModel @Inject constructor(
         }
     }
 
-    fun syncShoppingCartBasicData() = viewModelScope.launch {
-        if (Utils.hasInternetConnection(getApplication<Application>())){
-            try {
-                readToken()
-                readUserId()
-                handleShoppingCartResponse(
-                    repository.remote.getActiveShoppingCart(userId, jwt)
-                )
-            } catch (e: Exception) {
-                Log.e("Shopping-cart BASIC INFO", "Error loading sopping cart basic info..")
-            }
-        }
-    }
-
-    private fun handleShoppingCartResponse(response: Response<ShoppingCart>) {
-        if (response.isSuccessful) {
-            loginManager.storeShoppingCartId(response.body()!!.id)
-        }
-    }
 
     private fun handleResponse(response: Response<AuthResponse>) {
         val handledResponse = handleAuthResponse(response)
 
         if (handledResponse is NetworkResult.Success) {
-            syncShoppingCartBasicData()
             handledResponse.data?.getToken()?.let { token ->
                 loginManager.saveToken(token)
             }
@@ -201,18 +181,10 @@ class AccountViewModel @Inject constructor(
     }
 
     private fun readUserId() {
-        CoroutineScope(IO).launch {
-            loginManager.readUserId.collect { value ->
-                userId = value
-            }
-        }
+        userId = loginManager.readUserId()
     }
 
     private fun readToken() {
-        CoroutineScope(IO).launch {
-            loginManager.readToken.collect { token ->
-                jwt = "Bearer $token"
-            }
-        }
+        jwt = "Bearer ${loginManager.readToken()}"
     }
 }

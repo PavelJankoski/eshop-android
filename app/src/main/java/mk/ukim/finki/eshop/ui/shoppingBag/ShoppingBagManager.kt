@@ -17,11 +17,11 @@ import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.ui.account.LoginManager
 import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_JWT
 import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_USER_ID
-import mk.ukim.finki.eshop.util.Constants.Companion.NO_INTERNET_CONNECTION_ERROR_MESSAGE
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 import retrofit2.Response
 import javax.inject.Inject
+import kotlin.math.log
 
 @ViewModelScoped
 class ShoppingBagManager @Inject constructor(
@@ -30,18 +30,15 @@ class ShoppingBagManager @Inject constructor(
     application: Application
 ): AndroidViewModel(application) {
 
-    var userId: Long = DEFAULT_USER_ID.toLong()
-    var token: String = DEFAULT_JWT
-
-
     var isProductInShoppingCartResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
     var addOrRemoveProductResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
 
     fun isProductInShoppingCart(productId: Long) = CoroutineScope(IO).launch {
-        updateUserData()
         isProductInShoppingCartResponse.value = NetworkResult.Loading()
         if (Utils.hasInternetConnection(getApplication<Application>())) {
             try {
+                val token = loginManager.readToken()
+                val userId = loginManager.readUserId()
                 isProductInShoppingCartResponse.value = handleIsProductInShoppingCartResponse(
                     repository.remote.isProductInShoppingCart(userId, productId, token)
                 )
@@ -52,10 +49,11 @@ class ShoppingBagManager @Inject constructor(
     }
 
     fun addProductToShoppingCart(productId: Int)  = viewModelScope.launch {
-        updateUserData()
         addOrRemoveProductResponse.value = NetworkResult.Loading()
         if (Utils.hasInternetConnection(getApplication<Application>())) {
             try {
+                val token = loginManager.readToken()
+                val userId = loginManager.readUserId()
                 addOrRemoveProductResponse.value = handleAddProductOrRemoveResponse(
                     repository.remote.addProductToShoppingCart(userId, productId, token)
                 )
@@ -63,15 +61,16 @@ class ShoppingBagManager @Inject constructor(
                 addOrRemoveProductResponse.value = NetworkResult.Error("Error getting info....")
             }
         } else {
-            addOrRemoveProductResponse.value = NetworkResult.Error(NO_INTERNET_CONNECTION_ERROR_MESSAGE)
+            addOrRemoveProductResponse.value = NetworkResult.Error("")
         }
     }
 
-    fun removeProductToShoppingCart(productId: Int)  = viewModelScope.launch {
-        updateUserData()
+    fun removeProductFromShoppingCart(productId: Int)  = viewModelScope.launch {
         addOrRemoveProductResponse.value = NetworkResult.Loading()
         if (Utils.hasInternetConnection(getApplication<Application>())) {
             try {
+                val token = loginManager.readToken()
+                val userId = loginManager.readUserId()
                 addOrRemoveProductResponse.value = handleAddProductOrRemoveResponse(
                     repository.remote.removeProductFromShoppingCart(userId, productId, token)
                 )
@@ -79,7 +78,7 @@ class ShoppingBagManager @Inject constructor(
                 addOrRemoveProductResponse.value = NetworkResult.Error("Error getting info....")
             }
         } else {
-            addOrRemoveProductResponse.value = NetworkResult.Error(NO_INTERNET_CONNECTION_ERROR_MESSAGE)
+            addOrRemoveProductResponse.value = NetworkResult.Error("")
         }
     }
 
@@ -111,24 +110,6 @@ class ShoppingBagManager @Inject constructor(
         }
     }
 
-    fun updateUserData() {
-        readToken()
-        readUserId()
-    }
 
-    private fun readUserId() {
-        CoroutineScope(IO).launch {
-            loginManager.readUserId.collect { value ->
-                userId = value
-            }
-        }
-    }
 
-    private fun readToken() {
-        CoroutineScope(IO).launch {
-            loginManager.readToken.collect { value ->
-                token = "Bearer ${value.token}"
-            }
-        }
-    }
 }

@@ -10,11 +10,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_JWT
-import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_SHOPPING_CART_ID
 import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_USER_ID
 import mk.ukim.finki.eshop.util.Constants.Companion.PREFERENCE_JSON_WEB_TOKEN
 import mk.ukim.finki.eshop.util.Constants.Companion.PREFERENCE_NAME
-import mk.ukim.finki.eshop.util.Constants.Companion.PREFERENCE_SHOPPING_CART_ID
 import mk.ukim.finki.eshop.util.Constants.Companion.PREFERENCE_USER_ID
 import java.io.IOException
 import javax.inject.Inject
@@ -26,18 +24,12 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
     private object PreferenceKeys {
         val jwt = stringPreferencesKey(PREFERENCE_JSON_WEB_TOKEN)
         val userId = longPreferencesKey(PREFERENCE_USER_ID)
-        val shoppingCartId = longPreferencesKey(PREFERENCE_SHOPPING_CART_ID)
     }
 
     val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
         name = PREFERENCE_NAME
     )
 
-    suspend fun saveShoppingCartId(id: Long) {
-        context.dataStore.edit { preferences ->
-            preferences[PreferenceKeys.shoppingCartId] = id
-        }
-    }
 
     suspend fun saveJWT(jwt: String) {
         context.dataStore.edit { preferences ->
@@ -51,11 +43,6 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
         }
     }
 
-    val readShoppingCartId: Flow<Long> = context.dataStore.data
-        .map { preferences ->
-            val shoppingCartId = preferences[PreferenceKeys.shoppingCartId] ?: DEFAULT_SHOPPING_CART_ID.toLong()
-            shoppingCartId
-        }
 
     val readUserId: Flow<Long> = context.dataStore.data
         .map { preferences ->

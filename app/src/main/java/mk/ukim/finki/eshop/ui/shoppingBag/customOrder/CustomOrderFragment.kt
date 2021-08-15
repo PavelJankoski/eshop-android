@@ -26,13 +26,14 @@ class CustomOrderFragment : Fragment() {
     private val shoppingBagViewModel: ShoppingBagViewModel by activityViewModels()
     private val mAdapterList by lazy { OrderProductsAdapter() }
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCustomOrderBinding.inflate(inflater, container, false)
 
-        shoppingBagViewModel.syncUserAuthData()
         setupUserHasActiveCartObserver()
         observeProductsResponse()
         setupRecyclerView()
@@ -49,7 +50,7 @@ class CustomOrderFragment : Fragment() {
                     setupUserHasNoActiveCartUI()
                 }
             } else if (value is NetworkResult.Error) {
-                if (value.message.equals(Constants.NO_INTERNET_CONNECTION_ERROR_MESSAGE)) {
+                if (value.message.equals("")) {
                     setupNoInternetConnectionView()
                 }
             }
@@ -147,7 +148,7 @@ class CustomOrderFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        binding.root.requestLayout()
+        shoppingBagViewModel.checkIfUserHasActiveShoppingCart()
     }
 
     override fun onDestroy() {

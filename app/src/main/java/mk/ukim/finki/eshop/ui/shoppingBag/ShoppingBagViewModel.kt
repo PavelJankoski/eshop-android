@@ -18,12 +18,12 @@ import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.ui.account.LoginManager
 import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_JWT
 import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_USER_ID
-import mk.ukim.finki.eshop.util.Constants.Companion.NO_INTERNET_CONNECTION_ERROR_MESSAGE
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 import retrofit2.Response
 import java.lang.Exception
 import javax.inject.Inject
+import kotlin.math.log
 
 
 @HiltViewModel
@@ -37,58 +37,13 @@ class ShoppingBagViewModel @Inject constructor(
     var shoppingCartResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
     var cartItemsResponse: MutableLiveData<NetworkResult<List<CartItem>>> = MutableLiveData()
 
-    private var readJwt = false
-    private var readUserId = false
 
-    private var readJWT = loginManager.readToken
-    private var readUserID = loginManager.readUserId
-
-    private var token: String = DEFAULT_JWT
-    private var userId: Long = DEFAULT_USER_ID.toLong()
-
-    fun syncUserAuthData() {
-        syncToken()
-        syncUserId()
-    }
-
-    private fun syncToken() {
-
-        CoroutineScope(IO).launch {
-            readJsonWebToken()
-        }
-    }
-
-    private fun syncUserId() {
-
-        CoroutineScope(IO).launch {
-            readUserIdToken()
-        }
-    }
-
-    private suspend fun readJsonWebToken() {
-        readJWT.collect { value ->
-            token = "Bearer ${value.token}"
-            readJwt = (value.token != DEFAULT_JWT)
-            if (readJwt && readUserId) {
-                checkIfUserHasActiveShoppingCart()
-            }
-        }
-    }
-
-    private suspend fun readUserIdToken() {
-        readUserID.collect { value ->
-            userId = value
-            readUserId = (value != DEFAULT_USER_ID.toLong())
-            if (readJwt && readUserId) {
-                checkIfUserHasActiveShoppingCart()
-            }
-        }
-    }
-
-    private fun checkIfUserHasActiveShoppingCart() = viewModelScope.launch {
+    public fun checkIfUserHasActiveShoppingCart() = viewModelScope.launch {
         activeShoppingCartExistsResponse.value = NetworkResult.Loading()
         if (Utils.hasInternetConnection(getApplication<Application>())) {
             try {
+                val token = loginManager.readToken()
+                val userId = loginManager.readUserId()
                 activeShoppingCartExistsResponse.value = handleUserHasActiveShoppingCartResponse(
                     repository.remote.userHasActiveShoppingCart(userId, token)
                 )
@@ -96,13 +51,15 @@ class ShoppingBagViewModel @Inject constructor(
                 activeShoppingCartExistsResponse.value = NetworkResult.Error("Error checking existence...")
             }
         } else {
-            activeShoppingCartExistsResponse.value = NetworkResult.Error(NO_INTERNET_CONNECTION_ERROR_MESSAGE)
+            activeShoppingCartExistsResponse.value = NetworkResult.Error("")
         }
     }
 
      fun getCartItems() = viewModelScope.launch {
         if (Utils.hasInternetConnection(getApplication<Application>())) {
             try {
+                val token = loginManager.readToken()
+                val userId = loginManager.readUserId()
                 cartItemsResponse.value = handleCartItemsResponse(
                     repository.remote.getCartItems(userId, token)
                 )
@@ -116,6 +73,8 @@ class ShoppingBagViewModel @Inject constructor(
         shoppingCartResponse.value = NetworkResult.Loading()
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {
+                val token = loginManager.readToken()
+                val userId = loginManager.readUserId()
                 shoppingCartResponse.value = handleShoppingCartResponse(
                     repository.remote.getActiveShoppingCart(
                         userId, token

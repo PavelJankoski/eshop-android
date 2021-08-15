@@ -43,7 +43,9 @@ class LoginManager @Inject constructor(
     }
 
     fun readToken(): String {
-        return secureStorage.getString(PREFERENCE_JSON_WEB_TOKEN) ?: ""
+        val token = secureStorage.getString(PREFERENCE_JSON_WEB_TOKEN)
+        if(token.isNullOrBlank()) return ""
+        return "Bearer ${token}"
     }
 
     fun saveUserId(userId: Long) {

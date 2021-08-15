@@ -7,7 +7,6 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,7 +19,6 @@ import mk.ukim.finki.eshop.adapters.ProductsGridAdapter
 import mk.ukim.finki.eshop.adapters.ProductsListAdapter
 import mk.ukim.finki.eshop.databinding.FragmentProductsBinding
 import mk.ukim.finki.eshop.ui.search.SearchActivity
-import mk.ukim.finki.eshop.util.Constants
 import mk.ukim.finki.eshop.util.Constants.Companion.SEARCH_HISTORY_EXTRAS
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
@@ -43,7 +41,6 @@ class ProductsFragment : Fragment() {
         super.onResume()
         setupSortingDropdown()
         getProducts()
-        productsViewModel.syncUserAuthData()
     }
 
     override fun onCreateView(
@@ -65,11 +62,11 @@ class ProductsFragment : Fragment() {
     private fun observeAddOrRemoveToShoppingCartResponse() {
         productsViewModel.addOrRemoveProductResponse.observe(viewLifecycleOwner, { response ->
             if (response is NetworkResult.Success) {
-                productsViewModel.addOrProductToShoppingCart(response.data!!)
+                productsViewModel.addOrRemoveProductShoppingCart()
             } else if (response is NetworkResult.Error) {
                 var errorMessage = ""
-                if (response.message.equals(Constants.NO_INTERNET_CONNECTION_ERROR_MESSAGE)) {
-                    errorMessage = Constants.NO_INTERNET_CONNECTION_ERROR_MESSAGE
+                if (response.message.equals("")) {
+                    errorMessage = ""
                 } else errorMessage = "Due to technical problems at the moment we can not execute you're action"
                 Utils.showToast(requireContext(), errorMessage, Toast.LENGTH_SHORT)
             }
