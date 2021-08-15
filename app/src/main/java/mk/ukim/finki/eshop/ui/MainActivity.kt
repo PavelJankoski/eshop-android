@@ -27,17 +27,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
-        loginManager.checkAndUpdateLoginState()
+        loginManager.updateAuthState()
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         setupBottomNavigation()
     }
 
+
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         val loggedIn = savedInstanceState.getBoolean(LOGIN_STATE, false)
         loginManager.loggedIn.value = loggedIn
-        loginManager.checkAndUpdateLoginState()
+        loginManager.updateAuthState()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

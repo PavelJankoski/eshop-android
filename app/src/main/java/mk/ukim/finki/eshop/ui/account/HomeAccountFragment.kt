@@ -37,11 +37,11 @@ class HomeAccountFragment : Fragment() {
     }
 
     private fun setupInterface() {
-        val loggedInUser = loginManager.loggedIn.value
+        val isLoggedIn = loginManager.loggedIn
         lifecycleScope.launchWhenResumed {
             parentFragmentManager.commit {
                 setReorderingAllowed(true)
-                if (loggedInUser)
+                if (isLoggedIn.value)
                     replace<ProfileFragment>(R.id.account_container_view)
                 else
                     replace<AccountFragment>(R.id.account_container_view)

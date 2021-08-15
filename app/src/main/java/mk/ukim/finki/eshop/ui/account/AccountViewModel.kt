@@ -126,10 +126,10 @@ class AccountViewModel @Inject constructor(
 
         if (handledResponse is NetworkResult.Success) {
             handledResponse.data?.getToken()?.let { token ->
-                loginManager.saveJwtToken(token)
+                loginManager.saveToken(token)
             }
             handledResponse.data?.getUserId()?.let { userId->
-                loginManager.storeUserId(userId)
+                loginManager.saveUserId(userId)
             }
         }
 

@@ -12,67 +12,51 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mk.ukim.finki.eshop.data.datastore.DataStoreRepository
+import mk.ukim.finki.eshop.data.sharedpreferences.SecureStorage
 import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_JWT
 import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_USER_ID
 import mk.ukim.finki.eshop.util.Constants.Companion.GOOGLE_TYPE
+import mk.ukim.finki.eshop.util.Constants.Companion.PREFERENCE_JSON_WEB_TOKEN
+import mk.ukim.finki.eshop.util.Constants.Companion.PREFERENCE_USER_ID
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @ActivityRetainedScoped
 class LoginManager @Inject constructor(
-    private val dataStoreRepository: DataStoreRepository
+    private val secureStorage: SecureStorage
 ) {
 
     var loginType = ""
     var googleClient: GoogleSignInClient? = null
     var loggedIn: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    private var token = DEFAULT_JWT
-
-    val readToken = dataStoreRepository.readJWT
-    val readUserId = dataStoreRepository.readUserId
 
     fun logoutUser() {
-        saveJwtToken(DEFAULT_JWT)
-        storeUserId(DEFAULT_USER_ID.toLong())
-        checkAndUpdateLoginState()
+        secureStorage.clearStorage()
         if (loginType.equals(GOOGLE_TYPE, true)) {
             googleClient?.signOut()
         }
+        loggedIn.value = false
+    }
+    fun saveToken(token: String) {
+        secureStorage.putString(PREFERENCE_JSON_WEB_TOKEN, token)
+        loggedIn.value = true
     }
 
-    fun checkAndUpdateLoginState() {
-        CoroutineScope(IO).launch {
-            updateUserState()
-        }
+    fun readToken(): String {
+        return secureStorage.getString(PREFERENCE_JSON_WEB_TOKEN) ?: ""
     }
 
-    fun saveJwtToken(token: String) {
-        CoroutineScope(IO).launch {
-            saveToken(token)
-        }
+    fun saveUserId(userId: Long) {
+        secureStorage.putString(PREFERENCE_USER_ID, userId.toString())
     }
 
-    fun storeUserId(userId: Long) {
-        CoroutineScope(IO).launch {
-            saveUserId(userId)
-        }
+    fun readUserId(): Long {
+        return secureStorage.getString(PREFERENCE_USER_ID)!!.toLong()
     }
 
-    private suspend fun saveToken(token: String) {
-        dataStoreRepository.saveJWT(token)
-        updateUserState()
+    fun updateAuthState() {
+        val token: String = readToken()
+        loggedIn.value = token.isNotBlank()
     }
 
-    private suspend fun saveUserId(userId: Long) {
-        dataStoreRepository.saveUserId(userId)
-    }
-
-    private suspend fun updateUserState() {
-        readToken.collect { value ->
-            token = value.token
-            withContext(Main) {
-               loggedIn.value = (token != DEFAULT_JWT)
-            }
-        }
-    }
 }

@@ -4,7 +4,7 @@ class Constants {
     companion object {
         const val PRODUCT_RESULT_KEY = "productBundle"
 
-        const val BASE_URL = "http://192.168.1.19:8080"
+        const val BASE_URL = "http://192.168.100.130"
 
         // ROOM Database
         const val DATABASE_NAME = "clothing_eshop_db"
@@ -21,6 +21,9 @@ class Constants {
         const val PREFERENCE_NAME = "eshop-preferences"
         const val PREFERENCE_JSON_WEB_TOKEN = "jwt"
         const val PREFERENCE_USER_ID = "userId"
+
+        // ENCRYPTED SHARED PREFERENCES
+        const val ENCRYPTED_SHARED_PREFERENCES_NAME = "secure-storage_eshop"
 
         //DEFAULT VALUES
         const val DEFAULT_JWT = "1111111111111111111111111111111111111"
