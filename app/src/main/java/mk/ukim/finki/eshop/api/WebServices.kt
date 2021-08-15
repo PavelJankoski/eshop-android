@@ -1,13 +1,7 @@
 package mk.ukim.finki.eshop.api
 
-import mk.ukim.finki.eshop.api.dto.LoginDto
-import mk.ukim.finki.eshop.api.dto.PriceRangeDto
-import mk.ukim.finki.eshop.api.dto.RegisterDto
-import mk.ukim.finki.eshop.api.dto.TokenDto
-import mk.ukim.finki.eshop.api.model.AuthResponse
-import mk.ukim.finki.eshop.api.model.Category
-import mk.ukim.finki.eshop.api.model.Product
-import mk.ukim.finki.eshop.api.model.User
+import mk.ukim.finki.eshop.api.dto.*
+import mk.ukim.finki.eshop.api.model.*
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -46,5 +40,52 @@ interface WebServices {
     suspend fun existsUsername(
         @Path("username") username: String
     ): Response<Boolean>
+
+    @GET("/api/shopping-cart/exists-active/{userId}")
+    suspend fun userHaveActiveShoppingCart(
+        @Path("userId") userId: Long,
+        @Header("Authorization") token: String
+    ): Response<Boolean>
+
+    @GET("/api/shopping-cart/get-active/{userId}")
+    suspend fun getActiveShoppingCart(
+        @Path("userId") userId: Long,
+        @Header("Authorization") token: String
+    ): Response<ShoppingCart>
+
+    @GET("/api/shopping-cart/products-fixed-order/{userId}")
+    suspend fun getCartItems(
+        @Path("userId") userId: Long,
+        @Header("Authorization") token: String
+    ): Response<List<CartItem>>
+
+    @PATCH("/api/shopping-cart/add-product/{productId}/{userId}/{copies}")
+    suspend fun addProductToShoppingCart(
+        @Path("productId") productId: Int,
+        @Path("userId") userId: Long,
+        @Path("copies") copies: Int,
+        @Header("Authorization") token: String
+    ): Response<ShoppingCart>
+
+    @GET("/api/shopping-cart/is-in-shopping-cart/{userId}/{productId}")
+    suspend fun isInShoppingCart(
+        @Path("productId") productId: Long,
+        @Path("userId") userId: Long,
+        @Header("Authorization") token: String
+    ): Response<Boolean>
+
+    @PATCH("/api/shopping-cart/remove-product/{productId}/{userId}")
+    suspend fun removeFromShoppingCart(
+        @Path("productId") productId: Int,
+        @Path("userId") userId: Long,
+        @Header("Authorization") token: String
+    ): Response<ShoppingCart>
+
+    @GET("/api/shopping-cart/fav-cart/{productId}/{userId}")
+    suspend fun isFavAndInCart(
+        @Path("productId") productId: Int,
+        @Path("userId") userId: Long,
+        @Header("Authorization") token: String
+    ): Response<FavCartDto>
 
 }

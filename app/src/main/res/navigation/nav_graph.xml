@@ -6,6 +6,15 @@
     app:startDestination="@id/categoriesFragment">
 
     <fragment
+        android:id="@+id/shoppingBagFragment"
+        android:name="mk.ukim.finki.eshop.ui.shoppingBag.ShoppingBagFragment"
+        android:label="Shopping Bag"
+        tools:layout="@layout/fragment_shopping_bag" >
+        <action
+            android:id="@+id/action_shoppingBagFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
+    </fragment>
+    <fragment
         android:id="@+id/homeFragment"
         android:name="mk.ukim.finki.eshop.ui.home.HomeFragment"
         android:label="Home"
@@ -22,6 +31,12 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_categoriesFragment_to_loginPrompt"
+            app:destination="@id/loginPrompt" />
+        <action
+            android:id="@+id/action_categoriesFragment_to_shoppingBagFragment"
+            app:destination="@id/shoppingBagFragment" />
     </fragment>
     <fragment
         android:id="@+id/wishlistFragment"
@@ -102,6 +117,9 @@
         <action
             android:id="@+id/action_loginPrompt_to_homeAccountFragment"
             app:destination="@id/homeAccountFragment" />
+        <action
+            android:id="@+id/action_loginPrompt_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
     </dialog>
     <fragment
         android:id="@+id/homeAccountFragment"

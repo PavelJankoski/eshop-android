@@ -5,18 +5,24 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.PagerAdapter
 import mk.ukim.finki.eshop.databinding.FragmentCategoriesBinding
+import mk.ukim.finki.eshop.ui.account.LoginManager
 import mk.ukim.finki.eshop.ui.categories.man.CategoriesManFragment
 import mk.ukim.finki.eshop.ui.categories.woman.CategoriesWomanFragment
 import mk.ukim.finki.eshop.util.Utils
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class CategoriesFragment : Fragment() {
+
+    @Inject lateinit var loginManager: LoginManager
+
     private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
     private val categoriesViewModel: CategoriesViewModel by activityViewModels()
@@ -62,11 +68,23 @@ class CategoriesFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.shoppingCart_menuItem -> {
-                Utils.showToast(requireContext(), "Bag clicked!", Toast.LENGTH_SHORT)
+                if (!loginManager.loggedIn.value) {
+                    showLoginPrompt()
+                } else {
+                    navigateToShoppingBag()
+                }
                 true
             }
             else -> return super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun navigateToShoppingBag() {
+        findNavController().navigate(R.id.action_categoriesFragment_to_shoppingBagFragment)
+    }
+
+    private fun showLoginPrompt() {
+        findNavController().navigate(R.id.action_categoriesFragment_to_loginPrompt)
     }
 
     override fun onDestroyView() {

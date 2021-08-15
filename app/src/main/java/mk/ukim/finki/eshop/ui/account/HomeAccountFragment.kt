@@ -25,6 +25,7 @@ import javax.inject.Inject
 class HomeAccountFragment : Fragment() {
 
     @Inject lateinit var loginManager: LoginManager
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

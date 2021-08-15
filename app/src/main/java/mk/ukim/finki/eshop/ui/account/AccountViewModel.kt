@@ -10,16 +10,20 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import dagger.hilt.android.scopes.ViewModelScoped
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import mk.ukim.finki.eshop.api.dto.LoginDto
 import mk.ukim.finki.eshop.api.dto.RegisterDto
 import mk.ukim.finki.eshop.api.dto.TokenDto
 import mk.ukim.finki.eshop.api.model.AuthResponse
+import mk.ukim.finki.eshop.api.model.ShoppingCart
 import mk.ukim.finki.eshop.data.datastore.DataStoreRepository
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_JWT
+import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_USER_ID
 import mk.ukim.finki.eshop.util.Constants.Companion.GOOGLE_TYPE
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
@@ -38,6 +42,9 @@ class AccountViewModel @Inject constructor(
     var userExistsResponseLogin: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
     var userExistsResponseRegister: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
     var registerResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
+
+    var userId: Long = DEFAULT_USER_ID.toLong()
+    var jwt: String = DEFAULT_JWT
 
     fun checkIfUsernameAlreadyExists(username: String, who: String) {
         if (who.equals("login", true))
@@ -121,10 +128,31 @@ class AccountViewModel @Inject constructor(
         }
     }
 
+    fun syncShoppingCartBasicData() = viewModelScope.launch {
+        if (Utils.hasInternetConnection(getApplication<Application>())){
+            try {
+                readToken()
+                readUserId()
+                handleShoppingCartResponse(
+                    repository.remote.getActiveShoppingCart(userId, jwt)
+                )
+            } catch (e: Exception) {
+                Log.e("Shopping-cart BASIC INFO", "Error loading sopping cart basic info..")
+            }
+        }
+    }
+
+    private fun handleShoppingCartResponse(response: Response<ShoppingCart>) {
+        if (response.isSuccessful) {
+            loginManager.storeShoppingCartId(response.body()!!.id)
+        }
+    }
+
     private fun handleResponse(response: Response<AuthResponse>) {
         val handledResponse = handleAuthResponse(response)
 
         if (handledResponse is NetworkResult.Success) {
+            syncShoppingCartBasicData()
             handledResponse.data?.getToken()?.let { token ->
                 loginManager.saveJwtToken(token)
             }
@@ -170,5 +198,21 @@ class AccountViewModel @Inject constructor(
     fun setGoogleClient(googleApiClient: GoogleSignInClient) {
         loginManager.loginType = GOOGLE_TYPE
         loginManager.googleClient = googleApiClient
+    }
+
+    private fun readUserId() {
+        CoroutineScope(IO).launch {
+            loginManager.readUserId.collect { value ->
+                userId = value
+            }
+        }
+    }
+
+    private fun readToken() {
+        CoroutineScope(IO).launch {
+            loginManager.readToken.collect { token ->
+                jwt = "Bearer $token"
+            }
+        }
     }
 }

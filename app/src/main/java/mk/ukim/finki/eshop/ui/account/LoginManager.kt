@@ -30,6 +30,7 @@ class LoginManager @Inject constructor(
 
     val readToken = dataStoreRepository.readJWT
     val readUserId = dataStoreRepository.readUserId
+    val userShoppingCartId = dataStoreRepository.readShoppingCartId
 
     fun logoutUser() {
         saveJwtToken(DEFAULT_JWT)
@@ -56,6 +57,16 @@ class LoginManager @Inject constructor(
         CoroutineScope(IO).launch {
             saveUserId(userId)
         }
+    }
+
+    fun storeShoppingCartId(id: Long) {
+        CoroutineScope(IO).launch {
+            saveShoppingCartId(id)
+        }
+    }
+
+    private suspend fun saveShoppingCartId(id: Long) {
+        dataStoreRepository.saveShoppingCartId(id)
     }
 
     private suspend fun saveToken(token: String) {

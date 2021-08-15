@@ -46,6 +46,13 @@
         647139029513-qf8epdfrqckkrrhprvh8ni95m9mh7ka3.apps.googleusercontent.com
     </string>
     <string name="it_seems_that_you_are_not_logged_in">It seems that you are not logged in.</string>
+    <string name="price_default_string">123.999 $</string>
+    <string name="total_cost_label">Total cost:</string>
+    <string name="checkout">Checkout</string>
+    <string name="wifi_off_message">You\'re wifi connection is off</string>
+    <string name="you_don_t_have_any_products_in_the_sopping_cart_currently">You don\'t have any products in the sopping cart currently</string>
+    <string name="you_don_t_have_active_shopping_cart">You don\'t have active shopping bag.</string>
+    <string name="create_shopping_bag">Create shopping bag</string>
 
 
     <string-array name="sorting_products">

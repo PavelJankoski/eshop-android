@@ -10,7 +10,7 @@ class SharedBinding {
     companion object {
         @BindingAdapter("loadImageFromUrl")
         @JvmStatic
-        fun loadImageFromUrl(imageView: ImageView, imageUrl: String) {
+        fun loadImageFromUrl(imageView: ImageView, imageUrl: String?) {
             imageView.load(imageUrl) {
                 crossfade(600)
                 error(R.drawable.ic_placeholder_image)
