@@ -30,23 +30,8 @@ class ShoppingBagManager @Inject constructor(
     application: Application
 ): AndroidViewModel(application) {
 
-    var isProductInShoppingCartResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
     var addOrRemoveProductResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
 
-    fun isProductInShoppingCart(productId: Long) = CoroutineScope(IO).launch {
-        isProductInShoppingCartResponse.value = NetworkResult.Loading()
-        if (Utils.hasInternetConnection(getApplication<Application>())) {
-            try {
-                val token = loginManager.readToken()
-                val userId = loginManager.readUserId()
-                isProductInShoppingCartResponse.value = handleIsProductInShoppingCartResponse(
-                    repository.remote.isProductInShoppingCart(userId, productId, token)
-                )
-            } catch (e: Exception) {
-                isProductInShoppingCartResponse.value = NetworkResult.Error("Error getting info....")
-            }
-        }
-    }
 
     fun addProductToShoppingCart(productId: Int)  = viewModelScope.launch {
         addOrRemoveProductResponse.value = NetworkResult.Loading()

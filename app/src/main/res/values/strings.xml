@@ -13,6 +13,7 @@
     <string name="recommended">Recommended</string>
     <string name="filter">Filter</string>
     <string name="add_to_bag">Add to bag</string>
+    <string name="remove_from_bag">Remove from bag</string>
     <string name="product_code">Product code</string>
     <string name="brand">Brand</string>
     <string name="description">Description</string>

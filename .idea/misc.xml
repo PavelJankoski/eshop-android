@@ -3,13 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_add_to_bag.xml" value="0.21822916666666667" />
+        <entry key="app/src/main/res/drawable/ic_remove_from_bag.xml" value="0.21822916666666667" />
+        <entry key="app/src/main/res/layout/activity_details.xml" value="0.13854166666666667" />
         <entry key="app/src/main/res/layout/products_item_layout.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/layout/products_row_layout.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/layout/search_row_layout.xml" value="0.25052083333333336" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -40,6 +40,7 @@ class DetailsActivity : AppCompatActivity() {
             )
         }
         setupAddToWishlistBtn()
+        setupAddToBagBtn()
         setupViewPager()
     }
 
@@ -63,6 +64,27 @@ class DetailsActivity : AppCompatActivity() {
                 args.product.isFavourite = true
                 detailsViewModel.insertProductInWishlist(args.product)
                 Utils.showSnackbar(binding.addToWishlistFab, "Added product to wishlist!", Snackbar.LENGTH_SHORT)
+            }
+        }
+    }
+
+    private fun setupAddToBagBtn() {
+        if(args.product.isInShoppingCart) {
+            binding.addToBagBtn.text = getString(R.string.remove_from_bag)
+        }
+        else {
+            binding.addToBagBtn.text = getString(R.string.add_to_bag)
+        }
+        binding.addToBagBtn.setOnClickListener {
+            if(args.product.isInShoppingCart) {
+                binding.addToBagBtn.text = getString(R.string.add_to_bag)
+                detailsViewModel.removeProductFromShoppingCart(args.product.id)
+                Utils.showSnackbar(binding.addToBagBtn, "Removed product from shopping bag!", Snackbar.LENGTH_SHORT)
+            }
+            else {
+                binding.addToBagBtn.text = getString(R.string.remove_from_bag)
+                detailsViewModel.addProductToShoppingCart(args.product.id)
+                Utils.showSnackbar(binding.addToBagBtn, "Added product to shopping bag!", Snackbar.LENGTH_SHORT)
             }
         }
     }

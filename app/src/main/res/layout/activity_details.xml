@@ -323,7 +323,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/addToBag_btn"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginStart="16dp"

@@ -86,9 +86,11 @@ class ProductsBinding {
             iv.setOnClickListener {
                 if(product.isInShoppingCart) {
                     vm.removeProductFromShoppingCart(product.id)
+                    showSnackbar(iv, "Removed product from shopping bag!", Snackbar.LENGTH_SHORT)
                 }
                 else {
                     vm.addProductToShoppingCart(product.id)
+                    showSnackbar(iv, "Added product to shopping bag!", Snackbar.LENGTH_SHORT)
                 }
             }
         }
