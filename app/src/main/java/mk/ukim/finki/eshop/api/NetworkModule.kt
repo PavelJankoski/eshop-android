@@ -1,12 +1,16 @@
 package mk.ukim.finki.eshop.api
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import mk.ukim.finki.eshop.api.interceptor.RequestInterceptor
 import mk.ukim.finki.eshop.util.Constants.Companion.BASE_URL
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -19,11 +23,13 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideHttpClient(): OkHttpClient {
+    fun provideHttpClient(@ApplicationContext context: Context): OkHttpClient {
+        val tokenInterceptor = TokenInterceptor(context)
         return OkHttpClient.Builder()
-                .readTimeout(15, TimeUnit.SECONDS)
-                .connectTimeout(15, TimeUnit.SECONDS)
-                .build()
+            .addInterceptor(tokenInterceptor)
+            .readTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .build()
     }
 
     @Singleton

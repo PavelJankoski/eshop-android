@@ -32,8 +32,7 @@ interface WebServices {
 
     @GET("/api/users/{userId}")
     suspend fun getUserInfo(
-        @Path("userId") userId: Long,
-        @Header("Authorization") token: String
+        @Path("userId") userId: Long
     ): Response<User>
 
     @GET("/api/users/exists/{username}")
@@ -43,49 +42,42 @@ interface WebServices {
 
     @GET("/api/shopping-cart/exists-active/{userId}")
     suspend fun userHaveActiveShoppingCart(
-        @Path("userId") userId: Long,
-        @Header("Authorization") token: String
+        @Path("userId") userId: Long
     ): Response<Boolean>
 
     @GET("/api/shopping-cart/get-active/{userId}")
     suspend fun getActiveShoppingCart(
-        @Path("userId") userId: Long,
-        @Header("Authorization") token: String
+        @Path("userId") userId: Long
     ): Response<ShoppingCart>
 
     @GET("/api/shopping-cart/products-fixed-order/{userId}")
     suspend fun getCartItems(
-        @Path("userId") userId: Long,
-        @Header("Authorization") token: String
+        @Path("userId") userId: Long
     ): Response<List<CartItem>>
 
     @PATCH("/api/shopping-cart/add-product/{productId}/{userId}/{copies}")
     suspend fun addProductToShoppingCart(
         @Path("productId") productId: Int,
         @Path("userId") userId: Long,
-        @Path("copies") copies: Int,
-        @Header("Authorization") token: String
+        @Path("copies") copies: Int
     ): Response<ShoppingCart>
 
     @GET("/api/shopping-cart/is-in-shopping-cart/{userId}/{productId}")
     suspend fun isInShoppingCart(
         @Path("productId") productId: Long,
-        @Path("userId") userId: Long,
-        @Header("Authorization") token: String
+        @Path("userId") userId: Long
     ): Response<Boolean>
 
     @PATCH("/api/shopping-cart/remove-product/{productId}/{userId}")
     suspend fun removeFromShoppingCart(
         @Path("productId") productId: Int,
-        @Path("userId") userId: Long,
-        @Header("Authorization") token: String
+        @Path("userId") userId: Long
     ): Response<ShoppingCart>
 
     @GET("/api/shopping-cart/fav-cart/{productId}/{userId}")
     suspend fun isFavAndInCart(
         @Path("productId") productId: Int,
-        @Path("userId") userId: Long,
-        @Header("Authorization") token: String
+        @Path("userId") userId: Long
     ): Response<FavCartDto>
 
 }

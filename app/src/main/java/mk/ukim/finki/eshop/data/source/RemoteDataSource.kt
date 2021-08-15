@@ -45,32 +45,32 @@ class RemoteDataSource @Inject constructor(
                 return webServices.existsUsername(username)
         }
 
-        suspend fun userHasActiveShoppingCart(userId: Long, token: String): Response<Boolean> {
-                return webServices.userHaveActiveShoppingCart(userId, token)
+        suspend fun userHasActiveShoppingCart(userId: Long): Response<Boolean> {
+                return webServices.userHaveActiveShoppingCart(userId)
         }
 
-        suspend fun getActiveShoppingCart(userId: Long, token: String): Response<ShoppingCart> {
-                return  webServices.getActiveShoppingCart(userId, token)
+        suspend fun getActiveShoppingCart(userId: Long): Response<ShoppingCart> {
+                return  webServices.getActiveShoppingCart(userId)
         }
 
-        suspend fun getCartItems(userId: Long, token: String): Response<List<CartItem>> {
-                return webServices.getCartItems(userId, token)
+        suspend fun getCartItems(userId: Long): Response<List<CartItem>> {
+                return webServices.getCartItems(userId)
         }
 
-        suspend fun addProductToShoppingCart(userId: Long, productId: Int, token: String): Response<ShoppingCart> {
-                return webServices.addProductToShoppingCart(productId, userId, 1, token)
+        suspend fun addProductToShoppingCart(userId: Long, productId: Int): Response<ShoppingCart> {
+                return webServices.addProductToShoppingCart(productId, userId, 1)
         }
 
-        suspend fun isProductInShoppingCart(userId: Long, productId: Long, token: String): Response<Boolean> {
-                return webServices.isInShoppingCart(productId, userId, token)
+        suspend fun isProductInShoppingCart(userId: Long, productId: Long): Response<Boolean> {
+                return webServices.isInShoppingCart(productId, userId)
         }
 
-        suspend fun removeProductFromShoppingCart(userId: Long, productId: Int, token: String): Response<ShoppingCart> {
-                return webServices.removeFromShoppingCart(productId, userId, token)
+        suspend fun removeProductFromShoppingCart(userId: Long, productId: Int): Response<ShoppingCart> {
+                return webServices.removeFromShoppingCart(productId, userId)
         }
 
-        suspend fun isInCartAndFave(userId: Long, productId: Int, token: String): Response<FavCartDto> {
-                return webServices.isFavAndInCart(productId, userId, token)
+        suspend fun isInCartAndFave(userId: Long, productId: Int): Response<FavCartDto> {
+                return webServices.isFavAndInCart(productId, userId)
         }
 
 }

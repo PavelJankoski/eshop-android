@@ -93,9 +93,8 @@ class ProductsViewModel @Inject constructor(
     private suspend fun isInShoppingCartAndFaSafeCall(productId: Int): FavCartDto? {
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {
-                val token = loginManager.readToken()
                 val userId = loginManager.readUserId()
-                val response = repository.remote.isInCartAndFave(userId, productId, token)
+                val response = repository.remote.isInCartAndFave(userId, productId)
                 if (response.isSuccessful)
                     return response.body()!!
 

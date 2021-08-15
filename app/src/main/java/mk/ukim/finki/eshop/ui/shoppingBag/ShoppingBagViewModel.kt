@@ -42,10 +42,9 @@ class ShoppingBagViewModel @Inject constructor(
         activeShoppingCartExistsResponse.value = NetworkResult.Loading()
         if (Utils.hasInternetConnection(getApplication<Application>())) {
             try {
-                val token = loginManager.readToken()
                 val userId = loginManager.readUserId()
                 activeShoppingCartExistsResponse.value = handleUserHasActiveShoppingCartResponse(
-                    repository.remote.userHasActiveShoppingCart(userId, token)
+                    repository.remote.userHasActiveShoppingCart(userId)
                 )
             } catch(e: Exception) {
                 activeShoppingCartExistsResponse.value = NetworkResult.Error("Error checking existence...")
@@ -58,10 +57,9 @@ class ShoppingBagViewModel @Inject constructor(
      fun getCartItems() = viewModelScope.launch {
         if (Utils.hasInternetConnection(getApplication<Application>())) {
             try {
-                val token = loginManager.readToken()
                 val userId = loginManager.readUserId()
                 cartItemsResponse.value = handleCartItemsResponse(
-                    repository.remote.getCartItems(userId, token)
+                    repository.remote.getCartItems(userId)
                 )
             } catch (e: Exception) {
                 cartItemsResponse.value = NetworkResult.Error("Error loading cart items...")
@@ -73,11 +71,10 @@ class ShoppingBagViewModel @Inject constructor(
         shoppingCartResponse.value = NetworkResult.Loading()
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {
-                val token = loginManager.readToken()
                 val userId = loginManager.readUserId()
                 shoppingCartResponse.value = handleShoppingCartResponse(
                     repository.remote.getActiveShoppingCart(
-                        userId, token
+                        userId
                     )
                 )
             } catch (e: Exception) {

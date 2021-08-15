@@ -37,10 +37,9 @@ class ShoppingBagManager @Inject constructor(
         addOrRemoveProductResponse.value = NetworkResult.Loading()
         if (Utils.hasInternetConnection(getApplication<Application>())) {
             try {
-                val token = loginManager.readToken()
                 val userId = loginManager.readUserId()
                 addOrRemoveProductResponse.value = handleAddProductOrRemoveResponse(
-                    repository.remote.addProductToShoppingCart(userId, productId, token)
+                    repository.remote.addProductToShoppingCart(userId, productId)
                 )
             } catch (e: Exception) {
                 addOrRemoveProductResponse.value = NetworkResult.Error("Error getting info....")
@@ -54,10 +53,9 @@ class ShoppingBagManager @Inject constructor(
         addOrRemoveProductResponse.value = NetworkResult.Loading()
         if (Utils.hasInternetConnection(getApplication<Application>())) {
             try {
-                val token = loginManager.readToken()
                 val userId = loginManager.readUserId()
                 addOrRemoveProductResponse.value = handleAddProductOrRemoveResponse(
-                    repository.remote.removeProductFromShoppingCart(userId, productId, token)
+                    repository.remote.removeProductFromShoppingCart(userId, productId)
                 )
             } catch (e: Exception) {
                 addOrRemoveProductResponse.value = NetworkResult.Error("Error getting info....")
