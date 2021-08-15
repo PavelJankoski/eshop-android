@@ -53,6 +53,18 @@ class ProductsBinding {
             }
         }
 
+        @BindingAdapter("isProductInShoppingCart")
+        @JvmStatic
+        fun isProductInShoppingCart(iv: ImageView, isInShoppingCart: Boolean) {
+            iv.setColorFilter(ContextCompat.getColor(iv.context, R.color.black))
+            if(isInShoppingCart) {
+                iv.setImageResource(R.drawable.ic_remove_from_bag)
+            }
+            else {
+                iv.setImageResource(R.drawable.ic_add_to_bag)
+            }
+        }
+
         @BindingAdapter("onFavouriteClickListener", "setViewModel", requireAll = true)
         @JvmStatic
         fun onFavouriteClickListener(iv: ImageView, product: Product, vm: ProductsViewModel) {
@@ -64,6 +76,19 @@ class ProductsBinding {
                 else {
                     vm.insertProductInWishlist(product)
                     showSnackbar(iv, "Added product to wishlist!", Snackbar.LENGTH_SHORT)
+                }
+            }
+        }
+
+        @BindingAdapter("onAddOrRemoveClickListener", "setViewModel", requireAll = true)
+        @JvmStatic
+        fun onAddOrRemoveClickListener(iv: ImageView, product: Product, vm: ProductsViewModel) {
+            iv.setOnClickListener {
+                if(product.isInShoppingCart) {
+                    vm.removeProductFromShoppingCart(product.id)
+                }
+                else {
+                    vm.addProductToShoppingCart(product.id)
                 }
             }
         }

@@ -20,6 +20,7 @@ import mk.ukim.finki.eshop.adapters.ProductsGridAdapter
 import mk.ukim.finki.eshop.adapters.ProductsListAdapter
 import mk.ukim.finki.eshop.databinding.FragmentProductsBinding
 import mk.ukim.finki.eshop.ui.search.SearchActivity
+import mk.ukim.finki.eshop.util.Constants
 import mk.ukim.finki.eshop.util.Constants.Companion.SEARCH_HISTORY_EXTRAS
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
@@ -42,6 +43,7 @@ class ProductsFragment : Fragment() {
         super.onResume()
         setupSortingDropdown()
         getProducts()
+        productsViewModel.syncUserAuthData()
     }
 
     override fun onCreateView(
@@ -56,9 +58,23 @@ class ProductsFragment : Fragment() {
             findNavController().navigate(R.id.action_productsFragment_to_filterBottomSheetFragment)
         }
         observeProductsResponse()
+        observeAddOrRemoveToShoppingCartResponse()
         return binding.root
     }
 
+    private fun observeAddOrRemoveToShoppingCartResponse() {
+        productsViewModel.addOrRemoveProductResponse.observe(viewLifecycleOwner, { response ->
+            if (response is NetworkResult.Success) {
+                productsViewModel.addOrProductToShoppingCart(response.data!!)
+            } else if (response is NetworkResult.Error) {
+                var errorMessage = ""
+                if (response.message.equals(Constants.NO_INTERNET_CONNECTION_ERROR_MESSAGE)) {
+                    errorMessage = Constants.NO_INTERNET_CONNECTION_ERROR_MESSAGE
+                } else errorMessage = "Due to technical problems at the moment we can not execute you're action"
+                Utils.showToast(requireContext(), errorMessage, Toast.LENGTH_SHORT)
+            }
+        })
+    }
 
 
     private fun setupSortingDropdown() {
@@ -117,8 +133,6 @@ class ProductsFragment : Fragment() {
         })
 
     }
-
-
 
     private fun observeTypeMenuItemValue() {
         productsViewModel.listingType.observe(viewLifecycleOwner, { type ->

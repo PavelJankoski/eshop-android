@@ -1,13 +1,8 @@
 package mk.ukim.finki.eshop.data.source
 
 import mk.ukim.finki.eshop.api.WebServices
-import mk.ukim.finki.eshop.api.dto.LoginDto
-import mk.ukim.finki.eshop.api.dto.PriceRangeDto
-import mk.ukim.finki.eshop.api.dto.RegisterDto
-import mk.ukim.finki.eshop.api.dto.TokenDto
-import mk.ukim.finki.eshop.api.model.AuthResponse
-import mk.ukim.finki.eshop.api.model.Category
-import mk.ukim.finki.eshop.api.model.Product
+import mk.ukim.finki.eshop.api.dto.*
+import mk.ukim.finki.eshop.api.model.*
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -48,6 +43,34 @@ class RemoteDataSource @Inject constructor(
 
         suspend fun userWithUsernameExist(username: String): Response<Boolean> {
                 return webServices.existsUsername(username)
+        }
+
+        suspend fun userHasActiveShoppingCart(userId: Long, token: String): Response<Boolean> {
+                return webServices.userHaveActiveShoppingCart(userId, token)
+        }
+
+        suspend fun getActiveShoppingCart(userId: Long, token: String): Response<ShoppingCart> {
+                return  webServices.getActiveShoppingCart(userId, token)
+        }
+
+        suspend fun getCartItems(userId: Long, token: String): Response<List<CartItem>> {
+                return webServices.getCartItems(userId, token)
+        }
+
+        suspend fun addProductToShoppingCart(userId: Long, productId: Int, token: String): Response<ShoppingCart> {
+                return webServices.addProductToShoppingCart(productId, userId, 1, token)
+        }
+
+        suspend fun isProductInShoppingCart(userId: Long, productId: Long, token: String): Response<Boolean> {
+                return webServices.isInShoppingCart(productId, userId, token)
+        }
+
+        suspend fun removeProductFromShoppingCart(userId: Long, productId: Int, token: String): Response<ShoppingCart> {
+                return webServices.removeFromShoppingCart(productId, userId, token)
+        }
+
+        suspend fun isInCartAndFave(userId: Long, productId: Int, token: String): Response<FavCartDto> {
+                return webServices.isFavAndInCart(productId, userId, token)
         }
 
 }
