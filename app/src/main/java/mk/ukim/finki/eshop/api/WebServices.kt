@@ -98,4 +98,9 @@ interface WebServices {
         @Path("userId") userId: Long
     ): Response<List<Product>>
 
+    @GET("/api/products/productCode/{code}")
+    suspend fun getProductByProductCode(
+        @Path("code") productCode: String
+    ): Response<Product>
+
 }

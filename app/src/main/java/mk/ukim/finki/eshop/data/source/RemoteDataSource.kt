@@ -85,4 +85,8 @@ class RemoteDataSource @Inject constructor(
                 return webServices.getAllProductsInWishlist(userId)
         }
 
+        suspend fun getProductByProductCode(productCode: String): Response<Product> {
+                return webServices.getProductByProductCode(productCode)
+        }
+
 }
