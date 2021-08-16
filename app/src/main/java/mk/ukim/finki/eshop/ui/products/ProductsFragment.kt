@@ -18,6 +18,7 @@ import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.ProductsGridAdapter
 import mk.ukim.finki.eshop.adapters.ProductsListAdapter
 import mk.ukim.finki.eshop.databinding.FragmentProductsBinding
+import mk.ukim.finki.eshop.ui.products.filter.FilterBottomSheetFragmentDirections
 import mk.ukim.finki.eshop.ui.search.SearchActivity
 import mk.ukim.finki.eshop.util.Constants.Companion.SEARCH_HISTORY_EXTRAS
 import mk.ukim.finki.eshop.util.NetworkResult
@@ -52,7 +53,8 @@ class ProductsFragment : Fragment() {
         setHasOptionsMenu(true)
         observeTypeMenuItemValue()
         binding.filterButton.setOnClickListener {
-            findNavController().navigate(R.id.action_productsFragment_to_filterBottomSheetFragment)
+            val action = ProductsFragmentDirections.actionProductsFragmentToFilterBottomSheetFragment(args.categoryId)
+            findNavController().navigate(action)
         }
         observeProductsResponse()
         observeAddOrRemoveToShoppingCartResponse()

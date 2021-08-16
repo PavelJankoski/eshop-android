@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class PriceRangeDto(
+    private val categoryId: Long,
     private val min: Float,
     private val max: Float
 ) : Parcelable

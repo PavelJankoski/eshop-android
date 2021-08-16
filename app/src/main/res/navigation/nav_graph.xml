@@ -105,6 +105,9 @@
             app:destination="@id/productsFragment"
             app:popUpTo="@id/productsFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="categoryId"
+            app:argType="long" />
     </dialog>
     <dialog
         android:id="@+id/loginPrompt"
