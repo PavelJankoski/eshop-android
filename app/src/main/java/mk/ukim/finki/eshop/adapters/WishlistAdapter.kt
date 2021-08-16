@@ -3,18 +3,19 @@ package mk.ukim.finki.eshop.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import mk.ukim.finki.eshop.api.model.Product
 import mk.ukim.finki.eshop.data.model.WishlistEntity
 import mk.ukim.finki.eshop.databinding.WishlistRowLayoutBinding
 import mk.ukim.finki.eshop.ui.wishlist.WishlistViewModel
 import mk.ukim.finki.eshop.util.DiffUtil
 
 class WishlistAdapter(private val vm: WishlistViewModel): RecyclerView.Adapter<WishlistAdapter.MyViewHolder>() {
-    private var products = emptyList<WishlistEntity>()
+    private var products = emptyList<Product>()
 
     class MyViewHolder(
         private val binding: WishlistRowLayoutBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(product: WishlistEntity, vm: WishlistViewModel) {
+        fun bind(product: Product, vm: WishlistViewModel) {
             binding.product = product
             binding.vm = vm
             binding.executePendingBindings()
@@ -42,10 +43,8 @@ class WishlistAdapter(private val vm: WishlistViewModel): RecyclerView.Adapter<W
         return products.size
     }
 
-    fun setData(newData: List<WishlistEntity>) {
-        val diffUtil = DiffUtil(products, newData)
-        val diffUtilResult = androidx.recyclerview.widget.DiffUtil.calculateDiff(diffUtil)
+    fun setData(newData: List<Product>) {
         products = newData
-        diffUtilResult.dispatchUpdatesTo(this)
+        notifyDataSetChanged()
     }
 }

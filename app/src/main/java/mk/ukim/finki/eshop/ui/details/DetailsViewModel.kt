@@ -9,6 +9,7 @@ import mk.ukim.finki.eshop.api.model.Product
 import mk.ukim.finki.eshop.data.model.WishlistEntity
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.ui.shoppingBag.ShoppingBagManager
+import mk.ukim.finki.eshop.ui.wishlist.WishlistManager
 import mk.ukim.finki.eshop.util.NetworkResult
 import java.time.LocalDateTime
 import javax.inject.Inject
@@ -17,20 +18,16 @@ import javax.inject.Inject
 class DetailsViewModel @Inject constructor(
     private val repository: Repository,
     private val shoppingBagManager: ShoppingBagManager,
+    private val wishlistManager: WishlistManager,
     application: Application
 ): AndroidViewModel(application) {
 
     fun deleteProductFromWishlist(id: Int) {
-        viewModelScope.launch {
-            repository.local.deleteProductFromWishlist(id)
-        }
+        wishlistManager.removeProductFromWishlist(id)
     }
 
     fun insertProductInWishlist(product: Product) {
-        viewModelScope.launch {
-            val imagesJoined = product.images?.map{it.imageUrl}?.joinToString(";")
-            repository.local.insertProductInWishlist(WishlistEntity(product.id, LocalDateTime.now(), product.brand, product.condition, product.description, product.rating, product.price, product.productCode, product.name, imagesJoined))
-        }
+        wishlistManager.addProductToWishlist(product.id)
     }
 
     fun addProductToShoppingCart(id: Int) {

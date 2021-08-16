@@ -73,4 +73,16 @@ class RemoteDataSource @Inject constructor(
                 return webServices.isFavAndInCart(productId, userId)
         }
 
+        suspend fun addProductToWishlist(userId: Long, productId: Int): Response<Void> {
+                return webServices.addProductToWishlist(userId, productId)
+        }
+
+        suspend fun removeProductFromWishlist(userId: Long, productId: Int): Response<Void> {
+                return webServices.removeProductFromWishlist(userId, productId)
+        }
+
+        suspend fun getAllProductsInWishlist(userId: Long): Response<List<Product>> {
+                return webServices.getAllProductsInWishlist(userId)
+        }
+
 }

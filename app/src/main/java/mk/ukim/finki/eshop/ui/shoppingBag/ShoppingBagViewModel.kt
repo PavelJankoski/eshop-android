@@ -50,7 +50,7 @@ class ShoppingBagViewModel @Inject constructor(
                 activeShoppingCartExistsResponse.value = NetworkResult.Error("Error checking existence...")
             }
         } else {
-            activeShoppingCartExistsResponse.value = NetworkResult.Error("")
+            activeShoppingCartExistsResponse.value = NetworkResult.Error("Not connected to the internet. Please check your connection")
         }
     }
 

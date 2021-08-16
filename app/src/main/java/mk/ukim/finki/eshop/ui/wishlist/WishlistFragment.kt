@@ -20,6 +20,7 @@ import mk.ukim.finki.eshop.adapters.WishlistAdapter
 import mk.ukim.finki.eshop.databinding.FragmentWishlistBinding
 import mk.ukim.finki.eshop.ui.account.LoginManager
 import mk.ukim.finki.eshop.util.Constants
+import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 import mk.ukim.finki.eshop.util.Utils.Companion.hideShimmerEffect
 import javax.inject.Inject
@@ -75,17 +76,26 @@ class WishlistFragment : Fragment() {
     }
 
     private fun observeWishlistProducts()  {
-        lifecycleScope.launch {
-            wishlistViewModel.readWishlistProducts.observe(viewLifecycleOwner, {table ->
-                if(table.isNullOrEmpty()) {
-                    setupWishlistEmpty()
+        wishlistViewModel.getCartItems()
+        wishlistViewModel.wishlistProductsResponse.observe(viewLifecycleOwner, { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    hideShimmerEffect(binding.wishlistShimmerFrameLayout, binding.wishlistRecyclerView)
+                    if (!response.data.isNullOrEmpty()) {
+                        setupWishlistNotEmpty()
+                        mAdapter.setData(response.data)
+                    } else {
+                        setupWishlistEmpty()
+                    }
                 }
-                else {
-                    setupWishlistNotEmpty()
+                is NetworkResult.Error -> {
+                    hideShimmerEffect(binding.wishlistShimmerFrameLayout, binding.wishlistRecyclerView)
                 }
-                mAdapter.setData(table.sortedByDescending { it.addedOn })
-            })
-        }
+                is NetworkResult.Loading -> {
+                    Utils.showShimmerEffect(binding.wishlistShimmerFrameLayout, binding.wishlistRecyclerView)
+                }
+            }
+        })
     }
 
     private fun setupWishlistEmpty() {

@@ -80,4 +80,22 @@ interface WebServices {
         @Path("userId") userId: Long
     ): Response<FavCartDto>
 
+
+    @GET("/api/users/add-fave/{userId}/{productId}")
+    suspend fun addProductToWishlist(
+        @Path("userId") userId: Long,
+        @Path("productId") productId: Int
+    ): Response<Void>
+
+    @GET("/api/users/remove-fave/{userId}/{productId}")
+    suspend fun removeProductFromWishlist(
+        @Path("userId") userId: Long,
+        @Path("productId") productId: Int
+    ): Response<Void>
+
+    @GET("/api/users/all-fave/{userId}")
+    suspend fun getAllProductsInWishlist(
+        @Path("userId") userId: Long
+    ): Response<List<Product>>
+
 }

@@ -12,15 +12,14 @@ import kotlinx.coroutines.withContext
 import mk.ukim.finki.eshop.api.dto.FavCartDto
 import mk.ukim.finki.eshop.api.dto.PriceRangeDto
 import mk.ukim.finki.eshop.api.model.Product
-import mk.ukim.finki.eshop.data.model.WishlistEntity
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.ui.account.LoginManager
 import mk.ukim.finki.eshop.ui.shoppingBag.ShoppingBagManager
+import mk.ukim.finki.eshop.ui.wishlist.WishlistManager
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 import retrofit2.Response
 import java.lang.Exception
-import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,6 +27,7 @@ class ProductsViewModel @Inject constructor(
     private val repository: Repository,
     private val loginManager: LoginManager,
     private val shoppingBagManager: ShoppingBagManager,
+    private val wishlistManager: WishlistManager,
     application: Application
 ): AndroidViewModel(application) {
 
@@ -90,20 +90,6 @@ class ProductsViewModel @Inject constructor(
         shoppingBagManager.removeProductFromShoppingCart(id)
     }
 
-    private suspend fun isInShoppingCartAndFaSafeCall(productId: Int): FavCartDto? {
-        if(Utils.hasInternetConnection(getApplication<Application>())) {
-            try {
-                val userId = loginManager.readUserId()
-                val response = repository.remote.isInCartAndFave(userId, productId)
-                if (response.isSuccessful)
-                    return response.body()!!
-
-            } catch (e: Exception) {
-                Log.e("productViewModel", "is fav and shopping cart failed...")
-            }
-        }
-        return null
-    }
 
     private suspend fun getProductsSafeCall(categoryId: Long) {
         productsResponse.value = NetworkResult.Loading()
@@ -161,7 +147,7 @@ class ProductsViewModel @Inject constructor(
                 viewModelScope.launch(Dispatchers.IO) {
                     products.forEach { p ->
 
-                        val dto = isInShoppingCartAndFaSafeCall(p.id)
+                        val dto = shoppingBagManager.isInShoppingCartAndFaveSafeCall(p.id)
                         if (dto != null) {
                             p.isFavourite = dto.isFavorite.toBoolean()
                             p.isInShoppingCart = dto.isInShoppingCart.toBoolean()
@@ -187,20 +173,15 @@ class ProductsViewModel @Inject constructor(
     }
 
     fun deleteProductFromWishlist(id: Int) {
-        viewModelScope.launch {
-            productsResponse.value?.data!!.find { it.id == id }?.isFavourite = false
-            productsResponse.value = NetworkResult.Success(productsResponse.value?.data!!)
-            repository.local.deleteProductFromWishlist(id)
-        }
+        productsResponse.value?.data!!.find { it.id == id }?.isFavourite = false
+        productsResponse.value = NetworkResult.Success(productsResponse.value?.data!!)
+        wishlistManager.removeProductFromWishlist(id)
     }
 
     fun insertProductInWishlist(product: Product) {
-        viewModelScope.launch {
-            productsResponse.value?.data!!.find { it.id == product.id }?.isFavourite = true
-            productsResponse.value = NetworkResult.Success(productsResponse.value?.data!!)
-            val imagesJoined = product.images?.map{it.imageUrl}?.joinToString(";")
-            repository.local.insertProductInWishlist(WishlistEntity(product.id, LocalDateTime.now(), product.brand, product.condition, product.description, product.rating, product.price, product.productCode, product.name, imagesJoined))
-        }
+        productsResponse.value?.data!!.find { it.id == product.id }?.isFavourite = true
+        productsResponse.value = NetworkResult.Success(productsResponse.value?.data!!)
+        wishlistManager.addProductToWishlist(product.id)
     }
 
 }

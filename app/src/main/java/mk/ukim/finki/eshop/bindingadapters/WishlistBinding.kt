@@ -12,7 +12,6 @@ import com.google.android.material.snackbar.Snackbar
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.api.model.Image
 import mk.ukim.finki.eshop.api.model.Product
-import mk.ukim.finki.eshop.data.model.WishlistEntity
 import mk.ukim.finki.eshop.ui.products.ProductsFragmentDirections
 import mk.ukim.finki.eshop.ui.products.ProductsViewModel
 import mk.ukim.finki.eshop.ui.wishlist.WishlistFragmentDirections
@@ -22,13 +21,11 @@ import mk.ukim.finki.eshop.util.Utils
 class WishlistBinding {
     companion object {
 
-        @BindingAdapter("onWishlistEntityClickListener")
+        @BindingAdapter("onWishlistProductClickListener")
         @JvmStatic
-        fun onWishlistEntityClickListener(productLayout: ConstraintLayout, wishlistEntity: WishlistEntity) {
+        fun onWishlistProductClickListener(productLayout: ConstraintLayout, product: Product) {
             productLayout.setOnClickListener {
                 try {
-                    val imagesSplitted : List<Image> = wishlistEntity.images?.split(";")!!.map { Image(0, it) }
-                    val product = Product(wishlistEntity.brand, wishlistEntity.condition, wishlistEntity.description, wishlistEntity.id, wishlistEntity.rating, imagesSplitted, wishlistEntity.price, wishlistEntity.productCode, wishlistEntity.name, true)
                     val action = WishlistFragmentDirections.actionWishlistFragmentToDetailsActivity(product)
                     productLayout.findNavController().navigate(action)
                 }catch (e: Exception) {
@@ -37,23 +34,38 @@ class WishlistBinding {
             }
         }
 
-        @BindingAdapter("loadWishlistImageFromUrl")
-        @JvmStatic
-        fun loadWishlistImageFromUrl(imageView: ImageView, imageUrlsJoined: String) {
-            imageView.load(imageUrlsJoined.split(";")[0]) {
-                crossfade(600)
-                error(R.drawable.ic_placeholder_image)
-            }
-        }
-
         @BindingAdapter("onTrashClickListener", "setViewModel", requireAll = true)
         @JvmStatic
-        fun onTrashClickListener(btn: MaterialButton, product: WishlistEntity, vm: WishlistViewModel) {
+        fun onTrashClickListener(btn: MaterialButton, product: Product, vm: WishlistViewModel) {
             btn.setOnClickListener {
-                    vm.deleteProductFromWishlist(product.id)
+                    vm.removeProductFromWishlist(product.id)
                     Utils.showSnackbar(btn, "Removed product from wishlist!", Snackbar.LENGTH_SHORT)
 
             }
         }
+
+        @BindingAdapter("onMoveToBagBtnListener", "setViewModel", requireAll = true)
+        @JvmStatic
+        fun onMoveToBagBtnListener(btn: MaterialButton, product: Product, vm: WishlistViewModel) {
+            if(!product.isInShoppingCart) {
+                btn.text = "Move to bag"
+            } else {
+                btn.text = "Remove"
+            }
+            btn.setOnClickListener {
+                if(!product.isInShoppingCart) {
+                    vm.moveToBag(product.id)
+                    btn.text = "Remove"
+                    Utils.showSnackbar(btn, "Moved product to shopping bag!", Snackbar.LENGTH_SHORT)
+                }
+                else {
+                    vm.removeFromBag(product.id)
+                    btn.text = "Move to bag"
+                    Utils.showSnackbar(btn, "Removed product from shopping bag!", Snackbar.LENGTH_SHORT)
+                }
+                product.isInShoppingCart = !product.isInShoppingCart
+            }
+        }
+
     }
 }
