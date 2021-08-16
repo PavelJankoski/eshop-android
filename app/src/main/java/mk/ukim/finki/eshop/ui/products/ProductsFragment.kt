@@ -158,7 +158,7 @@ class ProductsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.shoppingCart_menuItem -> {
-                Utils.showToast(requireContext(), "Bag clicked!", Toast.LENGTH_SHORT)
+                findNavController().navigate(R.id.action_productsFragment_to_shoppingBagFragment)
                 true
             }
             R.id.search_menuItem -> {

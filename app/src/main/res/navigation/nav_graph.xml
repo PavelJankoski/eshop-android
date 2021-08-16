@@ -53,6 +53,9 @@
         <action
             android:id="@+id/action_wishlistFragment_to_loginPrompt"
             app:destination="@id/loginPrompt" />
+        <action
+            android:id="@+id/action_wishlistFragment_to_shoppingBagFragment"
+            app:destination="@id/shoppingBagFragment" />
     </fragment>
     <fragment
         android:id="@+id/accountFragment"
@@ -85,6 +88,9 @@
             android:name="priceRangeDto"
             app:argType="mk.ukim.finki.eshop.api.dto.PriceRangeDto"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_productsFragment_to_shoppingBagFragment"
+            app:destination="@id/shoppingBagFragment" />
     </fragment>
     <activity
         android:id="@+id/detailsActivity"

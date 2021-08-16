@@ -128,7 +128,7 @@ class WishlistFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.shoppingCart_menuItem -> {
-                Utils.showToast(requireContext(), "Bag clicked!", Toast.LENGTH_SHORT)
+                findNavController().navigate(R.id.action_wishlistFragment_to_shoppingBagFragment)
                 true
             }
             else -> return super.onOptionsItemSelected(item)
