@@ -15,110 +15,151 @@
         android:padding="16dp"
         tools:context=".ui.account.register.RegisterFragment">
 
-        <EditText
-            android:id="@+id/name_editText"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:ems="10"
-            android:inputType="textPersonName"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/name_inputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/black"
+            app:hintTextColor="@color/black"
+            android:layout_marginTop="16dp"
             android:hint="@string/name"
-            android:textCursorDrawable="@null"
-            android:background="@drawable/custom_input"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:errorIconDrawable="@null"
+            errorMessage="@{validator.nameValidator.error}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:importantForAutofill="no"
-            app:errorEnabled="true"
-            errorMessage="@{validator.nameValidator.error}"
-            android:text="@{validator.nameLiveData}"/>
+            >
 
-        <EditText
-            android:id="@+id/surname_editText"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:ems="10"
-            android:textCursorDrawable="@null"
-            android:inputType="textPersonName"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences"
+                android:textCursorDrawable="@null"
+                android:text="@{validator.nameLiveData}"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/surname_inputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/black"
+            app:hintTextColor="@color/black"
+            android:layout_marginTop="8dp"
             android:hint="@string/surname"
-            android:background="@drawable/custom_input"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/name_editText"
-            android:importantForAutofill="no"
+            app:endIconMode="clear_text"
             app:errorEnabled="true"
+            app:errorIconDrawable="@null"
             errorMessage="@{validator.surnameValidator.error}"
-            android:text="@{validator.surnameLiveData}"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name_inputLayout"
+            >
 
-        <EditText
-            android:id="@+id/username_editText"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:ems="10"
-            android:inputType="text"
-            android:textCursorDrawable="@null"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/surname_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences"
+                android:textCursorDrawable="@null"
+                app:errorEnabled="true"
+                android:text="@{validator.surnameLiveData}"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/username_inputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/black"
+            app:hintTextColor="@color/black"
+            android:layout_marginTop="8dp"
             android:hint="@string/username"
-            android:drawableStart="@drawable/custom_user_icon"
-            android:drawablePadding="12dp"
-            android:background="@drawable/custom_input"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/surname_editText"
-            android:importantForAutofill="no"
+            app:endIconMode="clear_text"
             app:errorEnabled="true"
+            app:errorIconDrawable="@null"
             errorMessage="@{validator.usernameValidator.error}"
-            android:text="@{validator.usernameLiveData}"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/surname_inputLayout"
+            >
 
-        <EditText
-            android:id="@+id/email_editText"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:ems="10"
-            android:textCursorDrawable="@null"
-            android:inputType="textEmailAddress"
-            android:drawableStart="@drawable/custom_email_icon"
-            android:drawablePadding="12dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/username_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textCursorDrawable="@null"
+                android:drawableStart="@drawable/custom_user_icon"
+                android:drawablePadding="12dp"
+                android:text="@{validator.usernameLiveData}"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email_inputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/black"
+            app:hintTextColor="@color/black"
+            android:layout_marginTop="8dp"
             android:hint="@string/email_address"
-            android:background="@drawable/custom_input"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/username_editText"
-            android:autofillHints="emailAddress"
+            app:endIconMode="clear_text"
             app:errorEnabled="true"
+            app:errorIconDrawable="@null"
             errorMessage="@{validator.emailValidator.error}"
-            android:text="@{validator.emailLiveData}"/>
-
-        <EditText
-            android:id="@+id/password_editText"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:ems="10"
-            android:textCursorDrawable="@null"
-            android:inputType="textPassword"
-            android:layout_marginTop="16dp"
-            android:drawableStart="@drawable/custom_password_icon"
-            android:drawablePadding="12dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:hint="@string/password"
-            android:background="@drawable/custom_input"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/email_editText"
-            android:autofillHints="emailAddress"
+            app:layout_constraintTop_toBottomOf="@id/username_inputLayout"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:textCursorDrawable="@null"
+                android:drawableStart="@drawable/custom_email_icon"
+                android:drawablePadding="12dp"
+                android:text="@{validator.emailLiveData}"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_inputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/black"
+            app:hintTextColor="@color/black"
+            android:layout_marginTop="8dp"
+            android:hint="@string/password"
+            app:endIconMode="password_toggle"
             app:errorEnabled="true"
+            app:errorIconDrawable="@null"
             errorMessage="@{validator.passwordValidator.error}"
-            android:text="@{validator.passwordLiveData}"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/email_inputLayout"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textCursorDrawable="@null"
+                android:drawableStart="@drawable/custom_password_icon"
+                android:drawablePadding="12dp"
+                android:text="@{validator.passwordLiveData}"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/register_btn"
@@ -129,6 +170,6 @@
             app:backgroundTint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password_editText" />
+            app:layout_constraintTop_toBottomOf="@+id/password_inputLayout" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

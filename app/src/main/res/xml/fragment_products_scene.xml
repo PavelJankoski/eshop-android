@@ -9,7 +9,7 @@
        <KeyFrameSet>
        </KeyFrameSet>
         <OnSwipe
-            motion:touchAnchorId="@+id/productsRecyclerView"
+            motion:touchAnchorId="@+id/products_swipeRefresh"
             motion:touchAnchorSide="top" />
     </Transition>
 

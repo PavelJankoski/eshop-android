@@ -58,11 +58,11 @@ class WishlistFragment : Fragment() {
     private fun setupUserNotAuthenticatedInterface() {
         hideShimmerEffect(binding.wishlistShimmerFrameLayout, binding.wishlistRecyclerView)
         binding.wishlistRecyclerView.visibility = View.GONE
-        binding.wishlistIv.visibility = View.GONE
+        binding.wishlistIv.setImageResource(R.drawable.ic_forbidden)
+        binding.wishlistIv.visibility = View.VISIBLE
         binding.startShoppingBtn.visibility = View.GONE
-        binding.wishlistEmptyTextView.visibility = View.GONE
-        binding.notAuthenticatedImg.visibility = View.VISIBLE
-        binding.notAuthenticatedMsg.visibility = View.VISIBLE
+        binding.wishlistEmptyTextView.text = "Please login to access wishlist"
+        binding.wishlistEmptyTextView.visibility = View.VISIBLE
     }
 
     private fun showLoginPrompt() {
@@ -99,17 +99,15 @@ class WishlistFragment : Fragment() {
     }
 
     private fun setupWishlistEmpty() {
-        binding.notAuthenticatedImg.visibility = View.GONE
-        binding.notAuthenticatedMsg.visibility = View.GONE
+        binding.wishlistIv.setImageResource(R.drawable.ic_wishlist_empty)
         binding.wishlistRecyclerView.visibility = View.GONE
         binding.wishlistIv.visibility = View.VISIBLE
         binding.startShoppingBtn.visibility = View.VISIBLE
+        binding.wishlistEmptyTextView.text = "Your wishlist is empty"
         binding.wishlistEmptyTextView.visibility = View.VISIBLE
     }
 
     private fun setupWishlistNotEmpty() {
-        binding.notAuthenticatedImg.visibility = View.GONE
-        binding.notAuthenticatedMsg.visibility = View.GONE
         binding.wishlistIv.visibility = View.GONE
         binding.startShoppingBtn.visibility = View.GONE
         binding.wishlistEmptyTextView.visibility = View.GONE

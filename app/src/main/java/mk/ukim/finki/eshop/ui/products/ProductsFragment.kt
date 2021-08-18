@@ -58,7 +58,14 @@ class ProductsFragment : Fragment() {
         }
         observeProductsResponse()
         observeAddOrRemoveToShoppingCartResponse()
+        setupSwipeToRefresh()
         return binding.root
+    }
+
+    private fun setupSwipeToRefresh () {
+        binding.productsSwipeRefresh.setOnRefreshListener {
+            getProducts()
+        }
     }
 
     private fun observeAddOrRemoveToShoppingCartResponse() {
@@ -121,9 +128,11 @@ class ProductsFragment : Fragment() {
                         mAdapterList.setData(response.data)
                         mAdapterGrid.setData(response.data)
                     }
+                    binding.productsSwipeRefresh.isRefreshing = false
                 }
                 is NetworkResult.Error -> {
                     hideShimmerEffect(binding.productsShimmerFrameLayout, binding.productsRecyclerView)
+                    binding.productsSwipeRefresh.isRefreshing = false
                 }
                 is NetworkResult.Loading -> {
                     showShimmerEffect(binding.productsShimmerFrameLayout, binding.productsRecyclerView)

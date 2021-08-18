@@ -4,6 +4,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import coil.load
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import mk.ukim.finki.eshop.R
 
 class SharedBinding {
@@ -25,7 +27,7 @@ class SharedBinding {
 
         @BindingAdapter("errorMessage")
         @JvmStatic
-        fun setErrorMessage(textView: TextView, message: String?) {
+        fun setErrorMessage(textView: TextInputLayout, message: String?) {
             textView.error = message
         }
     }

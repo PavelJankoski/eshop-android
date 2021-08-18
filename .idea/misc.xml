@@ -4,8 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/ic_add_to_bag.xml" value="0.21822916666666667" />
+        <entry key="app/src/main/res/drawable/ic_forbidden.xml" value="0.12447916666666667" />
         <entry key="app/src/main/res/drawable/ic_remove_from_bag.xml" value="0.21822916666666667" />
+        <entry key="app/src/main/res/drawable/ic_wishlist_empty.xml" value="0.12447916666666667" />
         <entry key="app/src/main/res/layout/activity_details.xml" value="0.13854166666666667" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/fragment_products.xml" value="0.13703703703703704" />
+        <entry key="app/src/main/res/layout/fragment_register.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_wishlist.xml" value="0.14479166666666668" />
         <entry key="app/src/main/res/layout/products_item_layout.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/layout/products_row_layout.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/layout/search_row_layout.xml" value="0.25052083333333336" />
