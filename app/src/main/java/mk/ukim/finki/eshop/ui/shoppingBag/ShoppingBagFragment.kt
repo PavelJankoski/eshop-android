@@ -5,13 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
-import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.PagerAdapter
 import mk.ukim.finki.eshop.databinding.FragmentShoppingBagBinding
-import mk.ukim.finki.eshop.ui.account.login.LoginFragment
-import mk.ukim.finki.eshop.ui.account.register.RegisterFragment
 import mk.ukim.finki.eshop.ui.shoppingBag.customOrder.CustomOrderFragment
 import mk.ukim.finki.eshop.ui.shoppingBag.history.HistoryFragment
 

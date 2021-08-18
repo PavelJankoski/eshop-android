@@ -11,7 +11,7 @@ import mk.ukim.finki.eshop.ui.products.ProductsViewModel
 
 class OrderProductsAdapter: RecyclerView.Adapter<OrderProductsAdapter.MyViewHolder>() {
 
-    private var cartItems = emptyList<CartItem>()
+    private var cartItems = mutableListOf<CartItem>()
 
     class MyViewHolder(
         private val binding: CustomOrderProductRowBinding
@@ -47,8 +47,23 @@ class OrderProductsAdapter: RecyclerView.Adapter<OrderProductsAdapter.MyViewHold
         return cartItems[position].products.id
     }
 
+    fun getCartItem(position: Int): CartItem {
+        return cartItems[position]
+    }
+
     fun setData(newData: List<CartItem>) {
-        cartItems = newData
+        cartItems = newData as MutableList<CartItem>
         notifyDataSetChanged()
     }
+
+    fun removeProduct(position: Int) {
+        cartItems.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    fun insertProduct(position: Int, cartItem: CartItem) {
+        cartItems.add(position, cartItem)
+        notifyItemInserted(position)
+    }
+
 }

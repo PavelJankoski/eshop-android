@@ -33,6 +33,8 @@ class ShoppingBagManager @Inject constructor(
 ): AndroidViewModel(application) {
 
     var addOrRemoveProductResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
+    var addProductResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
+    var removeProductResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
 
 
     fun addProductToShoppingCart(productId: Int)  = viewModelScope.launch {
@@ -40,9 +42,10 @@ class ShoppingBagManager @Inject constructor(
         if (Utils.hasInternetConnection(getApplication<Application>())) {
             try {
                 val userId = loginManager.readUserId()
-                addOrRemoveProductResponse.value = handleAddProductOrRemoveResponse(
+                addOrRemoveProductResponse.value = handleAddProductResponse(
                     repository.remote.addProductToShoppingCart(userId, productId)
                 )
+                addProductResponse.value = addOrRemoveProductResponse.value
             } catch (e: Exception) {
                 addOrRemoveProductResponse.value = NetworkResult.Error("Error getting info....")
             }
@@ -56,9 +59,10 @@ class ShoppingBagManager @Inject constructor(
         if (Utils.hasInternetConnection(getApplication<Application>())) {
             try {
                 val userId = loginManager.readUserId()
-                addOrRemoveProductResponse.value = handleAddProductOrRemoveResponse(
+                addOrRemoveProductResponse.value = handleRemoveResponse(
                     repository.remote.removeProductFromShoppingCart(userId, productId)
                 )
+                removeProductResponse.value = addOrRemoveProductResponse.value
             } catch (e: Exception) {
                 addOrRemoveProductResponse.value = NetworkResult.Error("Error getting info....")
             }
@@ -81,7 +85,21 @@ class ShoppingBagManager @Inject constructor(
         }
     }
 
-    private fun handleAddProductOrRemoveResponse(response: Response<ShoppingCart>): NetworkResult<Boolean> {
+    private fun handleAddProductResponse(response: Response<ShoppingCart>): NetworkResult<Boolean> {
+        return when {
+            response.message().toString().contains("timeout") -> {
+                NetworkResult.Error("Timeout")
+            }
+            response.isSuccessful -> {
+                NetworkResult.Success(true)
+            }
+            else -> {
+                NetworkResult.Error(response.message())
+            }
+        }
+    }
+
+    private fun handleRemoveResponse(response: Response<ShoppingCart>): NetworkResult<Boolean> {
         return when {
             response.message().toString().contains("timeout") -> {
                 NetworkResult.Error("Timeout")

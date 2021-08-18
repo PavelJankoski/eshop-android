@@ -30,12 +30,21 @@ import kotlin.math.log
 class ShoppingBagViewModel @Inject constructor(
     private val repository: Repository,
     private val loginManager: LoginManager,
+    val shoppingBagManager: ShoppingBagManager,
     application: Application
 ) : AndroidViewModel(application) {
 
     var activeShoppingCartExistsResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
     var shoppingCartResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
     var cartItemsResponse: MutableLiveData<NetworkResult<List<CartItem>>> = MutableLiveData()
+
+    fun addProductToShoppingCart(id: Int) {
+        shoppingBagManager.addProductToShoppingCart(id)
+    }
+
+    fun removeProductFromShoppingCart(id: Int) {
+        shoppingBagManager.removeProductFromShoppingCart(id)
+    }
 
 
     public fun checkIfUserHasActiveShoppingCart() = viewModelScope.launch {
