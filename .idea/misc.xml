@@ -9,6 +9,7 @@
         <entry key="app/src/main/res/drawable/ic_wishlist_empty.xml" value="0.12447916666666667" />
         <entry key="app/src/main/res/layout/activity_details.xml" value="0.13854166666666667" />
         <entry key="app/src/main/res/layout/custom_action_bag_item_layout.xml" value="0.21302083333333333" />
+        <entry key="app/src/main/res/layout/custom_order_product_row.xml" value="0.21302083333333333" />
         <entry key="app/src/main/res/layout/fragment_categories.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/fragment_categories_man.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/fragment_categories_woman.xml" value="0.37604166666666666" />

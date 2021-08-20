@@ -4,10 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import mk.ukim.finki.eshop.api.model.CartItem
-import mk.ukim.finki.eshop.api.model.Product
 import mk.ukim.finki.eshop.databinding.CustomOrderProductRowBinding
-import mk.ukim.finki.eshop.databinding.ProductsRowLayoutBinding
-import mk.ukim.finki.eshop.ui.products.ProductsViewModel
 
 class OrderProductsAdapter: RecyclerView.Adapter<OrderProductsAdapter.MyViewHolder>() {
 
@@ -44,7 +41,7 @@ class OrderProductsAdapter: RecyclerView.Adapter<OrderProductsAdapter.MyViewHold
     }
 
     fun getProduct(position: Int): Int {
-        return cartItems[position].products.id
+        return cartItems[position].product.id
     }
 
     fun getCartItem(position: Int): CartItem {

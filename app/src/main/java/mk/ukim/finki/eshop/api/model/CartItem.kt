@@ -1,7 +1,10 @@
 package mk.ukim.finki.eshop.api.model
 
+import com.google.gson.annotations.SerializedName
+
 data class CartItem(
     val id: Int,
-    val products: Product,
+    @SerializedName("products")
+    val product: Product,
     val quantity: Int
 )

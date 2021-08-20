@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mk.ukim.finki.eshop.MyApplication
 import mk.ukim.finki.eshop.api.model.CartItem
+import mk.ukim.finki.eshop.api.model.Product
 import mk.ukim.finki.eshop.api.model.ShoppingCart
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.ui.account.LoginManager
@@ -40,12 +41,12 @@ class ShoppingBagViewModel @Inject constructor(
     var shoppingCartResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
     var cartItemsResponse: MutableLiveData<NetworkResult<List<CartItem>>> = MutableLiveData()
 
-    fun addProductToShoppingCart(id: Int) {
-        shoppingBagManager.addProductToShoppingCart(id)
+    fun addProductToShoppingCart(id: Int, price: Int) {
+        shoppingBagManager.addProductToShoppingCart(id, price)
     }
 
-    fun removeProductFromShoppingCart(id: Int) {
-        shoppingBagManager.removeProductFromShoppingCart(id)
+    fun removeProductFromShoppingCart(id: Int, price: Int) {
+        shoppingBagManager.removeProductFromShoppingCart(id, price)
     }
 
 
@@ -114,6 +115,7 @@ class ShoppingBagViewModel @Inject constructor(
                 NetworkResult.Error("Timeout")
             }
             response.isSuccessful -> {
+                shoppingBagManager.totalPrice.value = response.body()!!.map { it.product.price * it.quantity }.reduce { total, next -> total + next }.toInt()
                 productsInBagNumber.value = response.body()!!.size
                 NetworkResult.Success(response.body()!!)
             }

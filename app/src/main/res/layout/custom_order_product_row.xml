@@ -39,7 +39,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars"
-                loadImageFromUrl="@{item.products.images[0].imageUrl}"/>
+                loadImageFromUrl="@{item.product.images[0].imageUrl}"/>
 
             <TextView
                 android:id="@+id/textView2"
@@ -49,7 +49,7 @@
                 android:layout_marginEnd="8dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="@{item.products.name}"
+                android:text="@{item.product.name}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -62,7 +62,7 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                priceToString="@{item.products.price}"
+                priceToString="@{item.product.price}"
                 app:layout_constraintStart_toStartOf="@+id/textView2"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
 

@@ -38,6 +38,7 @@ class CustomOrderFragment : Fragment() {
         setupUserHasActiveCartObserver()
         observeProductsResponse()
         observeSwipeRemoveProduct()
+        observeTotalPrice()
         setupRecyclerView()
 
         return binding.root
@@ -65,7 +66,7 @@ class CustomOrderFragment : Fragment() {
         binding.wifiOffSb.visibility = View.GONE
         binding.textViewWifiOffMessage.visibility = View.GONE
         binding.shoppingBagShimmerRecyclerView.visibility = View.GONE
-        binding.textViewTotalCost.visibility = View.GONE
+        binding.totalCostTextView.visibility = View.GONE
         binding.textViewTotalCostLabel.visibility = View.GONE
         binding.checkoutBtn.visibility = View.GONE
 
@@ -79,7 +80,7 @@ class CustomOrderFragment : Fragment() {
         binding.wifiOffSb.visibility = View.GONE
         binding.textViewWifiOffMessage.visibility = View.GONE
         binding.shoppingBagShimmerRecyclerView.visibility = View.GONE
-        binding.textViewTotalCost.visibility = View.GONE
+        binding.totalCostTextView.visibility = View.GONE
         binding.textViewTotalCostLabel.visibility = View.GONE
         binding.createShoppingCartBtn.visibility = View.GONE
         binding.imageViewNoActiveShoppingBag.visibility = View.GONE
@@ -92,12 +93,10 @@ class CustomOrderFragment : Fragment() {
 
     private fun setupNoInternetConnectionView() {
         binding.shoppingBagShimmerRecyclerView.visibility = View.GONE
-        binding.textViewTotalCost.visibility = View.GONE
-        binding.textViewTotalCostLabel.visibility = View.GONE
+        binding.checkoutConstraintLayout.visibility = View.GONE
         binding.createShoppingCartBtn.visibility = View.GONE
         binding.imageViewNoActiveShoppingBag.visibility = View.GONE
         binding.textViewNoActiveShoppingBag.visibility = View.GONE
-        binding.checkoutBtn.visibility = View.GONE
         binding.imageViewEmptyBag.visibility = View.GONE
         binding.textViewEmptyBag.visibility = View.GONE
 
@@ -115,9 +114,7 @@ class CustomOrderFragment : Fragment() {
         binding.createShoppingCartBtn.visibility = View.GONE
 
         binding.shoppingBagShimmerRecyclerView.visibility = View.VISIBLE
-        binding.textViewTotalCost.visibility = View.VISIBLE
-        binding.textViewTotalCostLabel.visibility = View.VISIBLE
-        binding.checkoutBtn.visibility = View.VISIBLE
+        binding.checkoutConstraintLayout.visibility = View.VISIBLE
     }
 
     private fun setupRecyclerView() {
@@ -129,14 +126,15 @@ class CustomOrderFragment : Fragment() {
                 val adapter = binding.shoppingBagShimmerRecyclerView.adapter as OrderProductsAdapter
                 val position = viewHolder.absoluteAdapterPosition
                 val cartItem = adapter.getCartItem(position)
+                val price = cartItem.product.price * cartItem.quantity
 
-                shoppingBagViewModel.removeProductFromShoppingCart(adapter.getProduct(position))
+                shoppingBagViewModel.removeProductFromShoppingCart(adapter.getProduct(position), price.toInt())
                 adapter.removeProduct(position)
 
                 Snackbar.make(binding.shoppingBagShimmerRecyclerView, "Undo remove of products", Snackbar.LENGTH_LONG)
                     .setAction("Undo") {
                         adapter.insertProduct(position, cartItem)
-                        shoppingBagViewModel.addProductToShoppingCart(adapter.getProduct(position))
+                        shoppingBagViewModel.addProductToShoppingCart(adapter.getProduct(position), price.toInt())
                     }.setActionTextColor(ContextCompat.getColor(requireContext(), R.color.white)).show()
             }
         }
@@ -144,6 +142,18 @@ class CustomOrderFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(binding.shoppingBagShimmerRecyclerView)
 
         Utils.showShimmerEffect(binding.customOrderShimmerFrameLayout, binding.shoppingBagShimmerRecyclerView)
+    }
+
+    private fun observeTotalPrice() {
+        shoppingBagViewModel.shoppingBagManager.totalPrice.observe(viewLifecycleOwner, {
+            if(it == 0) {
+                binding.checkoutConstraintLayout.visibility = View.GONE
+            }
+            else {
+                binding.checkoutConstraintLayout.visibility = View.VISIBLE
+                binding.totalCostTextView.text = it.toString().plus(" MKD")
+            }
+        })
     }
 
     private fun observeSwipeRemoveProduct() {

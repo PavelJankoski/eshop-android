@@ -31,9 +31,10 @@ class ShoppingBagManager @Inject constructor(
     var addOrRemoveProductResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
     var addProductToBagResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData(NetworkResult.Error("", false))
     var removeProductFromBagResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData(NetworkResult.Error("", false))
+    var totalPrice: MutableLiveData<Int> = MutableLiveData(0)
 
 
-    fun addProductToShoppingCart(productId: Int)  = viewModelScope.launch {
+    fun addProductToShoppingCart(productId: Int, price: Int = 0)  = viewModelScope.launch {
         addOrRemoveProductResponse.value = NetworkResult.Loading()
         if (Utils.hasInternetConnection(getApplication<Application>())) {
             try {
@@ -42,6 +43,9 @@ class ShoppingBagManager @Inject constructor(
                     repository.remote.addProductToShoppingCart(userId, productId)
                 )
                 addProductToBagResponse.value = addOrRemoveProductResponse.value
+                if(addOrRemoveProductResponse.value!!.data!! && price != 0) {
+                    totalPrice.value = totalPrice.value!! + price
+                }
             } catch (e: Exception) {
                 addOrRemoveProductResponse.value = NetworkResult.Error("Error getting info....")
             }
@@ -50,7 +54,7 @@ class ShoppingBagManager @Inject constructor(
         }
     }
 
-    fun removeProductFromShoppingCart(productId: Int)  = viewModelScope.launch {
+    fun removeProductFromShoppingCart(productId: Int, price: Int = 0)  = viewModelScope.launch {
         addOrRemoveProductResponse.value = NetworkResult.Loading()
         if (Utils.hasInternetConnection(getApplication<Application>())) {
             try {
@@ -59,6 +63,9 @@ class ShoppingBagManager @Inject constructor(
                     repository.remote.removeProductFromShoppingCart(userId, productId)
                 )
                 removeProductFromBagResponse.value = addOrRemoveProductResponse.value
+                if(addOrRemoveProductResponse.value!!.data!! && price != 0) {
+                    totalPrice.value = totalPrice.value!! - price
+                }
             } catch (e: Exception) {
                 addOrRemoveProductResponse.value = NetworkResult.Error("Error getting info....")
             }
