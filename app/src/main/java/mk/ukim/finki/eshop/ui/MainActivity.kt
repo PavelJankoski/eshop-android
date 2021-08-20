@@ -2,6 +2,7 @@ package mk.ukim.finki.eshop.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -56,6 +57,14 @@ class MainActivity : AppCompatActivity() {
         ))
         binding.bottomNavigationView.setupWithNavController(navController)
         setupActionBarWithNavController(navController, appBarConfig)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if(destination.id == R.id.shoppingBagFragment) {
+                binding.bottomNavigationView.visibility = View.GONE
+            } else {
+
+                binding.bottomNavigationView.visibility = View.VISIBLE
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

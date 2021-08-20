@@ -37,7 +37,7 @@
                 android:id="@+id/name_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapSentences"
+                android:inputType="textPersonName"
                 android:textCursorDrawable="@null"
                 android:text="@{validator.nameLiveData}"/>
         </com.google.android.material.textfield.TextInputLayout>

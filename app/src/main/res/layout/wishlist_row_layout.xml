@@ -91,13 +91,17 @@
                 app:layout_constraintStart_toStartOf="@+id/textView3" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/wishlistBag_btn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                setupButtonStyleWishlist="@{product}"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:textColor="@color/black"
+                app:rippleColor="?attr/colorControlHighlight"
                 onMoveToBagBtnListener="@{product}"
                 setViewModel="@{vm}"
-                android:backgroundTint="@color/black"
                 app:layout_constraintBottom_toBottomOf="@id/wishlistDelete_btn"
                 app:layout_constraintStart_toEndOf="@id/wishlistDelete_btn"
                 app:layout_constraintTop_toTopOf="@id/wishlistDelete_btn"

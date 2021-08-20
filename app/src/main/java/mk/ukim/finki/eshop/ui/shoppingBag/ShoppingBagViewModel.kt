@@ -47,7 +47,7 @@ class ShoppingBagViewModel @Inject constructor(
     }
 
 
-    public fun checkIfUserHasActiveShoppingCart() = viewModelScope.launch {
+    fun checkIfUserHasActiveShoppingCart() = viewModelScope.launch {
         activeShoppingCartExistsResponse.value = NetworkResult.Loading()
         if (Utils.hasInternetConnection(getApplication<Application>())) {
             try {

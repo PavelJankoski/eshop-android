@@ -12,5 +12,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="bg">#EEE</color>
+    <color name="green">#03aa5b</color>
+    <color name="red">#bf3c23</color>
     <color name="pinkred">#FF4081</color>
 </resources>
