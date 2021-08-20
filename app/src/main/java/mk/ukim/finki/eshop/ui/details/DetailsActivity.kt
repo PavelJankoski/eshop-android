@@ -31,6 +31,7 @@ class DetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         binding.product = args.product
+        binding.isLoggedIn = detailsViewModel.loginManager.readToken() != ""
         binding.lifecycleOwner = this
         setContentView(binding.root)
         binding.backFab.setOnClickListener {

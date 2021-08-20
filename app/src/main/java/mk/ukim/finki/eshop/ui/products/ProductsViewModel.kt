@@ -23,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductsViewModel @Inject constructor(
     private val repository: Repository,
-    private val loginManager: LoginManager,
+    val loginManager: LoginManager,
     val shoppingBagManager: ShoppingBagManager,
     private val wishlistManager: WishlistManager,
     application: Application

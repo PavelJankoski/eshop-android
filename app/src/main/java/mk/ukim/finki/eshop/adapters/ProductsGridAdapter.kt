@@ -8,15 +8,16 @@ import mk.ukim.finki.eshop.databinding.ProductsItemLayoutBinding
 import mk.ukim.finki.eshop.ui.products.ProductsViewModel
 import mk.ukim.finki.eshop.util.DiffUtil
 
-class ProductsGridAdapter(private val vm: ProductsViewModel): RecyclerView.Adapter<ProductsGridAdapter.MyViewHolder>() {
+class ProductsGridAdapter(private val vm: ProductsViewModel, private val isLoggedIn: Boolean): RecyclerView.Adapter<ProductsGridAdapter.MyViewHolder>() {
     private var products = emptyList<Product>()
 
     class MyViewHolder(
         private val binding: ProductsItemLayoutBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(product: Product, vm: ProductsViewModel) {
+        fun bind(product: Product, vm: ProductsViewModel, isLoggedIn: Boolean) {
             binding.product = product
             binding.vm = vm
+            binding.isLoggedIn = isLoggedIn
             binding.executePendingBindings()
         }
 
@@ -35,7 +36,7 @@ class ProductsGridAdapter(private val vm: ProductsViewModel): RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentProduct = products[position]
-        holder.bind(currentProduct, vm)
+        holder.bind(currentProduct, vm, isLoggedIn)
     }
 
     override fun getItemCount(): Int {

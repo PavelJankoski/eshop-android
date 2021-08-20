@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import coil.load
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import mk.ukim.finki.eshop.R
@@ -35,17 +36,40 @@ class SharedBinding {
             textView.error = message
         }
 
-        @BindingAdapter("setupOutlinedButtonStyle")
+        @BindingAdapter("setupOutlinedButtonStyle", "isLoggedIn", requireAll = false)
         @JvmStatic
-        fun setupOutlinedButtonStyle(btn: MaterialButton, product: Product) {
-            val sb = SharedBinding()
-            if(!product.isInShoppingCart) {
-                sb.setupButtonMoveToBag(btn)
+        fun setupOutlinedButtonStyle(btn: MaterialButton, product: Product, isLoggedIn: Boolean) {
+            if(!isLoggedIn) {
+                btn.text = "Please log in"
+                btn.isEnabled = false
+                btn.setTextColor(ContextCompat.getColor(btn.context, R.color.lightMediumGray))
+                btn.strokeColor = ColorStateList.valueOf(ContextCompat.getColor(btn.context, R.color.lightMediumGray))
             }
             else {
-                sb.setupButtonRemove(btn)
+                btn.isEnabled = true
+                val sb = SharedBinding()
+                if(!product.isInShoppingCart) {
+                    sb.setupButtonMoveToBag(btn)
+                }
+                else {
+                    sb.setupButtonRemove(btn)
+                }
+            }
+
+        }
+        @BindingAdapter("isDisabledFab")
+        @JvmStatic
+        fun isDisabledFab(btn: FloatingActionButton, isLoggedIn: Boolean) {
+            if(!isLoggedIn) {
+                btn.isEnabled = false
+                btn.setColorFilter(ContextCompat.getColor(btn.context, R.color.lightMediumGray))
+            }
+            else {
+                btn.isEnabled = true
+                btn.setColorFilter(ContextCompat.getColor(btn.context, R.color.black))
             }
         }
+
     }
     fun setupButtonMoveToBag(btn: MaterialButton) {
         btn.text = "Move to bag"

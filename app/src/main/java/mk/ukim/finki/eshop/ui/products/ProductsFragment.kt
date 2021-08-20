@@ -19,6 +19,7 @@ import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.ProductsGridAdapter
 import mk.ukim.finki.eshop.adapters.ProductsListAdapter
 import mk.ukim.finki.eshop.databinding.FragmentProductsBinding
+import mk.ukim.finki.eshop.ui.account.LoginManager
 import mk.ukim.finki.eshop.ui.products.filter.FilterBottomSheetFragmentDirections
 import mk.ukim.finki.eshop.ui.search.SearchActivity
 import mk.ukim.finki.eshop.util.Constants.Companion.SEARCH_HISTORY_EXTRAS
@@ -27,16 +28,20 @@ import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 import mk.ukim.finki.eshop.util.Utils.Companion.hideShimmerEffect
 import mk.ukim.finki.eshop.util.Utils.Companion.showShimmerEffect
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProductsFragment : Fragment() {
+
+    @Inject lateinit var loginManager: LoginManager
+
     private val args by navArgs<ProductsFragmentArgs>()
     private var _binding: FragmentProductsBinding? = null
     private val binding get() = _binding!!
     private val productsViewModel by viewModels<ProductsViewModel>()
     private var menuItemType = true
-    private val mAdapterList by lazy { ProductsListAdapter(productsViewModel) }
-    private val mAdapterGrid by lazy { ProductsGridAdapter(productsViewModel) }
+    private val mAdapterList by lazy { ProductsListAdapter(productsViewModel, productsViewModel.loginManager.loggedIn.value) }
+    private val mAdapterGrid by lazy { ProductsGridAdapter(productsViewModel, productsViewModel.loginManager.loggedIn.value) }
     private var searchedText: String = ""
     private lateinit var menuItem: MenuItem
 
@@ -191,7 +196,11 @@ class ProductsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.shoppingCart_menuItem -> {
-                findNavController().navigate(R.id.action_productsFragment_to_shoppingBagFragment)
+                if (!loginManager.loggedIn.value) {
+                    findNavController().navigate(R.id.action_productsFragment_to_loginPrompt)
+                } else {
+                    findNavController().navigate(R.id.action_productsFragment_to_shoppingBagFragment)
+                }
                 true
             }
             R.id.search_menuItem -> {

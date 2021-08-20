@@ -7,6 +7,9 @@
         <variable
             name="product"
             type="mk.ukim.finki.eshop.api.model.Product" />
+        <variable
+            name="isLoggedIn"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.motion.widget.MotionLayout
@@ -312,6 +315,7 @@
                 android:id="@+id/addToWishlist_fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                isDisabledFab="@{isLoggedIn}"
                 android:layout_marginStart="16dp"
                 app:backgroundTint="@color/white"
                 app:tint="@color/black"
@@ -329,6 +333,7 @@
                     android:layout_height="60dp"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     setupOutlinedButtonStyle="@{product}"
+                    isLoggedIn="@{isLoggedIn}"
                     android:textColor="@color/black"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"

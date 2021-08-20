@@ -91,6 +91,9 @@
         <action
             android:id="@+id/action_productsFragment_to_shoppingBagFragment"
             app:destination="@id/shoppingBagFragment" />
+        <action
+            android:id="@+id/action_productsFragment_to_loginPrompt"
+            app:destination="@id/loginPrompt" />
     </fragment>
     <activity
         android:id="@+id/detailsActivity"
@@ -122,13 +125,24 @@
         tools:layout="@layout/fragment_login_prompt" >
         <action
             android:id="@+id/action_loginPrompt_to_wishlistFragment"
-            app:destination="@id/wishlistFragment" />
+            app:destination="@id/wishlistFragment"
+            app:popUpTo="@id/wishlistFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginPrompt_to_homeAccountFragment"
-            app:destination="@id/homeAccountFragment" />
+            app:destination="@id/homeAccountFragment"
+            app:popUpTo="@id/homeAccountFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginPrompt_to_categoriesFragment"
-            app:destination="@id/categoriesFragment" />
+            app:destination="@id/categoriesFragment"
+            app:popUpTo="@id/categoriesFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginPrompt_to_productsFragment"
+            app:destination="@id/productsFragment"
+            app:popUpTo="@id/productsFragment"
+            app:popUpToInclusive="true" />
     </dialog>
     <fragment
         android:id="@+id/homeAccountFragment"

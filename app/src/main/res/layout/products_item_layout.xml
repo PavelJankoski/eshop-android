@@ -10,6 +10,9 @@
         <variable
             name="vm"
             type="mk.ukim.finki.eshop.ui.products.ProductsViewModel" />
+        <variable
+            name="isLoggedIn"
+            type="Boolean" />
     </data>
     <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
@@ -70,6 +73,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView2"
             onFavouriteClickListener="@{product}"
+            isLoggedIn="@{isLoggedIn}"
             isProductFavourite="@{product.isFavourite}"
             setViewModel="@{vm}"/>
 
@@ -83,6 +87,7 @@
             app:layout_constraintTop_toTopOf="@+id/imageView5"
             isProductInShoppingCart="@{product.isInShoppingCart}"
             onAddOrRemoveClickListener="@{product}"
+            isLoggedIn="@{isLoggedIn}"
             setViewModel="@{vm}"
             app:tint="@color/black" />
 

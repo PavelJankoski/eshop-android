@@ -146,7 +146,11 @@ class WishlistFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.shoppingCart_menuItem -> {
-                findNavController().navigate(R.id.action_wishlistFragment_to_shoppingBagFragment)
+                if (!loginManager.loggedIn.value) {
+                    showLoginPrompt()
+                } else {
+                    findNavController().navigate(R.id.action_wishlistFragment_to_shoppingBagFragment)
+                }
                 true
             }
             else -> return super.onOptionsItemSelected(item)

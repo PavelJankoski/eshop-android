@@ -1,6 +1,7 @@
 package mk.ukim.finki.eshop.bindingadapters
 
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -41,27 +42,39 @@ class ProductsBinding {
             }
         }
 
-        @BindingAdapter("isProductFavourite")
+        @BindingAdapter("isProductFavourite", "isLoggedIn", requireAll = true)
         @JvmStatic
-        fun isProductFavourite(iv: ImageView, isFavourite: Boolean) {
-            iv.setColorFilter(ContextCompat.getColor(iv.context, R.color.black))
-            if(isFavourite) {
-                iv.setImageResource(R.drawable.ic_heart_full)
+        fun isProductFavourite(iv: ImageView, isFavourite: Boolean, isLoggedIn: Boolean) {
+            if(isLoggedIn) {
+                iv.visibility = View.VISIBLE
+                iv.setColorFilter(ContextCompat.getColor(iv.context, R.color.black))
+                if(isFavourite) {
+                    iv.setImageResource(R.drawable.ic_heart_full)
+                }
+                else {
+                    iv.setImageResource(R.drawable.ic_heart)
+                }
             }
             else {
-                iv.setImageResource(R.drawable.ic_heart)
+                iv.visibility = View.GONE
             }
+
         }
 
-        @BindingAdapter("isProductInShoppingCart")
+        @BindingAdapter("isProductInShoppingCart", "isLoggedIn", requireAll = true)
         @JvmStatic
-        fun isProductInShoppingCart(iv: ImageView, isInShoppingCart: Boolean) {
-            iv.setColorFilter(ContextCompat.getColor(iv.context, R.color.black))
-            if(isInShoppingCart) {
-                iv.setImageResource(R.drawable.ic_remove_from_bag)
+        fun isProductInShoppingCart(iv: ImageView, isInShoppingCart: Boolean, isLoggedIn: Boolean) {
+            if(isLoggedIn) {
+                iv.visibility = View.VISIBLE
+                iv.setColorFilter(ContextCompat.getColor(iv.context, R.color.black))
+                if (isInShoppingCart) {
+                    iv.setImageResource(R.drawable.ic_remove_from_bag)
+                } else {
+                    iv.setImageResource(R.drawable.ic_add_to_bag)
+                }
             }
             else {
-                iv.setImageResource(R.drawable.ic_add_to_bag)
+                iv.visibility = View.GONE
             }
         }
 

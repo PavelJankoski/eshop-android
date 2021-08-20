@@ -13,11 +13,12 @@
         <entry key="app/src/main/res/layout/fragment_categories.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/fragment_categories_man.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/fragment_categories_woman.xml" value="0.37604166666666666" />
-        <entry key="app/src/main/res/layout/fragment_custom_order.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/fragment_custom_order.xml" value="0.2631578947368421" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_products.xml" value="0.13703703703703704" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_reviews.xml" value="0.23125" />
+        <entry key="app/src/main/res/layout/fragment_shopping_bag.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_wishlist.xml" value="0.14479166666666668" />
         <entry key="app/src/main/res/layout/products_item_layout.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/layout/products_row_layout.xml" value="0.25052083333333336" />

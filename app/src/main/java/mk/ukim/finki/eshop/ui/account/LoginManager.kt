@@ -18,6 +18,7 @@ import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_USER_ID
 import mk.ukim.finki.eshop.util.Constants.Companion.GOOGLE_TYPE
 import mk.ukim.finki.eshop.util.Constants.Companion.PREFERENCE_JSON_WEB_TOKEN
 import mk.ukim.finki.eshop.util.Constants.Companion.PREFERENCE_USER_ID
+import mk.ukim.finki.eshop.util.GlobalVariables
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -35,6 +36,7 @@ class LoginManager @Inject constructor(
         if (loginType.equals(GOOGLE_TYPE, true)) {
             googleClient?.signOut()
         }
+        GlobalVariables.productsInBagNumber.value = 0
         loggedIn.value = false
     }
     fun saveToken(token: String) {
