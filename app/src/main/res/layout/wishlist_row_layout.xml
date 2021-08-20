@@ -38,20 +38,23 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="8dp"
                 android:ellipsize="end"
                 android:maxLines="2"
+                tools:text="Classic fit t-shirt"
+                android:layout_marginEnd="16dp"
                 android:text="@{product.description}"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/wishlistDelete_btn"
+                app:layout_constraintEnd_toStartOf="@+id/wishlistDelete_btn"
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/wishlistDelete_btn" />
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 priceToString="@{product.price}"
+                tools:text="100"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -73,40 +76,39 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/wishlistDelete_btn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                onTrashClickListener="@{product}"
+                setViewModel="@{vm}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:insetLeft="0dp"
                 android:insetRight="0dp"
                 android:minWidth="0dp"
+                android:layout_marginTop="8dp"
                 android:text=""
                 app:icon="@drawable/ic_trash"
-                app:iconTint="@color/black"
                 app:iconGravity="textStart"
                 app:iconPadding="0dp"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                app:strokeColor="@color/black"
-                onTrashClickListener="@{product}"
-                setViewModel="@{vm}"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-                app:layout_constraintStart_toStartOf="@+id/textView3" />
+                app:iconTint="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/black" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/wishlistBag_btn"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                setupButtonStyleWishlist="@{product}"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:textColor="@color/black"
-                app:rippleColor="?attr/colorControlHighlight"
                 onMoveToBagBtnListener="@{product}"
                 setViewModel="@{vm}"
-                app:layout_constraintBottom_toBottomOf="@id/wishlistDelete_btn"
-                app:layout_constraintStart_toEndOf="@id/wishlistDelete_btn"
-                app:layout_constraintTop_toTopOf="@id/wishlistDelete_btn"
+                setupOutlinedButtonStyle="@{product}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                />
+                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:rippleColor="?attr/colorControlHighlight" />
 
 
 

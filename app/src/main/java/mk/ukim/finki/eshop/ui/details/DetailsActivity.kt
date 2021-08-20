@@ -1,5 +1,6 @@
 package mk.ukim.finki.eshop.ui.details
 
+import android.content.res.ColorStateList
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -17,6 +18,7 @@ import mk.ukim.finki.eshop.databinding.ActivityDetailsBinding
 import mk.ukim.finki.eshop.ui.details.moredetails.MoreDetailsFragment
 import mk.ukim.finki.eshop.ui.details.reviews.ReviewsFragment
 import mk.ukim.finki.eshop.util.Constants.Companion.PRODUCT_RESULT_KEY
+import mk.ukim.finki.eshop.util.GlobalVariables.Companion.productsInBagNumber
 import mk.ukim.finki.eshop.util.Utils
 
 @AndroidEntryPoint
@@ -39,13 +41,69 @@ class DetailsActivity : AppCompatActivity() {
                 it
             )
         }
+        Utils.setupCartItemsBadge(binding.cartBadge, productsInBagNumber.value!!)
+        observeShoppingBagActions()
+        observeWishlistActions()
         setupAddToWishlistBtn()
         setupAddToBagBtn()
         setupViewPager()
     }
 
+    private fun observeShoppingBagActions() {
+        detailsViewModel.addProductToBagResponse.observe(this, {
+            if(it.data!!) {
+                addProductToBagSuccess()
+            }
+        })
+        detailsViewModel.removeProductFromBagResponse.observe(this, {
+            if(it.data!!) {
+                removeProductFromBagSuccess()
+            }
+        })
+    }
+
+    private fun observeWishlistActions() {
+        detailsViewModel.addProductToWishlistResponse.observe(this, {
+            if(it.data!!) {
+                addProductToWishlistSuccess()
+            }
+        })
+        detailsViewModel.removeProductFromWishlistResponse.observe(this, {
+            if(it.data!!) {
+                removeProductFromWishlistSuccess()
+            }
+        })
+    }
+
+    private fun addProductToBagSuccess() {
+        Utils.setupCartItemsBadge(binding.cartBadge, productsInBagNumber.value!!)
+        args.product.isInShoppingCart = true
+        binding.addToBagBtn.strokeColor = ColorStateList.valueOf(ContextCompat.getColor(binding.addToBagBtn.context, R.color.red))
+        binding.addToBagBtn.text = getString(R.string.remove_from_bag)
+        Utils.showSnackbar(binding.addToBagBtn, "Added product to shopping bag!", Snackbar.LENGTH_SHORT)
+    }
+
+    private fun removeProductFromBagSuccess() {
+        Utils.setupCartItemsBadge(binding.cartBadge, productsInBagNumber.value!!)
+        args.product.isInShoppingCart = false
+        binding.addToBagBtn.text = getString(R.string.add_to_bag)
+        binding.addToBagBtn.strokeColor = ColorStateList.valueOf(ContextCompat.getColor(binding.addToBagBtn.context, R.color.green))
+        Utils.showSnackbar(binding.addToBagBtn, "Removed product from shopping bag!", Snackbar.LENGTH_SHORT)
+    }
+
+    private fun addProductToWishlistSuccess() {
+        binding.addToWishlistFab.setImageResource(R.drawable.ic_heart_full)
+        args.product.isFavourite = true
+        Utils.showSnackbar(binding.addToWishlistFab, "Added product to wishlist!", Snackbar.LENGTH_SHORT)
+    }
+
+    private fun removeProductFromWishlistSuccess() {
+        binding.addToWishlistFab.setImageResource(R.drawable.ic_heart)
+        args.product.isFavourite = false
+        Utils.showSnackbar(binding.addToWishlistFab, "Removed product from wishlist!", Snackbar.LENGTH_SHORT)
+    }
+
     private fun setupAddToWishlistBtn() {
-        binding.addToWishlistFab.setColorFilter(ContextCompat.getColor(binding.addToWishlistFab.context, R.color.black))
         if(args.product.isFavourite) {
             binding.addToWishlistFab.setImageResource(R.drawable.ic_heart_full)
         }
@@ -54,37 +112,21 @@ class DetailsActivity : AppCompatActivity() {
         }
         binding.addToWishlistFab.setOnClickListener {
             if(args.product.isFavourite) {
-                binding.addToWishlistFab.setImageResource(R.drawable.ic_heart)
-                args.product.isFavourite = false
                 detailsViewModel.deleteProductFromWishlist(args.product.id)
-                Utils.showSnackbar(binding.addToWishlistFab, "Removed product from wishlist!", Snackbar.LENGTH_SHORT)
             }
             else {
-                binding.addToWishlistFab.setImageResource(R.drawable.ic_heart_full)
-                args.product.isFavourite = true
                 detailsViewModel.insertProductInWishlist(args.product)
-                Utils.showSnackbar(binding.addToWishlistFab, "Added product to wishlist!", Snackbar.LENGTH_SHORT)
             }
         }
     }
 
     private fun setupAddToBagBtn() {
-        if(args.product.isInShoppingCart) {
-            binding.addToBagBtn.text = getString(R.string.remove_from_bag)
-        }
-        else {
-            binding.addToBagBtn.text = getString(R.string.add_to_bag)
-        }
         binding.addToBagBtn.setOnClickListener {
             if(args.product.isInShoppingCart) {
-                binding.addToBagBtn.text = getString(R.string.add_to_bag)
                 detailsViewModel.removeProductFromShoppingCart(args.product.id)
-                Utils.showSnackbar(binding.addToBagBtn, "Removed product from shopping bag!", Snackbar.LENGTH_SHORT)
             }
             else {
-                binding.addToBagBtn.text = getString(R.string.remove_from_bag)
                 detailsViewModel.addProductToShoppingCart(args.product.id)
-                Utils.showSnackbar(binding.addToBagBtn, "Added product to shopping bag!", Snackbar.LENGTH_SHORT)
             }
         }
     }

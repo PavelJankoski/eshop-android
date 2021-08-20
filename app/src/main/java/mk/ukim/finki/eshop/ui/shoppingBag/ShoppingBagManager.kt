@@ -5,36 +5,32 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import mk.ukim.finki.eshop.MyApplication
 import mk.ukim.finki.eshop.api.dto.FavCartDto
 import mk.ukim.finki.eshop.api.model.ShoppingCart
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.ui.account.LoginManager
-import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_JWT
-import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_USER_ID
+import mk.ukim.finki.eshop.util.GlobalVariables
+import mk.ukim.finki.eshop.util.GlobalVariables.Companion.productsInBagNumber
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 import retrofit2.Response
 import javax.inject.Inject
-import kotlin.math.log
+import javax.inject.Singleton
 
 @ViewModelScoped
 class ShoppingBagManager @Inject constructor(
     var loginManager: LoginManager,
     var repository: Repository,
-    application: Application
+    application: Application,
 ): AndroidViewModel(application) {
 
     var addOrRemoveProductResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
-    var addProductResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
-    var removeProductResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
+    var addProductToBagResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData(NetworkResult.Error("", false))
+    var removeProductFromBagResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData(NetworkResult.Error("", false))
 
 
     fun addProductToShoppingCart(productId: Int)  = viewModelScope.launch {
@@ -45,7 +41,7 @@ class ShoppingBagManager @Inject constructor(
                 addOrRemoveProductResponse.value = handleAddProductResponse(
                     repository.remote.addProductToShoppingCart(userId, productId)
                 )
-                addProductResponse.value = addOrRemoveProductResponse.value
+                addProductToBagResponse.value = addOrRemoveProductResponse.value
             } catch (e: Exception) {
                 addOrRemoveProductResponse.value = NetworkResult.Error("Error getting info....")
             }
@@ -62,7 +58,7 @@ class ShoppingBagManager @Inject constructor(
                 addOrRemoveProductResponse.value = handleRemoveResponse(
                     repository.remote.removeProductFromShoppingCart(userId, productId)
                 )
-                removeProductResponse.value = addOrRemoveProductResponse.value
+                removeProductFromBagResponse.value = addOrRemoveProductResponse.value
             } catch (e: Exception) {
                 addOrRemoveProductResponse.value = NetworkResult.Error("Error getting info....")
             }
@@ -88,13 +84,14 @@ class ShoppingBagManager @Inject constructor(
     private fun handleAddProductResponse(response: Response<ShoppingCart>): NetworkResult<Boolean> {
         return when {
             response.message().toString().contains("timeout") -> {
-                NetworkResult.Error("Timeout")
+                NetworkResult.Error("Timeout", false)
             }
             response.isSuccessful -> {
+                productsInBagNumber.value = productsInBagNumber.value!! + 1
                 NetworkResult.Success(true)
             }
             else -> {
-                NetworkResult.Error(response.message())
+                NetworkResult.Error(response.message(), false)
             }
         }
     }
@@ -102,13 +99,14 @@ class ShoppingBagManager @Inject constructor(
     private fun handleRemoveResponse(response: Response<ShoppingCart>): NetworkResult<Boolean> {
         return when {
             response.message().toString().contains("timeout") -> {
-                NetworkResult.Error("Timeout")
+                NetworkResult.Error("Timeout", false)
             }
             response.isSuccessful -> {
+                productsInBagNumber.value = productsInBagNumber.value!! - 1
                 NetworkResult.Success(true)
             }
             else -> {
-                NetworkResult.Error(response.message())
+                NetworkResult.Error(response.message(), false)
             }
         }
     }

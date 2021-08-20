@@ -314,6 +314,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 app:backgroundTint="@color/white"
+                app:tint="@color/black"
                 app:srcCompat="@drawable/ic_heart" />
 
             <LinearLayout
@@ -322,13 +323,16 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/addToBag_btn"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    setupOutlinedButtonStyle="@{product}"
+                    android:textColor="@color/black"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
-                    android:backgroundTint="@color/black"
+                    app:rippleColor="?attr/colorControlHighlight"
                     android:text="@string/add_to_bag" />
             </LinearLayout>
 

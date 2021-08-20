@@ -8,6 +8,10 @@
         <entry key="app/src/main/res/drawable/ic_remove_from_bag.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/drawable/ic_wishlist_empty.xml" value="0.12447916666666667" />
         <entry key="app/src/main/res/layout/activity_details.xml" value="0.13854166666666667" />
+        <entry key="app/src/main/res/layout/custom_action_bag_item_layout.xml" value="0.21302083333333333" />
+        <entry key="app/src/main/res/layout/fragment_categories.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/fragment_categories_man.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/fragment_categories_woman.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/fragment_custom_order.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_products.xml" value="0.13703703703703704" />
@@ -18,6 +22,8 @@
         <entry key="app/src/main/res/layout/products_row_layout.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/layout/search_row_layout.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/layout/wishlist_row_layout.xml" value="0.33" />
+        <entry key="app/src/main/res/menu/categories_toolbar_menu.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/menu/shopping_cart_toolbar_menu.xml" value="0.37604166666666666" />
       </map>
     </option>
   </component>

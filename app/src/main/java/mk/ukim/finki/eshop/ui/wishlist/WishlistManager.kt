@@ -31,6 +31,8 @@ class WishlistManager @Inject constructor(
 ): AndroidViewModel(application) {
 
     var addOrRemoveProductResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
+    var addProductToWishlistResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData(NetworkResult.Error("", false))
+    var removeProductFromWishlistResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData(NetworkResult.Error("", false))
 
     fun addProductToWishlist(productId: Int)  = viewModelScope.launch {
         addOrRemoveProductResponse.value = NetworkResult.Loading()
@@ -40,6 +42,7 @@ class WishlistManager @Inject constructor(
                 addOrRemoveProductResponse.value = handleAddProductOrRemoveResponse(
                     repository.remote.addProductToWishlist(userId, productId)
                 )
+                addProductToWishlistResponse.value = addOrRemoveProductResponse.value
             } catch (e: Exception) {
                 addOrRemoveProductResponse.value = NetworkResult.Error("Error getting info....")
             }
@@ -56,6 +59,7 @@ class WishlistManager @Inject constructor(
                 addOrRemoveProductResponse.value = handleAddProductOrRemoveResponse(
                     repository.remote.removeProductFromWishlist(userId, productId)
                 )
+                removeProductFromWishlistResponse.value = addOrRemoveProductResponse.value
             } catch (e: Exception) {
                 addOrRemoveProductResponse.value = NetworkResult.Error("Error getting info....")
             }

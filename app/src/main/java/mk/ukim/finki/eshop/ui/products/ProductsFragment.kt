@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
@@ -21,6 +22,7 @@ import mk.ukim.finki.eshop.databinding.FragmentProductsBinding
 import mk.ukim.finki.eshop.ui.products.filter.FilterBottomSheetFragmentDirections
 import mk.ukim.finki.eshop.ui.search.SearchActivity
 import mk.ukim.finki.eshop.util.Constants.Companion.SEARCH_HISTORY_EXTRAS
+import mk.ukim.finki.eshop.util.GlobalVariables.Companion.productsInBagNumber
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 import mk.ukim.finki.eshop.util.Utils.Companion.hideShimmerEffect
@@ -36,11 +38,16 @@ class ProductsFragment : Fragment() {
     private val mAdapterList by lazy { ProductsListAdapter(productsViewModel) }
     private val mAdapterGrid by lazy { ProductsGridAdapter(productsViewModel) }
     private var searchedText: String = ""
+    private lateinit var menuItem: MenuItem
 
 
     override fun onResume() {
         super.onResume()
         setupSortingDropdown()
+        if(this::menuItem.isInitialized) {
+            val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
+            Utils.setupCartItemsBadge(tv, productsInBagNumber.value!!)
+        }
         getProducts()
     }
 
@@ -154,10 +161,27 @@ class ProductsFragment : Fragment() {
         })
     }
 
+    private fun observeSetBagBadge() {
+        productsViewModel.addProductResponse.observe(viewLifecycleOwner, {
+            if(it.data!!) {
+                val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
+                Utils.setupCartItemsBadge(tv, productsInBagNumber.value!!)
+            }
+        })
+        productsViewModel.removeProductResponse.observe(viewLifecycleOwner, {
+            if(it.data!!) {
+                val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
+                Utils.setupCartItemsBadge(tv, productsInBagNumber.value!!)
+            }
+        })
+    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.products_toolbar_menu, menu)
-        val menuItem = menu.findItem(R.id.shoppingCart_menuItem)
+        menuItem = menu.findItem(R.id.shoppingCart_menuItem)
+        val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
+        Utils.setupCartItemsBadge(tv, productsInBagNumber.value!!)
+        observeSetBagBadge()
         menuItem.actionView.setOnClickListener {
             onOptionsItemSelected(menuItem)
         }

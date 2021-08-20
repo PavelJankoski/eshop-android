@@ -1,7 +1,6 @@
 package mk.ukim.finki.eshop.ui.products
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -9,7 +8,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import mk.ukim.finki.eshop.api.dto.FavCartDto
 import mk.ukim.finki.eshop.api.dto.PriceRangeDto
 import mk.ukim.finki.eshop.api.model.Product
 import mk.ukim.finki.eshop.data.source.Repository
@@ -26,16 +24,19 @@ import javax.inject.Inject
 class ProductsViewModel @Inject constructor(
     private val repository: Repository,
     private val loginManager: LoginManager,
-    private val shoppingBagManager: ShoppingBagManager,
+    val shoppingBagManager: ShoppingBagManager,
     private val wishlistManager: WishlistManager,
     application: Application
 ): AndroidViewModel(application) {
 
     var listingType: MutableLiveData<Boolean> = MutableLiveData(true)
     var addOrRemoveProductResponse = shoppingBagManager.addOrRemoveProductResponse
+    var addProductResponse = shoppingBagManager.addProductToBagResponse
+    var removeProductResponse = shoppingBagManager.removeProductFromBagResponse
     var addOrRemovedProduct: Int? = null
     var isRemoveProduct: Boolean? = null
     var categoryId: Int? = null
+
 
     fun changeListing() {
         listingType.value = !listingType.value!!

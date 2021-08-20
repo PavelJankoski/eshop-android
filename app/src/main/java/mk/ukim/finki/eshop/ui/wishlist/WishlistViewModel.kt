@@ -5,14 +5,12 @@ import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import mk.ukim.finki.eshop.api.model.CartItem
 import mk.ukim.finki.eshop.api.model.Product
-import mk.ukim.finki.eshop.data.model.CategoriesEntity
 import mk.ukim.finki.eshop.data.model.WishlistEntity
 import mk.ukim.finki.eshop.data.source.Repository
-import mk.ukim.finki.eshop.ui.account.AccountViewModel
 import mk.ukim.finki.eshop.ui.account.LoginManager
 import mk.ukim.finki.eshop.ui.shoppingBag.ShoppingBagManager
+import mk.ukim.finki.eshop.util.GlobalVariables
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 import retrofit2.Response
@@ -39,6 +37,9 @@ class WishlistViewModel @Inject constructor(
 
     /** RETROFIT */
     var wishlistProductsResponse: MutableLiveData<NetworkResult<List<Product>>> = MutableLiveData()
+    var addProductResponse = shoppingBagManager.addProductToBagResponse
+    var removeProductResponse = shoppingBagManager.removeProductFromBagResponse
+    var productsInBagNumber = GlobalVariables.productsInBagNumber
 
     fun getCartItems() = viewModelScope.launch {
         if (Utils.hasInternetConnection(getApplication<Application>())) {
@@ -90,6 +91,7 @@ class WishlistViewModel @Inject constructor(
 
     fun removeFromBag(id: Int) {
         shoppingBagManager.removeProductFromShoppingCart(id)
+
     }
 
 }

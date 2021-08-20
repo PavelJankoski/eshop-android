@@ -15,12 +15,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.OrderProductsAdapter
 import mk.ukim.finki.eshop.databinding.FragmentCustomOrderBinding
-import mk.ukim.finki.eshop.ui.shoppingBag.ShoppingBagManager
 import mk.ukim.finki.eshop.ui.shoppingBag.ShoppingBagViewModel
 import mk.ukim.finki.eshop.ui.shoppingBag.customOrder.swipeToDelete.SwipeToDeleteCallback
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class CustomOrderFragment : Fragment() {
@@ -149,7 +147,7 @@ class CustomOrderFragment : Fragment() {
     }
 
     private fun observeSwipeRemoveProduct() {
-        shoppingBagViewModel.shoppingBagManager.removeProductResponse.observe(viewLifecycleOwner, { response ->
+        shoppingBagViewModel.shoppingBagManager.removeProductFromBagResponse.observe(viewLifecycleOwner, { response ->
             if (response is NetworkResult.Success) {
                 shoppingBagViewModel.getCartItems()
             }

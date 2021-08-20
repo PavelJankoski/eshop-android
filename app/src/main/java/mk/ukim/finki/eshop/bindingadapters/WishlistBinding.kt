@@ -52,43 +52,22 @@ class WishlistBinding {
         @BindingAdapter("onMoveToBagBtnListener", "setViewModel", requireAll = true)
         @JvmStatic
         fun onMoveToBagBtnListener(btn: MaterialButton, product: Product, vm: WishlistViewModel) {
-            val wb = WishlistBinding()
+            val sb = SharedBinding()
             btn.setOnClickListener {
                 if(!product.isInShoppingCart) {
-                    wb.setupButtonRemove(btn)
+                    sb.setupButtonRemove(btn)
                     vm.moveToBag(product.id)
                     Utils.showSnackbar(btn, "Moved product to shopping bag!", Snackbar.LENGTH_SHORT)
                 }
                 else {
                     vm.removeFromBag(product.id)
-                    wb.setupButtonMoveToBag(btn)
+                    sb.setupButtonMoveToBag(btn)
                     Utils.showSnackbar(btn, "Removed product from shopping bag!", Snackbar.LENGTH_SHORT)
                 }
                 product.isInShoppingCart = !product.isInShoppingCart
             }
         }
-        @BindingAdapter("setupButtonStyleWishlist")
-        @JvmStatic
-        fun setupButtonStyleWishlist(btn: MaterialButton, product: Product) {
-            val wb = WishlistBinding()
-            if(!product.isInShoppingCart) {
-                wb.setupButtonMoveToBag(btn)
-            }
-            else {
-                wb.setupButtonRemove(btn)
-            }
-        }
 
     }
 
-
-
-    fun setupButtonMoveToBag(btn: MaterialButton) {
-        btn.text = "Move to bag"
-        btn.strokeColor = ColorStateList.valueOf(ContextCompat.getColor(btn.context, R.color.green))
-    }
-    fun setupButtonRemove(btn: MaterialButton) {
-        btn.text = "Remove"
-        btn.strokeColor = ColorStateList.valueOf(ContextCompat.getColor(btn.context, R.color.red))
-    }
 }

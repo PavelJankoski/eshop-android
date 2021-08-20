@@ -2,19 +2,23 @@ package mk.ukim.finki.eshop.ui.categories
 
 import android.os.Bundle
 import android.view.*
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import mk.ukim.finki.eshop.MyApplication
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.PagerAdapter
 import mk.ukim.finki.eshop.databinding.FragmentCategoriesBinding
 import mk.ukim.finki.eshop.ui.account.LoginManager
 import mk.ukim.finki.eshop.ui.categories.man.CategoriesManFragment
 import mk.ukim.finki.eshop.ui.categories.woman.CategoriesWomanFragment
+import mk.ukim.finki.eshop.util.GlobalVariables.Companion.productsInBagNumber
 import mk.ukim.finki.eshop.util.Utils
+import mk.ukim.finki.eshop.util.Utils.Companion.setupCartItemsBadge
 import javax.inject.Inject
 
 
@@ -26,6 +30,7 @@ class CategoriesFragment : Fragment() {
     private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
     private val categoriesViewModel: CategoriesViewModel by activityViewModels()
+    lateinit var menuItem: MenuItem
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,11 +43,17 @@ class CategoriesFragment : Fragment() {
         setHasOptionsMenu(true)
         setupViewPager()
         categoriesViewModel.getCategories()
+        categoriesViewModel.getCartItems()
         return binding.root
     }
 
 
-
+    private fun observeSetBadge() {
+        productsInBagNumber.observe(viewLifecycleOwner, {
+            val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
+            setupCartItemsBadge(tv, it)
+        })
+    }
     private fun setupViewPager() {
         val fragments = arrayListOf<Fragment>(CategoriesManFragment(), CategoriesWomanFragment())
         val tabLayoutTitles = arrayListOf<String>("Man", "Woman")
@@ -58,7 +69,10 @@ class CategoriesFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.shopping_cart_toolbar_menu, menu)
-        val menuItem = menu.findItem(R.id.shoppingCart_menuItem)
+        menuItem = menu.findItem(R.id.shoppingCart_menuItem)
+        val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
+        setupCartItemsBadge(tv, productsInBagNumber.value!!)
+        observeSetBadge()
         menuItem.actionView.setOnClickListener {
             onOptionsItemSelected(menuItem)
         }
@@ -86,6 +100,8 @@ class CategoriesFragment : Fragment() {
     private fun showLoginPrompt() {
         findNavController().navigate(R.id.action_categoriesFragment_to_loginPrompt)
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

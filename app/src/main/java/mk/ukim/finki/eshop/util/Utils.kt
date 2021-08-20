@@ -6,6 +6,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.snackbar.Snackbar
+import mk.ukim.finki.eshop.MyApplication
 import mk.ukim.finki.eshop.R
 import java.time.LocalDateTime
 import java.util.*
@@ -53,6 +55,19 @@ class Utils {
 
         fun showSnackbar(view: View, message: String, duration: Int) {
             Snackbar.make(view, message, duration).setAction("Okay") {}.setActionTextColor(ContextCompat.getColor(view.context, R.color.white)).show()
+        }
+
+        fun setupCartItemsBadge(tv: TextView, itemsInCart: Int) {
+            if (itemsInCart <= 0) {
+                if (tv.visibility != View.GONE) {
+                    tv.visibility = View.GONE
+                }
+            } else {
+                tv.text = itemsInCart.toString()
+                if (tv.visibility != View.VISIBLE) {
+                    tv.visibility = View.VISIBLE
+                }
+            }
         }
 
     }

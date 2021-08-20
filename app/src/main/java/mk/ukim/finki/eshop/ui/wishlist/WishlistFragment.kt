@@ -3,6 +3,7 @@ package mk.ukim.finki.eshop.ui.wishlist
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -34,6 +35,7 @@ class WishlistFragment : Fragment() {
     private val binding get() = _binding!!
     private val wishlistViewModel by viewModels<WishlistViewModel>()
     private val mAdapter by lazy { WishlistAdapter(wishlistViewModel) }
+    private lateinit var menuItem: MenuItem
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +55,21 @@ class WishlistFragment : Fragment() {
             }
         }
         return binding.root
+    }
+
+    private fun observeSetBagBadge() {
+        wishlistViewModel.addProductResponse.observe(viewLifecycleOwner, {
+            if(it.data!!) {
+                val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
+                Utils.setupCartItemsBadge(tv, wishlistViewModel.productsInBagNumber.value!!)
+            }
+        })
+        wishlistViewModel.removeProductResponse.observe(viewLifecycleOwner, {
+            if(it.data!!) {
+                val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
+                Utils.setupCartItemsBadge(tv, wishlistViewModel.productsInBagNumber.value!!)
+            }
+        })
     }
 
     private fun setupUserNotAuthenticatedInterface() {
@@ -116,7 +133,10 @@ class WishlistFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.shopping_cart_toolbar_menu, menu)
-        val menuItem = menu.findItem(R.id.shoppingCart_menuItem)
+        menuItem = menu.findItem(R.id.shoppingCart_menuItem)
+        val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
+        Utils.setupCartItemsBadge(tv, wishlistViewModel.productsInBagNumber.value!!)
+        observeSetBagBadge()
         menuItem.actionView.setOnClickListener {
             onOptionsItemSelected(menuItem)
         }
