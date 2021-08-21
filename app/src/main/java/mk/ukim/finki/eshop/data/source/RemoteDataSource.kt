@@ -89,4 +89,8 @@ class RemoteDataSource @Inject constructor(
                 return webServices.getProductByProductCode(productCode)
         }
 
+        suspend fun getPaymentSheetParams(amount: Int): Response<Map<String, String>> {
+                return webServices.getPaymentSheetParams(amount)
+        }
+
 }

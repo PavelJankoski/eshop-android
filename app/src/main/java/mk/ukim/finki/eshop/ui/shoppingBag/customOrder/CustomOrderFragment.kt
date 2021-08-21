@@ -1,39 +1,65 @@
 package mk.ukim.finki.eshop.ui.shoppingBag.customOrder
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.stripe.android.PaymentConfiguration
+import com.stripe.android.paymentsheet.PaymentSheet
+import com.stripe.android.paymentsheet.PaymentSheetResult
 import dagger.hilt.android.AndroidEntryPoint
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.OrderProductsAdapter
 import mk.ukim.finki.eshop.databinding.FragmentCustomOrderBinding
 import mk.ukim.finki.eshop.ui.shoppingBag.ShoppingBagViewModel
 import mk.ukim.finki.eshop.ui.shoppingBag.customOrder.swipeToDelete.SwipeToDeleteCallback
+import mk.ukim.finki.eshop.util.Constants.Companion.STRIPE_PUBLISHABLE_KEY
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 
 @AndroidEntryPoint
 class CustomOrderFragment : Fragment() {
 
+    private lateinit var paymentSheet: PaymentSheet
+
+    private lateinit var customerId: String
+    private lateinit var ephemeralKeySecret: String
+    private lateinit var paymentIntentClientSecret: String
+
     private var _binding: FragmentCustomOrderBinding? = null
     private val binding get() = _binding!!
     private val shoppingBagViewModel: ShoppingBagViewModel by activityViewModels()
     private val mAdapterList by lazy { OrderProductsAdapter() }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        PaymentConfiguration.init(requireContext(), STRIPE_PUBLISHABLE_KEY)
+
+        paymentSheet = PaymentSheet(this) { result ->
+            onPaymentSheetResult(result)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCustomOrderBinding.inflate(inflater, container, false)
+
+        binding.checkoutBtn.isCheckable = false
+
+        binding.checkoutBtn.setOnClickListener {
+            presentPaymentSheet()
+        }
 
         setupUserHasActiveCartObserver()
         observeProductsResponse()
@@ -42,6 +68,17 @@ class CustomOrderFragment : Fragment() {
         setupRecyclerView()
 
         return binding.root
+    }
+
+    private fun observePaymentSheetParamrs() {
+        shoppingBagViewModel.paymentParamsResponse.observe(viewLifecycleOwner, { response ->
+            if (response is NetworkResult.Success) {
+                customerId = response.data!!.get("customer")!!
+                ephemeralKeySecret = response.data.get("ephemeralKey")!!
+                paymentIntentClientSecret = response.data.get("paymentIntent")!!
+                binding.checkoutBtn.isCheckable = true
+            }
+        })
     }
 
     private fun setupUserHasActiveCartObserver() {
@@ -185,9 +222,47 @@ class CustomOrderFragment : Fragment() {
         })
     }
 
+    private fun fetchInitData() {
+        shoppingBagViewModel.fetchPaymentSheetParams()
+    }
+
+    private fun presentPaymentSheet() {
+        paymentSheet.presentWithPaymentIntent(
+            paymentIntentClientSecret,
+            PaymentSheet.Configuration(
+                merchantDisplayName = "Example, Inc.",
+                customer = PaymentSheet.CustomerConfiguration(
+                    id = customerId,
+                    ephemeralKeySecret = ephemeralKeySecret
+                )
+            )
+        )
+    }
+
+    private fun onPaymentSheetResult(paymentSheetResult: PaymentSheetResult) {
+        when (paymentSheetResult) {
+            is PaymentSheetResult.Canceled -> {
+                Utils.showToast(requireContext(), "Payment cancelled", Toast.LENGTH_LONG)
+            }
+            is PaymentSheetResult.Failed -> {
+                Utils.showToast(
+                    requireContext(),
+                    "Due to technical problems the payment failed, try again later...",
+                    Toast.LENGTH_LONG
+                )
+                Log.e("App", "Got error: ${paymentSheetResult.error}")
+            }
+            is PaymentSheetResult.Completed -> {
+                Utils.showToast(requireContext(), "Payment Complete", Toast.LENGTH_LONG)
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         shoppingBagViewModel.checkIfUserHasActiveShoppingCart()
+        observePaymentSheetParamrs()
+        fetchInitData()
     }
 
     override fun onDestroy() {

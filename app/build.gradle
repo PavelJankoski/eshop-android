@@ -139,6 +139,7 @@ dependencies {
     // Circular image
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-
+    // Stripe
+    implementation 'com.stripe:stripe-android:17.1.1'
 
 }

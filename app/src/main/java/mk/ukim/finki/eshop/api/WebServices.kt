@@ -103,4 +103,9 @@ interface WebServices {
         @Path("code") productCode: String
     ): Response<Product>
 
+    @POST("/api/strpe-mobile-endpoint/payment-sheet/{amount}")
+    suspend fun getPaymentSheetParams(
+        @Path("amount") amount: Int
+    ): Response<Map<String, String>>
+
 }

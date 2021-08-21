@@ -40,6 +40,7 @@ class ShoppingBagViewModel @Inject constructor(
     var activeShoppingCartExistsResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
     var shoppingCartResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
     var cartItemsResponse: MutableLiveData<NetworkResult<List<CartItem>>> = MutableLiveData()
+    var paymentParamsResponse: MutableLiveData<NetworkResult<Map<String, String>>> = MutableLiveData()
 
     fun addProductToShoppingCart(id: Int, price: Int) {
         shoppingBagManager.addProductToShoppingCart(id, price)
@@ -49,6 +50,20 @@ class ShoppingBagViewModel @Inject constructor(
         shoppingBagManager.removeProductFromShoppingCart(id, price)
     }
 
+    fun fetchPaymentSheetParams() = viewModelScope.launch {
+        paymentParamsResponse.value = NetworkResult.Loading()
+        if (Utils.hasInternetConnection(getApplication<Application>())) {
+            try {
+                paymentParamsResponse.value = handlePaymentParamsResponse(
+                    repository.remote.getPaymentSheetParams(shoppingBagManager.totalPrice.value!!)
+                )
+            } catch (e: Exception) {
+                paymentParamsResponse.value = NetworkResult.Error("Error retriving params...")
+            }
+        } else {
+            paymentParamsResponse.value = NetworkResult.Error("Not connected to the internet. Please check your connection")
+        }
+    }
 
     fun checkIfUserHasActiveShoppingCart() = viewModelScope.launch {
         activeShoppingCartExistsResponse.value = NetworkResult.Loading()
@@ -91,6 +106,20 @@ class ShoppingBagViewModel @Inject constructor(
                 )
             } catch (e: Exception) {
                 shoppingCartResponse.value = NetworkResult.Error("Error fetching the shopping cart...")
+            }
+        }
+    }
+
+    private fun handlePaymentParamsResponse(response: Response<Map<String, String>>): NetworkResult<Map<String, String>> {
+        return when {
+            response.message().toString().contains("timeout") -> {
+                NetworkResult.Error("Timeout")
+            }
+            response.isSuccessful -> {
+                NetworkResult.Success(response.body()!!)
+            }
+            else -> {
+                NetworkResult.Error(response.message())
             }
         }
     }
