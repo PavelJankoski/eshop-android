@@ -133,8 +133,7 @@ class CustomOrderFragment : Fragment() {
 
                 Snackbar.make(binding.shoppingBagShimmerRecyclerView, "Undo remove of products", Snackbar.LENGTH_LONG)
                     .setAction("Undo") {
-                        adapter.insertProduct(position, cartItem)
-                        shoppingBagViewModel.addProductToShoppingCart(adapter.getProduct(position), price.toInt())
+                        shoppingBagViewModel.addProductToShoppingCart(cartItem.product.id, price.toInt())
                     }.setActionTextColor(ContextCompat.getColor(requireContext(), R.color.white)).show()
             }
         }
@@ -157,7 +156,7 @@ class CustomOrderFragment : Fragment() {
     }
 
     private fun observeSwipeRemoveProduct() {
-        shoppingBagViewModel.shoppingBagManager.removeProductFromBagResponse.observe(viewLifecycleOwner, { response ->
+        shoppingBagViewModel.shoppingBagManager.addOrRemoveProductResponse.observe(viewLifecycleOwner, { response ->
             if (response is NetworkResult.Success) {
                 shoppingBagViewModel.getCartItems()
             }
