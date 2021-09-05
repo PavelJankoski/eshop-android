@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">eshop</string>
     <string name="splash_screen_text">Shopping made easy!</string>
     <string name="shopping_cart">Shopping cart</string>
     <string name="search">Search</string>

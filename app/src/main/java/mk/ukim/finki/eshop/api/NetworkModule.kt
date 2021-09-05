@@ -6,7 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import mk.ukim.finki.eshop.util.Constants.Companion.BASE_URL
+import mk.ukim.finki.eshop.BuildConfig
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -19,8 +19,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideHttpClient(@ApplicationContext context: Context): OkHttpClient {
-        val tokenInterceptor = TokenInterceptor(context)
+    fun provideHttpClient(tokenInterceptor: TokenInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(tokenInterceptor)
             .readTimeout(15, TimeUnit.SECONDS)
@@ -41,7 +40,7 @@ object NetworkModule {
             gsonConverterFactory: GsonConverterFactory
     ) : Retrofit {
         return Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BuildConfig.BASE_URL)
                 .client(okHttpClient)
                 .addConverterFactory(gsonConverterFactory)
                 .build()

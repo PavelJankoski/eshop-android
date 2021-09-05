@@ -4,7 +4,7 @@ class Constants {
     companion object {
         const val PRODUCT_RESULT_KEY = "productBundle"
 
-        const val BASE_URL = "http://192.168.1.115:8080"
+        const val BASE_URL = "http://192.168.6.4:8080"
 
         // ROOM Database
         const val DATABASE_NAME = "clothing_eshop_db"
@@ -34,8 +34,10 @@ class Constants {
 
         // Google sign in
         const val GOOGLE_TYPE = "google"
+
         // NOTE: CLIENT ID FOR WEB APP SAME ON BACKEND AND IN APP!!!!!!!!!!!!
         const val GOOGLE_CLIENT_ID = "467495057025-lqpkn4mpl6bor6b6ga9d0hdo68prmvi4.apps.googleusercontent.com"
+
         // Stripe publishable key
         const val STRIPE_PUBLISHABLE_KEY = "pk_test_51H0AUpKlrDn4L6TppUjWu90nNVVYxLPfCctgG9DoaMIdMB4SSGbM4SIb1vvxldSyzw7f9k2TRGnZ2OnHYJFGXEO300ZAVYUir2"
     }

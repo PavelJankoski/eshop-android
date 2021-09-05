@@ -18,8 +18,12 @@ data class Product(
     val id: Int,
     @SerializedName("starRating")
     val rating: Float,
+    @SerializedName("numRatings")
+    val numRatings: Int,
     @SerializedName("images")
     val images: @RawValue List<Image>?,
+    @SerializedName("ratings")
+    val ratings: @RawValue List<Rating>?,
     @SerializedName("price")
     val price: Double,
     @SerializedName("productCode")
