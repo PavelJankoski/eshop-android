@@ -61,12 +61,11 @@ class CustomOrderFragment : Fragment() {
             presentPaymentSheet()
         }
 
-        setupUserHasActiveCartObserver()
         observeProductsResponse()
         observeSwipeRemoveProduct()
         observeTotalPrice()
         setupRecyclerView()
-
+        observePaymentSheetParamrs()
         return binding.root
     }
 
@@ -222,10 +221,6 @@ class CustomOrderFragment : Fragment() {
         })
     }
 
-    private fun fetchInitData() {
-        shoppingBagViewModel.fetchPaymentSheetParams()
-    }
-
     private fun presentPaymentSheet() {
         paymentSheet.presentWithPaymentIntent(
             paymentIntentClientSecret,
@@ -261,8 +256,8 @@ class CustomOrderFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         shoppingBagViewModel.checkIfUserHasActiveShoppingCart()
-        observePaymentSheetParamrs()
-        fetchInitData()
+        setupUserHasActiveCartObserver()
+
     }
 
     override fun onDestroy() {

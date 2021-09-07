@@ -17,6 +17,11 @@ class MoreDetailsFragment : Fragment() {
     private var _binding: FragmentMoreDetailsBinding? = null
     private val binding get() = _binding!!
 
+    override fun onResume() {
+        super.onResume()
+        binding.root.requestLayout()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
