@@ -41,6 +41,7 @@ class ShoppingBagViewModel @Inject constructor(
     var shoppingCartResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
     var cartItemsResponse: MutableLiveData<NetworkResult<List<CartItem>>> = MutableLiveData()
     var paymentParamsResponse: MutableLiveData<NetworkResult<Map<String, String>>> = MutableLiveData()
+    val historyShoppingCartsResponse: MutableLiveData<NetworkResult<List<ShoppingCart>>> = MutableLiveData()
 
     fun addProductToShoppingCart(id: Int, price: Int) {
         shoppingBagManager.addProductToShoppingCart(id, price)
@@ -62,6 +63,22 @@ class ShoppingBagViewModel @Inject constructor(
             }
         } else {
             paymentParamsResponse.value = NetworkResult.Error("Not connected to the internet. Please check your connection")
+        }
+    }
+
+    fun fetchHistoryShoppingCarts() = viewModelScope.launch {
+        historyShoppingCartsResponse.value = NetworkResult.Loading()
+        if(Utils.hasInternetConnection(getApplication<Application>())) {
+            try {
+                val userId = loginManager.readUserId()
+                historyShoppingCartsResponse.value = handleShoppingCartsHistoryResponse(
+                    repository.remote.getShoppingCarts(userId)
+                )
+            } catch (e: Exception) {
+                historyShoppingCartsResponse.value= NetworkResult.Error("Error fetching shopping carts...")
+            }
+        } else {
+            historyShoppingCartsResponse.value = NetworkResult.Error("Not connected to the internet. Please check your connection")
         }
     }
 
@@ -161,6 +178,20 @@ class ShoppingBagViewModel @Inject constructor(
             }
             response.isSuccessful -> {
                 NetworkResult.Success(true)
+            }
+            else -> {
+                NetworkResult.Error(response.message())
+            }
+        }
+    }
+
+    private fun handleShoppingCartsHistoryResponse(response: Response<List<ShoppingCart>>): NetworkResult<List<ShoppingCart>> {
+        return when {
+            response.message().toString().contains("timeout") -> {
+                NetworkResult.Error("Timeout")
+            }
+            response.isSuccessful -> {
+                NetworkResult.Success(response.body()!!)
             }
             else -> {
                 NetworkResult.Error(response.message())

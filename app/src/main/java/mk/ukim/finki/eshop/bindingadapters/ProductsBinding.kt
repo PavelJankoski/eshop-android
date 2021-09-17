@@ -8,12 +8,13 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.api.model.Product
+import mk.ukim.finki.eshop.api.model.ShoppingCart
 import mk.ukim.finki.eshop.ui.products.ProductsFragmentDirections
 import mk.ukim.finki.eshop.ui.products.ProductsViewModel
+import mk.ukim.finki.eshop.ui.shoppingBag.ShoppingBagFragmentDirections
 import mk.ukim.finki.eshop.util.Utils.Companion.showSnackbar
 
 class ProductsBinding {
@@ -38,6 +39,19 @@ class ProductsBinding {
                     productLayout.findNavController().navigate(action)
                 }catch (e: Exception) {
                     Log.e("onProductClickListener", e.message.toString())
+                }
+            }
+        }
+
+        @BindingAdapter("onShoppingCartClickListener")
+        @JvmStatic
+        fun onShoppingCartClickListener(shoppingCartLayout: ConstraintLayout, shoppingCart: ShoppingCart) {
+            shoppingCartLayout.setOnClickListener {
+                try {
+                    val action = ShoppingBagFragmentDirections.actionShoppingBagFragmentToShoppingCartDetailsActivity(shoppingCart)
+                    shoppingCartLayout.findNavController().navigate(action)
+                }catch (e: Exception) {
+                    Log.e("onShoppingCartClickListener", e.message.toString())
                 }
             }
         }

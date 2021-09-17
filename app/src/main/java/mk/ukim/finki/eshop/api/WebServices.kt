@@ -108,4 +108,9 @@ interface WebServices {
         @Path("amount") amount: Int
     ): Response<Map<String, String>>
 
+    @GET("/api/shopping-cart/all/{userId}")
+    suspend fun getShoppingCarts(
+        @Path("userId") userId: Long
+    ): Response<List<ShoppingCart>>
+
 }

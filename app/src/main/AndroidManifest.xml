@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".MyApplication"
@@ -16,16 +16,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Eshop"
         android:usesCleartextTraffic="true">
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+        <activity
+            android:name=".ui.shoppingBag.history.ShoppingCartDetails.ShoppingCartDetailsActivity"
+            android:exported="true" />
 
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-
-
-        <activity android:name=".ui.qrcode.QrCodeActivity"></activity>
+        <activity android:name=".ui.qrcode.QrCodeActivity" />
         <activity android:name=".ui.search.SearchActivity" />
         <activity android:name=".ui.details.DetailsActivity" />
         <activity android:name=".ui.splash.SplashScreenActivity">

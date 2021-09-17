@@ -17,6 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import mk.ukim.finki.eshop.MyApplication
 import mk.ukim.finki.eshop.R
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class Utils {
@@ -68,6 +69,13 @@ class Utils {
                     tv.visibility = View.VISIBLE
                 }
             }
+        }
+
+        fun shortDateFormat(dateString: String): String {
+            val date = LocalDateTime.parse(dateString)
+            val formatter = DateTimeFormatter.ofPattern("EE dd.MM.yyyy")
+            val formattedDate = date.format(formatter)
+            return  formattedDate
         }
 
     }

@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_shoppingBagFragment_to_categoriesFragment"
             app:destination="@id/categoriesFragment" />
+        <action
+            android:id="@+id/action_shoppingBagFragment_to_shoppingCartDetailsActivity"
+            app:destination="@id/shoppingCartDetailsActivity" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -149,4 +152,13 @@
         android:name="mk.ukim.finki.eshop.ui.account.HomeAccountFragment"
         android:label="Account"
         tools:layout="@layout/fragment_home_account" />
+    <activity
+        android:id="@+id/shoppingCartDetailsActivity"
+        android:name="mk.ukim.finki.eshop.ui.shoppingBag.history.ShoppingCartDetails.ShoppingCartDetailsActivity"
+        android:label="Shopping Cart Details"
+        tools:layout="@layout/activity_shopping_cart_details" >
+        <argument
+            android:name="shoppingCart"
+            app:argType="mk.ukim.finki.eshop.api.model.ShoppingCart" />
+    </activity>
 </navigation>
