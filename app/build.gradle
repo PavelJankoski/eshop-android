@@ -46,7 +46,7 @@ android {
     productFlavors {
         dev {
             resValue "string", "app_name", "dev-eshop"
-            buildConfigField ("String", "BASE_URL", "\"http://192.168.1.94:8080\"")
+            buildConfigField ("String", "BASE_URL", "\"http://192.168.100.241:8080\"")
         }
     }
 }
