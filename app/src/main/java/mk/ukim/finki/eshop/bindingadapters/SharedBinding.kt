@@ -1,6 +1,7 @@
 package mk.ukim.finki.eshop.bindingadapters
 
 import android.content.res.ColorStateList
+import android.graphics.Bitmap
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -21,6 +22,15 @@ class SharedBinding {
             imageView.load(imageUrl) {
                 crossfade(600)
                 error(R.drawable.ic_placeholder_image)
+            }
+        }
+
+        @BindingAdapter("loadImageFromBitmap")
+        @JvmStatic
+        fun loadImageFromBitmap(imageView: ImageView, bitmap: Bitmap?) {
+            imageView.load(bitmap) {
+                crossfade(600)
+                error(R.drawable.ic_account)
             }
         }
 

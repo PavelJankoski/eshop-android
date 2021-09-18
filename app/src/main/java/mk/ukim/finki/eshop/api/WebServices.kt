@@ -113,4 +113,9 @@ interface WebServices {
         @Path("userId") userId: Long
     ): Response<List<ShoppingCart>>
 
+    @GET("/api/users/{userId}")
+    suspend fun getUser(
+        @Path("userId") userId: Long
+    ): Response<User>
+
 }

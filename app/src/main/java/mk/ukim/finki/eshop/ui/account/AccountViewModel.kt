@@ -20,7 +20,9 @@ import mk.ukim.finki.eshop.api.dto.RegisterDto
 import mk.ukim.finki.eshop.api.dto.TokenDto
 import mk.ukim.finki.eshop.api.model.AuthResponse
 import mk.ukim.finki.eshop.api.model.ShoppingCart
+import mk.ukim.finki.eshop.api.model.User
 import mk.ukim.finki.eshop.data.datastore.DataStoreRepository
+import mk.ukim.finki.eshop.data.datastore.UserId
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_JWT
 import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_USER_ID
@@ -42,6 +44,7 @@ class AccountViewModel @Inject constructor(
     var userExistsResponseLogin: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
     var userExistsResponseRegister: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
     var registerResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
+    var userDataResponse: MutableLiveData<NetworkResult<User>> = MutableLiveData()
 
     var userId: Long = DEFAULT_USER_ID.toLong()
     var jwt: String = DEFAULT_JWT
@@ -128,6 +131,37 @@ class AccountViewModel @Inject constructor(
         }
     }
 
+    fun getUserData()  = viewModelScope.launch {
+        userDataResponse.value = NetworkResult.Loading()
+        if (Utils.hasInternetConnection(getApplication<Application>())) {
+            try {
+                val userId = loginManager.readUserId()
+                userDataResponse.value = handleUserResponse(
+                    repository.remote.getUser(userId)
+                )
+            } catch (e: Exception) {
+                authResponse.value = NetworkResult.Error("Cannot authenticate user")
+            }
+        }
+    }
+
+    private fun handleUserResponse(response: Response<User>): NetworkResult<User> {
+        return when {
+            response.message().toString().contains("timeout") -> {
+                NetworkResult.Error("Timeout")
+            }
+            response.isSuccessful -> {
+                NetworkResult.Success(response.body()!!)
+            }
+            else -> {
+                var errorMessage = response.message()
+                if (response.errorBody()?.string()?.contains("Invalid password") == true)
+                    errorMessage = "Invalid password...."
+                NetworkResult.Error(errorMessage)
+            }
+        }
+    }
+
 
     private fun handleResponse(response: Response<AuthResponse>) {
         val handledResponse = handleAuthResponse(response)
@@ -138,6 +172,7 @@ class AccountViewModel @Inject constructor(
             }
             handledResponse.data?.getUserId()?.let { userId->
                 loginManager.saveUserId(userId)
+                getUserData()
             }
         }
 

@@ -12,10 +12,13 @@
         <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/fragment_history.xml" value="0.1" />
         <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/fragment_home.xml" value="0.14221014492753623" />
         <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/fragment_payment.xml" value="0.14855072463768115" />
+        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/fragment_products.xml" value="0.1" />
+        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/fragment_shopping_bag.xml" value="0.10914855072463768" />
         <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/history_row_layout.xml" value="0.17708333333333334" />
         <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/placeholder_custom_order_product_row.xml" value="0.13272543059777103" />
         <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/placeholder_history_row.xml" value="0.17708333333333334" />
+        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/placeholder_profile.xml" value="0.14221014492753623" />
         <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/products_row_layout.xml" value="0.10914855072463768" />
         <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/shopping_cart_dialog.xml" value="0.15" />
         <entry key="app/src/main/res/drawable/ic_add_to_bag.xml" value="0.21822916666666667" />

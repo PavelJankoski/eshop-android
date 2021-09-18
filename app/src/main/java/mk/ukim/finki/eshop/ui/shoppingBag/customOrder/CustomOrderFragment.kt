@@ -54,13 +54,11 @@ class CustomOrderFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCustomOrderBinding.inflate(inflater, container, false)
-
-        binding.checkoutBtn.isCheckable = false
-
         binding.checkoutBtn.setOnClickListener {
             presentPaymentSheet()
         }
-
+        binding.checkoutBtn.isEnabled = false
+        fetchInitData()
         setupUserHasActiveCartObserver()
         observeProductsResponse()
         observeSwipeRemoveProduct()
@@ -68,17 +66,6 @@ class CustomOrderFragment : Fragment() {
         setupRecyclerView()
 
         return binding.root
-    }
-
-    private fun observePaymentSheetParamrs() {
-        shoppingBagViewModel.paymentParamsResponse.observe(viewLifecycleOwner, { response ->
-            if (response is NetworkResult.Success) {
-                customerId = response.data!!.get("customer")!!
-                ephemeralKeySecret = response.data.get("ephemeralKey")!!
-                paymentIntentClientSecret = response.data.get("paymentIntent")!!
-                binding.checkoutBtn.isCheckable = true
-            }
-        })
     }
 
     private fun setupUserHasActiveCartObserver() {
@@ -195,6 +182,7 @@ class CustomOrderFragment : Fragment() {
     private fun observeSwipeRemoveProduct() {
         shoppingBagViewModel.shoppingBagManager.addOrRemoveProductResponse.observe(viewLifecycleOwner, { response ->
             if (response is NetworkResult.Success) {
+                fetchInitData()
                 shoppingBagViewModel.getCartItems()
             }
         })
@@ -223,6 +211,7 @@ class CustomOrderFragment : Fragment() {
     }
 
     private fun fetchInitData() {
+        binding.checkoutBtn.isEnabled = false
         shoppingBagViewModel.fetchPaymentSheetParams()
     }
 
@@ -258,11 +247,22 @@ class CustomOrderFragment : Fragment() {
         }
     }
 
+    private fun observePaymentSheetParamrs() {
+        shoppingBagViewModel.paymentParamsResponse.observe(viewLifecycleOwner, { response ->
+            if (response is NetworkResult.Success) {
+                Utils.showSnackbar(binding.shoppingBagShimmerRecyclerView, "You're info is validated now. You can execute payments.", Snackbar.LENGTH_LONG);
+                customerId = response.data!!.get("customer")!!
+                ephemeralKeySecret = response.data.get("ephemeralKey")!!
+                paymentIntentClientSecret = response.data.get("paymentIntent")!!
+                binding.checkoutBtn.isEnabled=true
+            }
+        })
+    }
+
     override fun onResume() {
         super.onResume()
         shoppingBagViewModel.checkIfUserHasActiveShoppingCart()
         observePaymentSheetParamrs()
-        fetchInitData()
     }
 
     override fun onDestroy() {
