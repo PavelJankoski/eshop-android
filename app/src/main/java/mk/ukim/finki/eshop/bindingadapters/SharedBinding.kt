@@ -28,9 +28,13 @@ class SharedBinding {
         @BindingAdapter("loadImageFromBitmap")
         @JvmStatic
         fun loadImageFromBitmap(imageView: ImageView, bitmap: Bitmap?) {
-            imageView.load(bitmap) {
-                crossfade(600)
-                error(R.drawable.ic_account)
+            if (bitmap!= null) {
+                imageView.load(bitmap) {
+                    crossfade(600)
+                    error(R.drawable.ic_account)
+                }
+            } else {
+                imageView.load(R.drawable.ic_account)
             }
         }
 

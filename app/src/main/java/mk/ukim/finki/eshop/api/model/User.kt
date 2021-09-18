@@ -8,4 +8,8 @@ data class User(
     val name: String,
     val surname: String,
     val userName: String
-)
+) {
+    fun fullName(): String {
+        return String.format("%s %s", name, surname)
+    }
+}
