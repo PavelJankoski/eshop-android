@@ -124,10 +124,10 @@ class DetailsActivity : AppCompatActivity() {
     private fun setupAddToBagBtn() {
         binding.addToBagBtn.setOnClickListener {
             if(args.product.isInShoppingCart) {
-                detailsViewModel.removeProductFromShoppingCart(args.product.id)
+                detailsViewModel.removeProductFromShoppingCart(args.product.id, args.product.price.toInt())
             }
             else {
-                detailsViewModel.addProductToShoppingCart(args.product.id)
+                detailsViewModel.addProductToShoppingCart(args.product.id, args.product.price.toInt())
             }
         }
     }

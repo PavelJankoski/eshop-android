@@ -13,6 +13,15 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.api.model.Product
+import org.w3c.dom.Text
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatterBuilder
+import java.util.*
 
 class SharedBinding {
     companion object {
@@ -82,6 +91,16 @@ class SharedBinding {
                 btn.isEnabled = true
                 btn.setColorFilter(ContextCompat.getColor(btn.context, R.color.black))
             }
+        }
+
+        @BindingAdapter("formatDateFromString")
+        @JvmStatic
+        fun formatDateFromString(tv: TextView, date: String) {
+            val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+            val output = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault())
+            val d = sdf.parse(date)
+            val formattedTime = output.format(d!!)
+            tv.text = formattedTime
         }
 
     }

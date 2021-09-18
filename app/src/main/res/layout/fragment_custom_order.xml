@@ -167,7 +167,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:lines="2"
-            android:text="@string/you_don_t_have_any_products_in_the_sopping_cart_currently"
+            android:text="@string/you_don_t_have_any_products_in_the_shopping_cart_currently"
             android:textSize="20sp"
             android:textStyle="bold"
             android:visibility="invisible"

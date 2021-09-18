@@ -51,12 +51,12 @@ class ShoppingBagViewModel @Inject constructor(
         shoppingBagManager.removeProductFromShoppingCart(id, price)
     }
 
-    fun fetchPaymentSheetParams() = viewModelScope.launch {
+    private fun fetchPaymentSheetParams(price: Int) = viewModelScope.launch {
         paymentParamsResponse.value = NetworkResult.Loading()
         if (Utils.hasInternetConnection(getApplication<Application>())) {
             try {
                 paymentParamsResponse.value = handlePaymentParamsResponse(
-                    repository.remote.getPaymentSheetParams(shoppingBagManager.totalPrice.value!!)
+                    repository.remote.getPaymentSheetParams(price)
                 )
             } catch (e: Exception) {
                 paymentParamsResponse.value = NetworkResult.Error("Error retriving params...")
@@ -102,8 +102,9 @@ class ShoppingBagViewModel @Inject constructor(
         if (Utils.hasInternetConnection(getApplication<Application>())) {
             try {
                 val userId = loginManager.readUserId()
+                val response = repository.remote.getCartItems(userId)
                 cartItemsResponse.value = handleCartItemsResponse(
-                    repository.remote.getCartItems(userId)
+                    response
                 )
             } catch (e: Exception) {
                 cartItemsResponse.value = NetworkResult.Error("Error loading cart items...")
@@ -161,8 +162,13 @@ class ShoppingBagViewModel @Inject constructor(
                 NetworkResult.Error("Timeout")
             }
             response.isSuccessful -> {
-                shoppingBagManager.totalPrice.value = response.body()!!.map { it.product.price * it.quantity }.reduce { total, next -> total + next }.toInt()
+                var totalPrice = 0
+                if(!response.body().isNullOrEmpty()){
+                    totalPrice = response.body()!!.map { it.product.price * it.quantity }.reduce { total, next -> total + next }.toInt()
+                }
+                shoppingBagManager.totalPrice.value = totalPrice
                 productsInBagNumber.value = response.body()!!.size
+                fetchPaymentSheetParams(totalPrice)
                 NetworkResult.Success(response.body()!!)
             }
             else -> {

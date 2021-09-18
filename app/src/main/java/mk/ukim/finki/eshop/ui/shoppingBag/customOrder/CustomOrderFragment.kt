@@ -59,12 +59,12 @@ class CustomOrderFragment : Fragment() {
         }
         binding.checkoutBtn.isEnabled = false
         fetchInitData()
-        setupUserHasActiveCartObserver()
+
         observeProductsResponse()
         observeSwipeRemoveProduct()
         observeTotalPrice()
         setupRecyclerView()
-
+        observePaymentSheetParamrs()
         return binding.root
     }
 
@@ -262,7 +262,8 @@ class CustomOrderFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         shoppingBagViewModel.checkIfUserHasActiveShoppingCart()
-        observePaymentSheetParamrs()
+        setupUserHasActiveCartObserver()
+
     }
 
     override fun onDestroy() {

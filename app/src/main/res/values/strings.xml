@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">eshop</string>
     <string name="splash_screen_text">Shopping made easy!</string>
     <string name="shopping_cart">Shopping cart</string>
     <string name="search">Search</string>
@@ -51,7 +50,7 @@
     <string name="total">Total:</string>
     <string name="checkout">Checkout</string>
     <string name="wifi_off_message">You\'re wifi connection is off</string>
-    <string name="you_don_t_have_any_products_in_the_sopping_cart_currently">You don\'t have any products in the sopping cart currently</string>
+    <string name="you_don_t_have_any_products_in_the_shopping_cart_currently">You don\'t have any products in the shopping cart currently</string>
     <string name="you_don_t_have_active_shopping_cart">You don\'t have active shopping bag.</string>
     <string name="create_shopping_bag">Create shopping bag</string>
     <string name="shopping_cart_info">Shopping Cart Info</string>

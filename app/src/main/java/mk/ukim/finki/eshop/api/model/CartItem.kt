@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class CartItem(
     val id: Int,
-    @SerializedName("products")
+    @SerializedName("product")
     val product: Product,
     val quantity: Int
 ) : Parcelable

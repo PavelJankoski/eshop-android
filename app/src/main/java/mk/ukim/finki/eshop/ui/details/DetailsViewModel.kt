@@ -34,11 +34,11 @@ class DetailsViewModel @Inject constructor(
         wishlistManager.addProductToWishlist(product.id)
     }
 
-    fun addProductToShoppingCart(id: Int) {
-        shoppingBagManager.addProductToShoppingCart(id)
+    fun addProductToShoppingCart(id: Int, price: Int) {
+        shoppingBagManager.addProductToShoppingCart(id, price)
     }
 
-    fun removeProductFromShoppingCart(id: Int) {
-        shoppingBagManager.removeProductFromShoppingCart(id)
+    fun removeProductFromShoppingCart(id: Int, price: Int) {
+        shoppingBagManager.removeProductFromShoppingCart(id, price)
     }
 }
