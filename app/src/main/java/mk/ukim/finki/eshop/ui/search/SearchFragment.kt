@@ -1,39 +1,58 @@
 package mk.ukim.finki.eshop.ui.search
 
+import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.KeyEvent
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.core.app.ActivityCompat
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import mk.ukim.finki.eshop.adapters.SearchAdapter
-import mk.ukim.finki.eshop.databinding.ActivitySearchBinding
-import mk.ukim.finki.eshop.ui.qrcode.QrCodeActivity
-import mk.ukim.finki.eshop.util.Constants.Companion.PRODUCT_CODE_EXTRAS
-import mk.ukim.finki.eshop.util.Constants.Companion.SEARCH_HISTORY_EXTRAS
+import mk.ukim.finki.eshop.databinding.FragmentSearchBinding
+import mk.ukim.finki.eshop.util.Utils
+import okhttp3.internal.Util
 
 @AndroidEntryPoint
-class SearchActivity : AppCompatActivity() {
-    private var _binding: ActivitySearchBinding? = null
+class SearchFragment : Fragment() {
+    private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
     private val searchViewModel by viewModels<SearchViewModel>()
     private val mAdapter by lazy { SearchAdapter(searchViewModel) }
+    private val CAMERA_REQUEST_CODE = 100
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        _binding = ActivitySearchBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    private val permReqLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            val granted = permissions.entries.all {
+                it.value == true
+            }
+            if (granted) {
+                navigateToQrCodeFragment()
+            }
+            else {
+                Utils.showToast(requireContext(), "Cannot access qr code screen without camera permission", Toast.LENGTH_LONG)
+            }
+        }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
         setupSearchRecyclerView()
         setupClickListeners()
         searchInputEnterListener()
-        observeProductChange()
-        searchViewModel.readSearchHistory.observe(this, {table ->
+        searchViewModel.readSearchHistory.observe(viewLifecycleOwner, {table ->
             if(table.isNullOrEmpty()) {
                 searchHistoryIsEmpty()
             }
@@ -42,41 +61,39 @@ class SearchActivity : AppCompatActivity() {
             }
             mAdapter.setData(table.sortedByDescending { it.searchedOn })
         })
+        return binding.root
     }
 
-    private fun observeProductChange() {
-        searchViewModel.product.observe(this, { product ->
-            //val intent = Intent(this, DetailsActivity::class.java)
-            intent.putExtra("product", product)
-            startActivity(intent)
-        })
-    }
-
-    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val data: Intent? = result.data
-            val productCode = data?.getStringExtra(PRODUCT_CODE_EXTRAS)
-            lifecycleScope.launch {
-                searchViewModel.getProductByProductCodeSafeCall(productCode!!)
-            }
-        }
+    private fun navigateToQrCodeFragment() {
+        val action = SearchFragmentDirections.actionSearchFragmentToQrCodeFragment()
+        findNavController().navigate(action)
     }
 
     private fun setupClickListeners() {
         binding.searchBackIv.setOnClickListener {
-            finish()
+            //parentFragmentManager.popBackStack()
         }
         binding.clearTextView.setOnClickListener {
             searchViewModel.deleteAllSearchHistory()
         }
         binding.qrCodeImageView.setOnClickListener {
-            resultLauncher.launch(Intent(this, QrCodeActivity::class.java))
+            if (hasPermissions(requireContext(), arrayOf(Manifest.permission.CAMERA))) {
+                navigateToQrCodeFragment()
+            } else {
+                permReqLauncher.launch(
+                    arrayOf(Manifest.permission.CAMERA)
+                )
+            }
         }
+    }
+
+    private fun hasPermissions(context: Context, permissions: Array<String>): Boolean = permissions.all {
+        ActivityCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun setupSearchRecyclerView() {
         binding.searchHistoryRecyclerView.adapter = mAdapter
-        binding.searchHistoryRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
+        binding.searchHistoryRecyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun searchInputEnterListener () {
@@ -86,11 +103,7 @@ class SearchActivity : AppCompatActivity() {
                 ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) -> {
                     if(!binding.searchEditText.text.isNullOrEmpty()) {
                         val searchText = binding.searchEditText.text.toString()
-                        val intent = Intent()
-                        intent.putExtra(SEARCH_HISTORY_EXTRAS, searchText)
-                        setResult(Activity.RESULT_OK, intent)
-                        searchViewModel.insertSearchText(searchText)
-                        finish()
+
                     }
                     return@setOnKeyListener true
                 }
@@ -115,8 +128,8 @@ class SearchActivity : AppCompatActivity() {
         binding.searchHistoryEmptyTv.visibility = View.GONE
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 }

@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,8 +21,6 @@ import mk.ukim.finki.eshop.adapters.ProductsGridAdapter
 import mk.ukim.finki.eshop.adapters.ProductsListAdapter
 import mk.ukim.finki.eshop.databinding.FragmentProductsBinding
 import mk.ukim.finki.eshop.ui.account.LoginManager
-import mk.ukim.finki.eshop.ui.products.filter.FilterBottomSheetFragmentDirections
-import mk.ukim.finki.eshop.ui.search.SearchActivity
 import mk.ukim.finki.eshop.util.Constants.Companion.SEARCH_HISTORY_EXTRAS
 import mk.ukim.finki.eshop.util.GlobalVariables.Companion.productsInBagNumber
 import mk.ukim.finki.eshop.util.NetworkResult
@@ -127,8 +126,8 @@ class ProductsFragment : Fragment() {
     }
 
     private fun startSearchActivity() {
-        val intent: Intent = Intent(activity, SearchActivity::class.java)
-        resultLauncher.launch(intent)
+        val action = ProductsFragmentDirections.actionProductsFragmentToSearchFragment()
+        findNavController().navigate(action)
     }
 
     private fun observeProductsResponse() {

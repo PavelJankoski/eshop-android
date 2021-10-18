@@ -59,12 +59,12 @@ class MainActivity : AppCompatActivity() {
             if(destination.id == R.id.shoppingBagFragment) {
                 binding.bottomNavigationView.visibility = View.GONE
             }
-            else if(destination.id==R.id.detailsFragment) {
+            else if(destination.id==R.id.detailsFragment || destination.id == R.id.searchFragment || destination.id == R.id.qrCodeFragment) {
                 binding.bottomNavigationView.visibility = View.GONE
                 binding.toolbar.visibility = View.GONE
             }
             else {
-
+                binding.toolbar.visibility = View.VISIBLE
                 binding.bottomNavigationView.visibility = View.VISIBLE
             }
         }
