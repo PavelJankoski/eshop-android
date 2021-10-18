@@ -17,16 +17,15 @@
     <color name="red">#bf3c23</color>
     <color name="pinkred">#FF4081</color>
 
-    <color name="backgroundColor">@color/lightGray</color>
-    <color name="placeHolderColor">@color/mediumGray</color>
-    <color name="itemColor">@color/darker</color>
+    <!-- DARK THEME -->
+    <color name="backgroundColor">@color/dark</color>
+    <color name="placeHolderColor">@color/darker</color>
+    <color name="itemColor">@color/mediumGray</color>
 
     // Custom Bottom Navigation
-    <color name="btmNvgBackgroundColor">@color/white</color>
-    <color name="btmNvgIndicatorColor">@color/lightMediumGray</color>
-    <color name="btmNvgTextColor">@color/black</color>
-    <color name="btmNvgIconColorActive">@color/black</color>
-    <color name="btmNvgIconColor">@color/mediumGray</color>
-
-
+    <color name="btmNvgBackgroundColor">@color/black</color>
+    <color name="btmNvgIndicatorColor">@color/darkGray</color>
+    <color name="btmNvgTextColor">@color/white</color>
+    <color name="btmNvgIconColorActive">@color/white</color>
+    <color name="btmNvgIconColor">@color/lightGray</color>
 </resources>

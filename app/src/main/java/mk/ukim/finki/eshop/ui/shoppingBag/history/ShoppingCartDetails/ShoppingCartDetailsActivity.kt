@@ -6,9 +6,7 @@ import androidx.navigation.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.OrderProductsAdapter
-import mk.ukim.finki.eshop.databinding.ActivityDetailsBinding
 import mk.ukim.finki.eshop.databinding.ActivityShoppingCartDetailsBinding
-import mk.ukim.finki.eshop.ui.details.DetailsActivityArgs
 
 class ShoppingCartDetailsActivity : AppCompatActivity() {
 

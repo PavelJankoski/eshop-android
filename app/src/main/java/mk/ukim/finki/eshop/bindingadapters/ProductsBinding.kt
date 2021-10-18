@@ -35,7 +35,7 @@ class ProductsBinding {
         fun onProductClickListener(productLayout: ConstraintLayout, product: Product) {
             productLayout.setOnClickListener {
                 try {
-                    val action = ProductsFragmentDirections.actionProductsFragmentToDetailsActivity(product)
+                    val action = ProductsFragmentDirections.actionProductsFragmentToDetailsFragment(product)
                     productLayout.findNavController().navigate(action)
                 }catch (e: Exception) {
                     Log.e("onProductClickListener", e.message.toString())

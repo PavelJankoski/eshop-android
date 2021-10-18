@@ -6,30 +6,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.SearchAdapter
-import mk.ukim.finki.eshop.api.model.Image
-import mk.ukim.finki.eshop.api.model.Product
-import mk.ukim.finki.eshop.databinding.ActivityMainBinding
 import mk.ukim.finki.eshop.databinding.ActivitySearchBinding
-import mk.ukim.finki.eshop.databinding.FragmentCategoriesBinding
-import mk.ukim.finki.eshop.ui.details.DetailsActivity
 import mk.ukim.finki.eshop.ui.qrcode.QrCodeActivity
 import mk.ukim.finki.eshop.util.Constants.Companion.PRODUCT_CODE_EXTRAS
-import mk.ukim.finki.eshop.util.Constants.Companion.QR_CODE_PRODUCT_DETAILS_EXTRAS
 import mk.ukim.finki.eshop.util.Constants.Companion.SEARCH_HISTORY_EXTRAS
-import mk.ukim.finki.eshop.util.NetworkResult
-import mk.ukim.finki.eshop.util.Utils
-import mk.ukim.finki.eshop.util.Utils.Companion.showToast
 
 @AndroidEntryPoint
 class SearchActivity : AppCompatActivity() {
@@ -59,7 +46,7 @@ class SearchActivity : AppCompatActivity() {
 
     private fun observeProductChange() {
         searchViewModel.product.observe(this, { product ->
-            val intent = Intent(this, DetailsActivity::class.java)
+            //val intent = Intent(this, DetailsActivity::class.java)
             intent.putExtra("product", product)
             startActivity(intent)
         })

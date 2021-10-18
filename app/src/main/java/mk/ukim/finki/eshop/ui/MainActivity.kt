@@ -3,6 +3,7 @@ package mk.ukim.finki.eshop.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.PopupMenu
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -49,18 +50,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupBottomNavigation() {
         navController = findNavController(R.id.navHostFragment)
-        val appBarConfig = AppBarConfiguration(setOf(
-            /*R.id.homeFragment,*/
-            R.id.categoriesFragment,
-            R.id.wishlistFragment,
-            R.id.homeAccountFragment
-        ))
-        binding.bottomNavigationView.setupWithNavController(navController)
-        setupActionBarWithNavController(navController, appBarConfig)
+        setupActionBarWithNavController(navController)
+        val popupMenu = PopupMenu(this, null)
+        popupMenu.inflate(R.menu.bottom_nav_menu)
+        val menu = popupMenu.menu
+        binding.bottomNavigationView.setupWithNavController(menu, navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if(destination.id == R.id.shoppingBagFragment) {
                 binding.bottomNavigationView.visibility = View.GONE
-            } else {
+            }
+            else if(destination.id==R.id.detailsFragment) {
+                binding.bottomNavigationView.visibility = View.GONE
+                binding.toolbar.visibility = View.GONE
+            }
+            else {
 
                 binding.bottomNavigationView.visibility = View.VISIBLE
             }

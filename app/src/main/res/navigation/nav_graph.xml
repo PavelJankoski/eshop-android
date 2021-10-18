@@ -47,18 +47,14 @@
         android:label="Wishlist"
         tools:layout="@layout/fragment_wishlist" >
         <action
-            android:id="@+id/action_wishlistFragment_to_detailsActivity"
-            app:destination="@id/detailsActivity"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-        <action
             android:id="@+id/action_wishlistFragment_to_loginPrompt"
             app:destination="@id/loginPrompt" />
         <action
             android:id="@+id/action_wishlistFragment_to_shoppingBagFragment"
             app:destination="@id/shoppingBagFragment" />
+        <action
+            android:id="@+id/action_wishlistFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/accountFragment"
@@ -78,13 +74,6 @@
             app:argType="string"
             android:defaultValue="Products" />
         <action
-            android:id="@+id/action_productsFragment_to_detailsActivity"
-            app:destination="@id/detailsActivity"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-        <action
             android:id="@+id/action_productsFragment_to_filterBottomSheetFragment"
             app:destination="@id/filterBottomSheetFragment" />
         <argument
@@ -97,16 +86,14 @@
         <action
             android:id="@+id/action_productsFragment_to_loginPrompt"
             app:destination="@id/loginPrompt" />
+        <action
+            android:id="@+id/action_productsFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
-    <activity
-        android:id="@+id/detailsActivity"
-        android:name="mk.ukim.finki.eshop.ui.details.DetailsActivity"
-        android:label="activity_details"
-        tools:layout="@layout/activity_details" >
-        <argument
-            android:name="product"
-            app:argType="mk.ukim.finki.eshop.api.model.Product" />
-    </activity>
     <dialog
         android:id="@+id/filterBottomSheetFragment"
         android:name="mk.ukim.finki.eshop.ui.products.filter.FilterBottomSheetFragment"
@@ -161,4 +148,12 @@
             android:name="shoppingCart"
             app:argType="mk.ukim.finki.eshop.api.model.ShoppingCart" />
     </activity>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="mk.ukim.finki.eshop.ui.details.DetailsFragment"
+        android:label="DetailsFragment" >
+        <argument
+            android:name="product"
+            app:argType="mk.ukim.finki.eshop.api.model.Product" />
+    </fragment>
 </navigation>

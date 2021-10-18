@@ -3,41 +3,25 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/drawable/custom_password_icon.xml" value="0.11458333333333333" />
-        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/drawable/ic_account.xml" value="0.11458333333333333" />
-        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/activity_details.xml" value="0.1" />
-        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/activity_search.xml" value="0.14221014492753623" />
-        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/activity_shopping_cart_details.xml" value="0.1" />
-        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/custom_order_product_row.xml" value="0.10914855072463768" />
-        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/fragment_account.xml" value="0.14221014492753623" />
-        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/fragment_custom_order.xml" value="0.10778985507246377" />
-        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/fragment_history.xml" value="0.1" />
-        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/fragment_home.xml" value="0.14221014492753623" />
-        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/fragment_payment.xml" value="0.14855072463768115" />
-        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/fragment_products.xml" value="0.1" />
-        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
-        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/fragment_shopping_bag.xml" value="0.10914855072463768" />
-        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/history_row_layout.xml" value="0.17708333333333334" />
-        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/placeholder_custom_order_product_row.xml" value="0.13272543059777103" />
-        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/placeholder_history_row.xml" value="0.17708333333333334" />
-        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/placeholder_profile.xml" value="0.14221014492753623" />
-        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/products_row_layout.xml" value="0.10914855072463768" />
-        <entry key="..\:/Users/DELL/StudioProjects/eshop-android/app/src/main/res/layout/shopping_cart_dialog.xml" value="0.15" />
-        <entry key="app/src/main/res/drawable/ic_add_to_bag.xml" value="0.21822916666666667" />
-        <entry key="app/src/main/res/drawable/ic_remove_from_bag.xml" value="0.21822916666666667" />
-        <entry key="app/src/main/res/layout/activity_details.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/fragment_custom_order.xml" value="0.15" />
-        <entry key="app/src/main/res/layout/fragment_more_details.xml" value="0.1203125" />
-        <entry key="app/src/main/res/layout/fragment_reviews.xml" value="0.1203125" />
-        <entry key="app/src/main/res/layout/fragment_wishlist.xml" value="0.1203125" />
-        <entry key="app/src/main/res/layout/products_item_layout.xml" value="0.25052083333333336" />
-        <entry key="app/src/main/res/layout/products_row_layout.xml" value="0.25052083333333336" />
-        <entry key="app/src/main/res/layout/reviews_row_layout.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/search_row_layout.xml" value="0.25052083333333336" />
-        <entry key="app/src/main/res/layout/wishlist_row_layout.xml" value="0.13854166666666667" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/custom_input.xml" value="0.14739583333333334" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_user.xml" value="0.2703125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_user_focused.xml" value="0.2703125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_user_outlined.xml" value="0.14739583333333334" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/search_bg.xml" value="0.14739583333333334" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/activity_details.xml" value="0.1621376811594203" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/activity_main.xml" value="0.1621376811594203" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/activity_qr_code.xml" value="0.13125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/activity_search.xml" value="0.13125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/activity_shopping_cart_details.xml" value="0.13125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_account.xml" value="0.13125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_categories.xml" value="0.33178869323447635" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_details.xml" value="0.245018115942029" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_shopping_bag.xml" value="0.13125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

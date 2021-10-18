@@ -14,7 +14,7 @@
 
     <item
         android:id="@+id/homeAccountFragment"
-        android:icon="@drawable/ic_account"
+        android:icon="@drawable/ic_user_outlined"
         android:title="@string/account" />
 
 

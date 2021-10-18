@@ -1,12 +1,15 @@
 package mk.ukim.finki.eshop.ui.details
 
 import android.content.res.ColorStateList
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.navigation.navArgs
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.material.snackbar.Snackbar
@@ -14,49 +17,51 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.DetailsPagerAdapter
-import mk.ukim.finki.eshop.databinding.ActivityDetailsBinding
+import mk.ukim.finki.eshop.databinding.FragmentCategoriesBinding
+import mk.ukim.finki.eshop.databinding.FragmentDetailsBinding
 import mk.ukim.finki.eshop.ui.details.moredetails.MoreDetailsFragment
 import mk.ukim.finki.eshop.ui.details.reviews.ReviewsFragment
-import mk.ukim.finki.eshop.util.Constants.Companion.PRODUCT_RESULT_KEY
-import mk.ukim.finki.eshop.util.GlobalVariables.Companion.productsInBagNumber
+import mk.ukim.finki.eshop.util.Constants
+import mk.ukim.finki.eshop.util.GlobalVariables
 import mk.ukim.finki.eshop.util.Utils
 
 @AndroidEntryPoint
-class DetailsActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityDetailsBinding
-    private val args by navArgs<DetailsActivityArgs>()
+class DetailsFragment : Fragment() {
+    private var _binding: FragmentDetailsBinding? = null
+    private val binding get() = _binding!!
     private val detailsViewModel by viewModels<DetailsViewModel>()
+    private val args by navArgs<DetailsFragmentArgs>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityDetailsBinding.inflate(layoutInflater)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        // Inflate the layout for this fragment
+        _binding = FragmentDetailsBinding.inflate(inflater, container, false)
         binding.product = args.product
         binding.isLoggedIn = detailsViewModel.loginManager.readToken() != ""
         binding.lifecycleOwner = this
-        setContentView(binding.root)
-        binding.backFab.setOnClickListener {
-            finish()
-        }
         args.product.images?.map { SlideModel(it.imageUrl, ScaleTypes.CENTER_CROP) }?.let {
             binding.imageSlider.setImageList(
                 it
             )
         }
-        Utils.setupCartItemsBadge(binding.cartBadge, productsInBagNumber.value!!)
+        Utils.setupCartItemsBadge(binding.cartBadge, GlobalVariables.productsInBagNumber.value!!)
         observeShoppingBagActions()
         observeWishlistActions()
         setupAddToWishlistBtn()
         setupAddToBagBtn()
         setupViewPager()
+        return binding.root
     }
 
     private fun observeShoppingBagActions() {
-        detailsViewModel.addProductToBagResponse.observe(this, {
+        detailsViewModel.addProductToBagResponse.observe(viewLifecycleOwner, {
             if(it.data!!) {
                 addProductToBagSuccess()
             }
         })
-        detailsViewModel.removeProductFromBagResponse.observe(this, {
+        detailsViewModel.removeProductFromBagResponse.observe(viewLifecycleOwner, {
             if(it.data!!) {
                 removeProductFromBagSuccess()
             }
@@ -64,12 +69,12 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun observeWishlistActions() {
-        detailsViewModel.addProductToWishlistResponse.observe(this, {
+        detailsViewModel.addProductToWishlistResponse.observe(viewLifecycleOwner, {
             if(it.data!!) {
                 addProductToWishlistSuccess()
             }
         })
-        detailsViewModel.removeProductFromWishlistResponse.observe(this, {
+        detailsViewModel.removeProductFromWishlistResponse.observe(viewLifecycleOwner, {
             if(it.data!!) {
                 removeProductFromWishlistSuccess()
             }
@@ -77,7 +82,7 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun addProductToBagSuccess() {
-        Utils.setupCartItemsBadge(binding.cartBadge, productsInBagNumber.value!!)
+        Utils.setupCartItemsBadge(binding.cartBadge, GlobalVariables.productsInBagNumber.value!!)
         args.product.isInShoppingCart = true
         binding.addToBagBtn.strokeColor = ColorStateList.valueOf(ContextCompat.getColor(binding.addToBagBtn.context, R.color.red))
         binding.addToBagBtn.text = getString(R.string.remove_from_bag)
@@ -85,7 +90,7 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun removeProductFromBagSuccess() {
-        Utils.setupCartItemsBadge(binding.cartBadge, productsInBagNumber.value!!)
+        Utils.setupCartItemsBadge(binding.cartBadge, GlobalVariables.productsInBagNumber.value!!)
         args.product.isInShoppingCart = false
         binding.addToBagBtn.text = getString(R.string.add_to_bag)
         binding.addToBagBtn.strokeColor = ColorStateList.valueOf(ContextCompat.getColor(binding.addToBagBtn.context, R.color.green))
@@ -138,8 +143,8 @@ class DetailsActivity : AppCompatActivity() {
         val fragments = arrayListOf<Fragment>(MoreDetailsFragment(), ReviewsFragment())
         val tabLayoutTitles = arrayListOf<String>("More details", "Reviews")
         val resultBundle = Bundle()
-        resultBundle.putParcelable(PRODUCT_RESULT_KEY, args.product)
-        val pagerAdapter = DetailsPagerAdapter(resultBundle, fragments, this)
+        resultBundle.putParcelable(Constants.PRODUCT_RESULT_KEY, args.product)
+        val pagerAdapter = DetailsPagerAdapter(resultBundle, fragments, requireActivity())
         binding.detailsViewPager.apply {
             adapter = pagerAdapter
         }
@@ -147,5 +152,10 @@ class DetailsActivity : AppCompatActivity() {
         TabLayoutMediator(binding.detailsTabLayout, binding.detailsViewPager) { tab, position ->
             tab.text = tabLayoutTitles[position]
         }.attach()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

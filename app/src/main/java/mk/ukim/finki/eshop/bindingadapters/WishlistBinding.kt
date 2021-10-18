@@ -31,7 +31,7 @@ class WishlistBinding {
         fun onWishlistProductClickListener(productLayout: ConstraintLayout, product: Product) {
             productLayout.setOnClickListener {
                 try {
-                    val action = WishlistFragmentDirections.actionWishlistFragmentToDetailsActivity(product)
+                    val action = WishlistFragmentDirections.actionWishlistFragmentToDetailsFragment(product)
                     productLayout.findNavController().navigate(action)
                 }catch (e: Exception) {
                     Log.e("onProductClickListener", e.message.toString())

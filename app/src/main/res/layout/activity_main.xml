@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg"
+    android:background="@color/backgroundColor"
     tools:context=".ui.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -36,16 +36,23 @@
         app:layout_constraintTop_toBottomOf="@+id/appBar"
         app:navGraph="@navigation/nav_graph" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+
+
+    <me.ibrahimsn.lib.SmoothBottomBar
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:layout_height="60dp"
+        app:backgroundColor="@color/btmNvgBackgroundColor"
+        app:indicatorColor="@color/btmNvgIndicatorColor"
+        app:textColor="@color/btmNvgTextColor"
+        app:iconTint="@color/btmNvgIconColor"
+        app:iconTintActive="@color/btmNvgIconColorActive"
+        app:iconSize="25dp"
+        app:textSize="14sp"
+        app:menu="@menu/bottom_nav_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu"
-        app:labelVisibilityMode="labeled"/>
+        app:layout_constraintStart_toStartOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
