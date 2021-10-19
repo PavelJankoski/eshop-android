@@ -14,11 +14,13 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp"
-        style="@style/CategoryCardViewStyle">
+        app:cardCornerRadius="10dp"
+        app:strokeColor="@color/strokeColor"
+        app:strokeWidth="1dp">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/cardBackgroundColor"
             onWishlistProductClickListener="@{product}"
             android:padding="8dp">
 

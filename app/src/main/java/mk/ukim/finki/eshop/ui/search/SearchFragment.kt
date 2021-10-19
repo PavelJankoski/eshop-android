@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,7 +30,6 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
     private val searchViewModel by viewModels<SearchViewModel>()
     private val mAdapter by lazy { SearchAdapter(searchViewModel) }
-    private val CAMERA_REQUEST_CODE = 100
 
     private val permReqLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -71,7 +71,7 @@ class SearchFragment : Fragment() {
 
     private fun setupClickListeners() {
         binding.searchBackIv.setOnClickListener {
-            //parentFragmentManager.popBackStack()
+            findNavController().popBackStack()
         }
         binding.clearTextView.setOnClickListener {
             searchViewModel.deleteAllSearchHistory()

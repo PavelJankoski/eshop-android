@@ -17,13 +17,19 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp"
-        style="@style/CategoryCardViewStyle">
+        app:cardCornerRadius="10dp"
+        app:strokeColor="@color/strokeColor"
+        app:strokeWidth="1dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         onProductClickListener="@{product}"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:background="@color/cardBackgroundColor"
+        >
 
         <ImageView
             android:scaleType="centerCrop"

@@ -10,12 +10,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.appbar.AppBarLayout
 import dagger.hilt.android.AndroidEntryPoint
+import me.ibrahimsn.lib.SmoothBottomBar
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.ProductsGridAdapter
 import mk.ukim.finki.eshop.adapters.ProductsListAdapter
@@ -125,7 +126,7 @@ class ProductsFragment : Fragment() {
         }
     }
 
-    private fun startSearchActivity() {
+    private fun navigateToSearchFragment() {
         val action = ProductsFragmentDirections.actionProductsFragmentToSearchFragment()
         findNavController().navigate(action)
     }
@@ -204,7 +205,7 @@ class ProductsFragment : Fragment() {
             }
             R.id.search_menuItem -> {
                 searchedText = ""
-                startSearchActivity()
+                navigateToSearchFragment()
                 true
             }
             R.id.type_menuItem -> {

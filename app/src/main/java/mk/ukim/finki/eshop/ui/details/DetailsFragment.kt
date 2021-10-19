@@ -9,12 +9,15 @@ import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import me.ibrahimsn.lib.SmoothBottomBar
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.DetailsPagerAdapter
 import mk.ukim.finki.eshop.databinding.FragmentCategoriesBinding
@@ -45,6 +48,9 @@ class DetailsFragment : Fragment() {
             binding.imageSlider.setImageList(
                 it
             )
+        }
+        binding.backFab.setOnClickListener {
+            findNavController().popBackStack()
         }
         Utils.setupCartItemsBadge(binding.cartBadge, GlobalVariables.productsInBagNumber.value!!)
         observeShoppingBagActions()

@@ -50,21 +50,28 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupBottomNavigation() {
         navController = findNavController(R.id.navHostFragment)
-        setupActionBarWithNavController(navController)
+        val appBarConfig = AppBarConfiguration(setOf(
+            /*R.id.homeFragment,*/
+            R.id.categoriesFragment,
+            R.id.wishlistFragment,
+            R.id.homeAccountFragment
+        ))
         val popupMenu = PopupMenu(this, null)
         popupMenu.inflate(R.menu.bottom_nav_menu)
         val menu = popupMenu.menu
         binding.bottomNavigationView.setupWithNavController(menu, navController)
+        setupActionBarWithNavController(navController, appBarConfig)
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if(destination.id == R.id.shoppingBagFragment) {
                 binding.bottomNavigationView.visibility = View.GONE
             }
             else if(destination.id==R.id.detailsFragment || destination.id == R.id.searchFragment || destination.id == R.id.qrCodeFragment) {
                 binding.bottomNavigationView.visibility = View.GONE
-                binding.toolbar.visibility = View.GONE
+                binding.appBar.visibility = View.GONE
             }
             else {
-                binding.toolbar.visibility = View.VISIBLE
+                binding.appBar.visibility = View.VISIBLE
                 binding.bottomNavigationView.visibility = View.VISIBLE
             }
         }

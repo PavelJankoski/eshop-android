@@ -28,4 +28,9 @@
     <color name="btmNvgTextColor">@color/white</color>
     <color name="btmNvgIconColorActive">@color/white</color>
     <color name="btmNvgIconColor">@color/lightGray</color>
+
+    // Custom CardView Style
+    <color name="strokeColor">@color/mediumGray</color>
+    <color name="cardBackgroundColor">@color/darker</color>
+    <color name="cardBackgroundLightColor">#206200EA</color>
 </resources>

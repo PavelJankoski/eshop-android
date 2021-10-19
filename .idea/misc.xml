@@ -13,6 +13,8 @@
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/activity_qr_code.xml" value="0.13125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/activity_search.xml" value="0.13125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/activity_shopping_cart_details.xml" value="0.13125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/categories_row_layout.xml" value="0.13125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/custom_order_product_row.xml" value="0.13125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_account.xml" value="0.13125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_categories.xml" value="0.33178869323447635" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_details.xml" value="0.245018115942029" />
@@ -20,6 +22,14 @@
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_qr_code.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_search.xml" value="0.13125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_shopping_bag.xml" value="0.13125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/history_row_layout.xml" value="0.13125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/placeholder_history_row.xml" value="0.13125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/products_item_layout.xml" value="0.13125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/products_row_layout.xml" value="0.13125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/reviews_row_layout.xml" value="0.264" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/search_row_layout.xml" value="0.13125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/sorting_dropdown_item.xml" value="0.13125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/wishlist_row_layout.xml" value="0.13125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
       </map>
     </option>
