@@ -35,7 +35,6 @@ class ProductsViewModel @Inject constructor(
     var removeProductResponse = shoppingBagManager.removeProductFromBagResponse
     var addOrRemovedProduct: Int? = null
     var isRemoveProduct: Boolean? = null
-    var categoryId: Int? = null
 
 
     fun changeListing() {

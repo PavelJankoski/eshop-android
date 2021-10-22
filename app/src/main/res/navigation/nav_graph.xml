@@ -189,5 +189,15 @@
         android:id="@+id/qrCodeFragment"
         android:name="mk.ukim.finki.eshop.ui.qrcode.QrCodeFragment"
         android:label="fragment_qr_code"
-        tools:layout="@layout/fragment_qr_code" />
+        tools:layout="@layout/fragment_qr_code" >
+        <action
+            android:id="@+id/action_qrCodeFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/productsFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
 </navigation>
