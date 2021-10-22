@@ -9,12 +9,8 @@ import mk.ukim.finki.eshop.api.model.User
 
 @Parcelize
 data class Rating(
-    @SerializedName("rating")
     val rating: Float,
-    @SerializedName("review")
     val review: String,
-    @SerializedName("reviewedOn")
     val reviewedOn: String,
-    @SerializedName("user")
     val user: @RawValue User
 ) : Parcelable

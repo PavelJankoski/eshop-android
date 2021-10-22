@@ -33,7 +33,7 @@ class ProductsViewModel @Inject constructor(
     var addOrRemoveProductResponse = shoppingBagManager.addOrRemoveProductResponse
     var addProductResponse = shoppingBagManager.addProductToBagResponse
     var removeProductResponse = shoppingBagManager.removeProductFromBagResponse
-    var addOrRemovedProduct: Int? = null
+    var addOrRemovedProduct: Long? = null
     var isRemoveProduct: Boolean? = null
 
 
@@ -74,17 +74,17 @@ class ProductsViewModel @Inject constructor(
         getProductsInPriceRangeSafeCall(dto)
     }
 
-    fun getFilteredProductsForCategory(categoryId: Long, searchText: String) = viewModelScope.launch {
-        getFilteredProductsForCategorySafeCall(categoryId, searchText)
+    fun getFilteredProductsForCategory(searchText: String) = viewModelScope.launch {
+        getFilteredProductsForCategorySafeCall(searchText)
     }
 
-    fun addProductToShoppingCart(id: Int) {
+    fun addProductToShoppingCart(id: Long) {
         addOrRemovedProduct = id
         isRemoveProduct = false
         shoppingBagManager.addProductToShoppingCart(id)
     }
 
-    fun removeProductFromShoppingCart(id: Int) {
+    fun removeProductFromShoppingCart(id: Long) {
         addOrRemovedProduct = id
         isRemoveProduct = true
         shoppingBagManager.removeProductFromShoppingCart(id)
@@ -95,7 +95,7 @@ class ProductsViewModel @Inject constructor(
         productsResponse.value = NetworkResult.Loading()
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {
-                val response = repository.remote.getProductsByCategory(categoryId)
+                val response = repository.remote.getProductsByCategory(categoryId, 0)
                 productsResponse.value = handleProductsResponse(response)
 
             } catch (e: Exception) {
@@ -108,7 +108,7 @@ class ProductsViewModel @Inject constructor(
         productsResponse.value = NetworkResult.Loading()
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {
-                val response = repository.remote.getProductsInPriceRange(dto)
+                val response = repository.remote.getFilteredProductsForCategory(dto, 0)
                 productsResponse.value = handleProductsResponse(response)
 
             } catch (e: Exception) {
@@ -117,12 +117,12 @@ class ProductsViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getFilteredProductsForCategorySafeCall(categoryId: Long, searchText: String) {
+    private suspend fun getFilteredProductsForCategorySafeCall(searchText: String) {
         productsResponse.value = NetworkResult.Loading()
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {
                 withContext(Dispatchers.Main) {
-                    val response = repository.remote.getFilteredProductsForCategory(categoryId, searchText)
+                    val response = repository.remote.getSearchedProducts(searchText, 0)
                     productsResponse.postValue(handleProductsResponse(response))
                 }
 
@@ -142,21 +142,7 @@ class ProductsViewModel @Inject constructor(
                 NetworkResult.Error("Products not found.")
             }
             response.isSuccessful -> {
-
-                    val products = response.body()!!
-                viewModelScope.launch(Dispatchers.IO) {
-                    products.forEach { p ->
-
-                        val dto = shoppingBagManager.isInShoppingCartAndFaveSafeCall(p.id)
-                        if (dto != null) {
-                            p.isFavourite = dto.isFavorite.toBoolean()
-                            p.isInShoppingCart = dto.isInShoppingCart.toBoolean()
-                        }
-                }
-                    productsResponse.postValue(NetworkResult.Success(products))
-                }
-
-                NetworkResult.Success(products)
+                NetworkResult.Success(response.body()!!)
             }
             else -> {
                 NetworkResult.Error(response.message())
@@ -172,7 +158,7 @@ class ProductsViewModel @Inject constructor(
         }
     }
 
-    fun deleteProductFromWishlist(id: Int) {
+    fun deleteProductFromWishlist(id: Long) {
         productsResponse.value?.data!!.find { it.id == id }?.isFavourite = false
         productsResponse.value = NetworkResult.Success(productsResponse.value?.data!!)
         wishlistManager.removeProductFromWishlist(id)

@@ -29,7 +29,7 @@ class QrCodeViewModel @Inject constructor(
         product.value = NetworkResult.Loading()
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {
-                val response = repository.remote.getProductByProductCode(productCode)
+                val response = repository.remote.getProductByProductCode(productCode, 0)
                 product.value = handleProductsResponse(response, productCode)
 
             } catch (e: Exception) {

@@ -30,7 +30,7 @@
 
         <ImageView
             android:id="@+id/imageView2"
-            loadImageFromUrl="@{product.images[0].imageUrl}"
+            loadImageFromUrl="@{product.images[0]}"
             android:layout_width="170dp"
             android:layout_height="200dp"
             android:scaleType="centerCrop"

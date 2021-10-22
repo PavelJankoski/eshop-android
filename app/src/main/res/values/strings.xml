@@ -60,6 +60,7 @@
     <string name="ended">Ended:</string>
     <string name="cart_status">Cart Status:</string>
     <string name="log_out">LOG OUT</string>
+    <string name="shop">Shop</string>
 
 
     <string-array name="sorting_products">

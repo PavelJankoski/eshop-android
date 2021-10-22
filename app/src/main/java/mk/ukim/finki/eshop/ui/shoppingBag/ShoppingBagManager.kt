@@ -34,7 +34,7 @@ class ShoppingBagManager @Inject constructor(
     var totalPrice: MutableLiveData<Int> = MutableLiveData(0)
 
 
-    fun addProductToShoppingCart(productId: Int, price: Int = 0)  = viewModelScope.launch {
+    fun addProductToShoppingCart(productId: Long, price: Int = 0)  = viewModelScope.launch {
         addOrRemoveProductResponse.value = NetworkResult.Loading()
         if (Utils.hasInternetConnection(getApplication<Application>())) {
             try {
@@ -54,7 +54,7 @@ class ShoppingBagManager @Inject constructor(
         }
     }
 
-    fun removeProductFromShoppingCart(productId: Int, price: Int = 0)  = viewModelScope.launch {
+    fun removeProductFromShoppingCart(productId: Long, price: Int = 0)  = viewModelScope.launch {
         addOrRemoveProductResponse.value = NetworkResult.Loading()
         if (Utils.hasInternetConnection(getApplication<Application>())) {
             try {
@@ -118,7 +118,7 @@ class ShoppingBagManager @Inject constructor(
         }
     }
 
-    suspend fun isInShoppingCartAndFaveSafeCall(productId: Int): FavCartDto? {
+    suspend fun isInShoppingCartAndFaveSafeCall(productId: Long): FavCartDto? {
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {
                 val userId = loginManager.readUserId()

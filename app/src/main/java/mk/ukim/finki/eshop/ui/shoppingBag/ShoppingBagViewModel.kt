@@ -43,11 +43,11 @@ class ShoppingBagViewModel @Inject constructor(
     var paymentParamsResponse: MutableLiveData<NetworkResult<Map<String, String>>> = MutableLiveData()
     val historyShoppingCartsResponse: MutableLiveData<NetworkResult<List<ShoppingCart>>> = MutableLiveData()
 
-    fun addProductToShoppingCart(id: Int, price: Int) {
+    fun addProductToShoppingCart(id: Long, price: Int) {
         shoppingBagManager.addProductToShoppingCart(id, price)
     }
 
-    fun removeProductFromShoppingCart(id: Int, price: Int) {
+    fun removeProductFromShoppingCart(id: Long, price: Int) {
         shoppingBagManager.removeProductFromShoppingCart(id, price)
     }
 

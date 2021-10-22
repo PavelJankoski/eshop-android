@@ -26,7 +26,7 @@
 
             <ImageView
                 android:scaleType="centerCrop"
-                loadImageFromUrl="@{product.images[0].imageUrl}"
+                loadImageFromUrl="@{product.images[0]}"
                 android:id="@+id/imageView2"
                 android:layout_width="100dp"
                 android:layout_height="150dp"

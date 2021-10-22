@@ -105,7 +105,7 @@ class ProductsFragment : Fragment() {
 
     private fun getProducts() {
         if (!args.searchText.isNullOrEmpty()) {
-            productsViewModel.getFilteredProductsForCategory(args.categoryId, args.searchText!!)
+            productsViewModel.getFilteredProductsForCategory(args.searchText!!)
         }
         else if(args.priceRangeDto != null) {
             productsViewModel.getProductsInPriceRange(args.priceRangeDto!!)

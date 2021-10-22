@@ -65,14 +65,18 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if(destination.id == R.id.shoppingBagFragment) {
                 binding.bottomNavigationView.visibility = View.GONE
+                binding.borderBlackView.visibility = View.GONE
             }
             else if(destination.id==R.id.detailsFragment || destination.id == R.id.searchFragment || destination.id == R.id.qrCodeFragment) {
                 binding.bottomNavigationView.visibility = View.GONE
+                binding.borderBlackView.visibility = View.GONE
                 binding.appBar.visibility = View.GONE
             }
             else {
                 binding.appBar.visibility = View.VISIBLE
                 binding.bottomNavigationView.visibility = View.VISIBLE
+                binding.borderBlackView.visibility = View.VISIBLE
+
             }
         }
     }

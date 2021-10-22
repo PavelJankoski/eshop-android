@@ -44,7 +44,7 @@ class DetailsFragment : Fragment() {
         binding.product = args.product
         binding.isLoggedIn = detailsViewModel.loginManager.readToken() != ""
         binding.lifecycleOwner = this
-        args.product.images?.map { SlideModel(it.imageUrl, ScaleTypes.CENTER_CROP) }?.let {
+        args.product.images.map { SlideModel(it, ScaleTypes.CENTER_CROP) }.let {
             binding.imageSlider.setImageList(
                 it
             )

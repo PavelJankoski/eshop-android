@@ -1,12 +1,7 @@
 package mk.ukim.finki.eshop.data.model
 
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.RawValue
-import mk.ukim.finki.eshop.api.model.Image
-import mk.ukim.finki.eshop.api.model.Product
 import mk.ukim.finki.eshop.util.Constants.Companion.WISHLIST_TABLE
 import java.time.LocalDateTime
 

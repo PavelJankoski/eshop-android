@@ -32,10 +32,10 @@ class ReviewsFragment : Fragment() {
         binding.reviewsRecyclerView.adapter = mAdapter
         binding.reviewsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        if(!myBundle.ratings.isNullOrEmpty()) {
-            mAdapter.setData(myBundle.ratings)
-            binding.root.requestLayout()
-        }
+//        if(!myBundle.ratings.isNullOrEmpty()) {
+//            mAdapter.setData(myBundle.ratings)
+//            binding.root.requestLayout()
+//        }
         return binding.root
     }
 

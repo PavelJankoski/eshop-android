@@ -5,7 +5,7 @@
         android:icon="@drawable/ic_home" />-->
 
     <item android:id="@+id/categoriesFragment"
-        android:title="@string/categories"
+        android:title="@string/shop"
         android:icon="@drawable/ic_hanger" />
 
     <item android:id="@+id/wishlistFragment"

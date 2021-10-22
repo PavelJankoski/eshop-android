@@ -80,16 +80,16 @@ class WishlistViewModel @Inject constructor(
         }
     }
 
-    fun removeProductFromWishlist(id: Int) {
+    fun removeProductFromWishlist(id: Long) {
         wishlistProductsResponse.value = NetworkResult.Success(wishlistProductsResponse.value!!.data!!.filter { p -> p.id != id })
         wishlistManager.removeProductFromWishlist(id)
     }
 
-    fun moveToBag(id: Int) {
+    fun moveToBag(id: Long) {
         shoppingBagManager.addProductToShoppingCart(id)
     }
 
-    fun removeFromBag(id: Int) {
+    fun removeFromBag(id: Long) {
         shoppingBagManager.removeProductFromShoppingCart(id)
 
     }

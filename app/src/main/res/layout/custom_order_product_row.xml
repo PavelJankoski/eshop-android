@@ -39,7 +39,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars"
-                loadImageFromUrl="@{item.product.images[0].imageUrl}"/>
+                loadImageFromUrl="@{item.product.images[0]}"/>
 
             <TextView
                 android:id="@+id/textView2"

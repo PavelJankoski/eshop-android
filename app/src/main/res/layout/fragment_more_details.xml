@@ -91,29 +91,6 @@
             app:layout_constraintTop_toBottomOf="@+id/textView9"
             tools:text="Good casual cotton t-shirt" />
 
-        <TextView
-            android:id="@+id/textView91"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/condition"
-            android:textAllCaps="true"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/description_textView"
-            app:layout_constraintTop_toBottomOf="@+id/description_textView" />
 
-        <TextView
-            android:id="@+id/condition_textView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            onlyFirstLetterCapital="@{product.condition}"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textView91"
-            app:layout_constraintTop_toBottomOf="@+id/textView91"
-            tools:text="New" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

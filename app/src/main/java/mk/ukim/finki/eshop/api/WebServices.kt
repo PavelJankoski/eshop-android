@@ -6,17 +6,32 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface WebServices {
-    @GET("/api/categories")
+    @GET("/api/product-catalog-service/categories")
     suspend fun getCategories() : Response<List<Category>>
 
-    @GET("/api/products/category/{categoryId}")
-    suspend fun getProductsByCategory(@Path("categoryId") categoryId: Long) : Response<List<Product>>
+    @GET("/api/product-catalog-service/products/{categoryId}")
+    suspend fun getProductsByCategory(
+        @Path("categoryId") categoryId: Long,
+        @Query(value = "userId") userId: Long
+    ) : Response<List<Product>>
 
-    @POST("/api/products/priceRange")
-    suspend fun getProductsInPriceRange(@Body dto: PriceRangeDto): Response<List<Product>>
+    @POST("/api/product-catalog-service/products/filter")
+    suspend fun getFilteredProductsForCategory(
+        @Body dto: PriceRangeDto,
+        @Query(value = "userId") userId: Long
+    ): Response<List<Product>>
 
-    @GET("/api/products/filter-products")
-    suspend fun getFilteredProductsForCategory(@Query(value = "categoryId") categoryId: Long, @Query(value = "searchText") searchText: String): Response<List<Product>>
+    @GET("/api/product-catalog-service/products/search")
+    suspend fun getSearchedProducts(
+        @Query(value = "searchText") searchText: String,
+        @Query(value = "userId") userId: Long
+    ): Response<List<Product>>
+
+    @GET("/api/product-catalog-service/products/code/{code}")
+    suspend fun getProductByProductCode(
+        @Path("code") productCode: String,
+        @Query(value = "userId") userId: Long
+    ): Response<Product>
 
     @POST("/api/users")
     suspend fun registerUser(@Body dto: RegisterDto)
@@ -57,7 +72,7 @@ interface WebServices {
 
     @PATCH("/api/shopping-cart/add-product/{productId}/{userId}/{copies}")
     suspend fun addProductToShoppingCart(
-        @Path("productId") productId: Int,
+        @Path("productId") productId: Long,
         @Path("userId") userId: Long,
         @Path("copies") copies: Int
     ): Response<ShoppingCart>
@@ -70,13 +85,13 @@ interface WebServices {
 
     @PATCH("/api/shopping-cart/remove-product/{productId}/{userId}")
     suspend fun removeFromShoppingCart(
-        @Path("productId") productId: Int,
+        @Path("productId") productId: Long,
         @Path("userId") userId: Long
     ): Response<ShoppingCart>
 
     @GET("/api/shopping-cart/fav-cart/{productId}/{userId}")
     suspend fun isFavAndInCart(
-        @Path("productId") productId: Int,
+        @Path("productId") productId: Long,
         @Path("userId") userId: Long
     ): Response<FavCartDto>
 
@@ -84,24 +99,19 @@ interface WebServices {
     @GET("/api/users/add-fave/{userId}/{productId}")
     suspend fun addProductToWishlist(
         @Path("userId") userId: Long,
-        @Path("productId") productId: Int
+        @Path("productId") productId: Long
     ): Response<Void>
 
     @GET("/api/users/remove-fave/{userId}/{productId}")
     suspend fun removeProductFromWishlist(
         @Path("userId") userId: Long,
-        @Path("productId") productId: Int
+        @Path("productId") productId: Long
     ): Response<Void>
 
     @GET("/api/users/all-fave/{userId}")
     suspend fun getAllProductsInWishlist(
         @Path("userId") userId: Long
     ): Response<List<Product>>
-
-    @GET("/api/products/productCode/{code}")
-    suspend fun getProductByProductCode(
-        @Path("code") productCode: String
-    ): Response<Product>
 
     @POST("/api/strpe-mobile-endpoint/payment-sheet/{amount}")
     suspend fun getPaymentSheetParams(

@@ -8,7 +8,7 @@ data class User(
     val createDate: String,
     val email: String,
     val id: Int,
-    val image: Image?,
+    val image: String,
     val name: String,
     val surname: String,
     val userName: String

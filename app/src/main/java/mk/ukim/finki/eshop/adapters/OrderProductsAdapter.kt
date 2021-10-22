@@ -40,7 +40,7 @@ class OrderProductsAdapter: RecyclerView.Adapter<OrderProductsAdapter.MyViewHold
         return cartItems.size
     }
 
-    fun getProduct(position: Int): Int {
+    fun getProduct(position: Int): Long {
         return cartItems[position].product.id
     }
 

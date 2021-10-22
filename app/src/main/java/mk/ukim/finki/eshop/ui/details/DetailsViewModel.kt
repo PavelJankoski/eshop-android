@@ -26,7 +26,7 @@ class DetailsViewModel @Inject constructor(
     var removeProductFromWishlistResponse = wishlistManager.removeProductFromWishlistResponse
 
 
-    fun deleteProductFromWishlist(id: Int) {
+    fun deleteProductFromWishlist(id: Long) {
         wishlistManager.removeProductFromWishlist(id)
     }
 
@@ -34,11 +34,11 @@ class DetailsViewModel @Inject constructor(
         wishlistManager.addProductToWishlist(product.id)
     }
 
-    fun addProductToShoppingCart(id: Int, price: Int) {
+    fun addProductToShoppingCart(id: Long, price: Int) {
         shoppingBagManager.addProductToShoppingCart(id, price)
     }
 
-    fun removeProductFromShoppingCart(id: Int, price: Int) {
+    fun removeProductFromShoppingCart(id: Long, price: Int) {
         shoppingBagManager.removeProductFromShoppingCart(id, price)
     }
 }

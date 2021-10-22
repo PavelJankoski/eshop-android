@@ -13,16 +13,20 @@ class RemoteDataSource @Inject constructor(
                 return webServices.getCategories()
         }
 
-        suspend fun getProductsByCategory(categoryId: Long): Response<List<Product>> {
-                return webServices.getProductsByCategory(categoryId)
+        suspend fun getProductsByCategory(categoryId: Long, userId: Long): Response<List<Product>> {
+                return webServices.getProductsByCategory(categoryId, userId)
         }
 
-        suspend fun getProductsInPriceRange(dto: PriceRangeDto): Response<List<Product>> {
-                return webServices.getProductsInPriceRange(dto)
+        suspend fun getFilteredProductsForCategory(dto: PriceRangeDto, userId: Long): Response<List<Product>> {
+                return webServices.getFilteredProductsForCategory(dto, userId)
         }
 
-        suspend fun getFilteredProductsForCategory(categoryId: Long, searchText: String): Response<List<Product>> {
-                return webServices.getFilteredProductsForCategory(categoryId, searchText)
+        suspend fun getSearchedProducts(searchText: String, userId: Long): Response<List<Product>> {
+                return webServices.getSearchedProducts(searchText, userId)
+        }
+
+        suspend fun getProductByProductCode(productCode: String, userId: Long): Response<Product> {
+                return webServices.getProductByProductCode(productCode, userId)
         }
 
         suspend fun registerUser(dto: RegisterDto) {
@@ -57,7 +61,7 @@ class RemoteDataSource @Inject constructor(
                 return webServices.getCartItems(userId)
         }
 
-        suspend fun addProductToShoppingCart(userId: Long, productId: Int): Response<ShoppingCart> {
+        suspend fun addProductToShoppingCart(userId: Long, productId: Long): Response<ShoppingCart> {
                 return webServices.addProductToShoppingCart(productId, userId, 1)
         }
 
@@ -65,19 +69,19 @@ class RemoteDataSource @Inject constructor(
                 return webServices.isInShoppingCart(productId, userId)
         }
 
-        suspend fun removeProductFromShoppingCart(userId: Long, productId: Int): Response<ShoppingCart> {
+        suspend fun removeProductFromShoppingCart(userId: Long, productId: Long): Response<ShoppingCart> {
                 return webServices.removeFromShoppingCart(productId, userId)
         }
 
-        suspend fun isInCartAndFave(userId: Long, productId: Int): Response<FavCartDto> {
+        suspend fun isInCartAndFave(userId: Long, productId: Long): Response<FavCartDto> {
                 return webServices.isFavAndInCart(productId, userId)
         }
 
-        suspend fun addProductToWishlist(userId: Long, productId: Int): Response<Void> {
+        suspend fun addProductToWishlist(userId: Long, productId: Long): Response<Void> {
                 return webServices.addProductToWishlist(userId, productId)
         }
 
-        suspend fun removeProductFromWishlist(userId: Long, productId: Int): Response<Void> {
+        suspend fun removeProductFromWishlist(userId: Long, productId: Long): Response<Void> {
                 return webServices.removeProductFromWishlist(userId, productId)
         }
 
@@ -85,9 +89,6 @@ class RemoteDataSource @Inject constructor(
                 return webServices.getAllProductsInWishlist(userId)
         }
 
-        suspend fun getProductByProductCode(productCode: String): Response<Product> {
-                return webServices.getProductByProductCode(productCode)
-        }
 
         suspend fun getPaymentSheetParams(amount: Int): Response<Map<String, String>> {
                 return webServices.getPaymentSheetParams(amount)

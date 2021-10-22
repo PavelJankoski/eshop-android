@@ -41,7 +41,7 @@ class CategoriesWomanFragment : Fragment() {
                 is NetworkResult.Success -> {
                     hideShimmerEffect(binding.womanCategoriesShimmerFrameLayout, binding.womanCategoriesRecyclerView)
                     if(response.data != null) {
-                        mAdapter.setData(response.data.filter { it.gender.lowercase() == "female" })
+                        mAdapter.setData(response.data.filter { it.gender.lowercase() == "women" })
                     }
                 }
                 is NetworkResult.Error -> {
@@ -65,7 +65,7 @@ class CategoriesWomanFragment : Fragment() {
         lifecycleScope.launch {
             categoriesViewModel.readCategories.observe(viewLifecycleOwner, {table ->
                 if(!table.isNullOrEmpty()) {
-                    mAdapter.setData(table[0].categories.filter { it.gender.lowercase() == "female" })
+                    mAdapter.setData(table[0].categories.filter { it.gender.lowercase() == "women" })
                 }
             })
         }

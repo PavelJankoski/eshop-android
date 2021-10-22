@@ -34,7 +34,7 @@ class WishlistManager @Inject constructor(
     var addProductToWishlistResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData(NetworkResult.Error("", false))
     var removeProductFromWishlistResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData(NetworkResult.Error("", false))
 
-    fun addProductToWishlist(productId: Int)  = viewModelScope.launch {
+    fun addProductToWishlist(productId: Long)  = viewModelScope.launch {
         addOrRemoveProductResponse.value = NetworkResult.Loading()
         if (Utils.hasInternetConnection(getApplication<Application>())) {
             try {
@@ -51,7 +51,7 @@ class WishlistManager @Inject constructor(
         }
     }
 
-    fun removeProductFromWishlist(productId: Int)  = viewModelScope.launch {
+    fun removeProductFromWishlist(productId: Long)  = viewModelScope.launch {
         addOrRemoveProductResponse.value = NetworkResult.Loading()
         if (Utils.hasInternetConnection(getApplication<Application>())) {
             try {

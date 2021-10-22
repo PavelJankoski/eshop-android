@@ -30,13 +30,20 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintBottom_toTopOf="@+id/borderBlack_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBar"
         app:navGraph="@navigation/nav_graph" />
 
-
+    <View
+        android:id="@+id/borderBlack_view"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/mediumGray"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <me.ibrahimsn.lib.SmoothBottomBar
         android:id="@+id/bottomNavigationView"

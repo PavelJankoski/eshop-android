@@ -8,28 +8,20 @@ import kotlinx.parcelize.RawValue
 
 @Parcelize
 data class Product(
-    @SerializedName("brand")
+    val id: Long,
     val brand: String,
-    @SerializedName("condition")
-    val condition: String,
-    @SerializedName("description")
     val description: String,
-    @SerializedName("id")
-    val id: Int,
     @SerializedName("starRating")
     val rating: Float,
-    @SerializedName("numRatings")
     val numRatings: Int,
     @SerializedName("images")
-    val images: @RawValue List<Image>?,
-    @SerializedName("ratings")
-    val ratings: @RawValue List<Rating>?,
-    @SerializedName("price")
+    val images: @RawValue List<String>,
+    val sizes: @RawValue List<Size>,
     val price: Double,
-    @SerializedName("productCode")
+    @SerializedName("code")
     val productCode: String,
-    @SerializedName("productName")
     val name: String,
+    @SerializedName("isInWishlist")
     var isFavourite: Boolean = false,
     var isInShoppingCart: Boolean = false
 ) : Parcelable

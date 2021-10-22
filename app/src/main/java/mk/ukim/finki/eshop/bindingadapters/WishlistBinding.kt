@@ -1,26 +1,15 @@
 package mk.ukim.finki.eshop.bindingadapters
 
 import android.util.Log
-import android.widget.Button
-import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
-import coil.load
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
-import mk.ukim.finki.eshop.R
-import mk.ukim.finki.eshop.api.model.Image
 import mk.ukim.finki.eshop.api.model.Product
-import mk.ukim.finki.eshop.ui.products.ProductsFragmentDirections
-import mk.ukim.finki.eshop.ui.products.ProductsViewModel
 import mk.ukim.finki.eshop.ui.wishlist.WishlistFragmentDirections
 import mk.ukim.finki.eshop.ui.wishlist.WishlistViewModel
 import mk.ukim.finki.eshop.util.Utils
-import android.content.res.ColorStateList
-
-
 
 
 class WishlistBinding {
