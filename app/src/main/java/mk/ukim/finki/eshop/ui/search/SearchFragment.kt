@@ -96,6 +96,8 @@ class SearchFragment : Fragment() {
         binding.searchHistoryRecyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
+
+
     private fun searchInputEnterListener () {
         binding.searchEditText.setOnKeyListener { _, keyCode, event ->
             when {
@@ -103,7 +105,9 @@ class SearchFragment : Fragment() {
                 ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) -> {
                     if(!binding.searchEditText.text.isNullOrEmpty()) {
                         val searchText = binding.searchEditText.text.toString()
-
+                        searchViewModel.insertSearchText(searchText)
+                        val action = SearchFragmentDirections.actionSearchFragmentToProductsFragment(1, null, searchText, "\"".plus(searchText).plus("\""))
+                        findNavController().navigate(action)
                     }
                     return@setOnKeyListener true
                 }

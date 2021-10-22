@@ -64,10 +64,6 @@
         <argument
             android:name="categoryId"
             app:argType="long" />
-        <argument
-            android:name="categoryType"
-            app:argType="string"
-            android:defaultValue="Products" />
         <action
             android:id="@+id/action_productsFragment_to_filterBottomSheetFragment"
             app:destination="@id/filterBottomSheetFragment" />
@@ -94,9 +90,15 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@id/productsFragment"
-            app:popUpToInclusive="false" />
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <argument
+            android:name="searchText"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="categoryType"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <dialog
         android:id="@+id/filterBottomSheetFragment"
@@ -173,6 +175,15 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_searchFragment_to_productsFragment"
+            app:destination="@id/productsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/productsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/qrCodeFragment"

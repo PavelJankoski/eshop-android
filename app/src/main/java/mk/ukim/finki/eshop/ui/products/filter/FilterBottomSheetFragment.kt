@@ -60,7 +60,7 @@ class FilterBottomSheetFragment : BottomSheetDialogFragment() {
 
         binding.applyButton.setOnClickListener {
             val dto = PriceRangeDto(args.categoryId, binding.priceRangeSeekbar.currentMinValue.toFloat(), binding.priceRangeSeekbar.currentMaxValue.toFloat())
-            val action = FilterBottomSheetFragmentDirections.actionFilterBottomSheetFragmentToProductsFragment(1, "", dto)
+            val action = FilterBottomSheetFragmentDirections.actionFilterBottomSheetFragmentToProductsFragment(1, dto, null, "")
             findNavController().navigate(action)
         }
 

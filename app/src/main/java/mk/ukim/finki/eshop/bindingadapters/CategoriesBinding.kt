@@ -37,7 +37,7 @@ class CategoriesBinding {
         fun onCategoryClickListener(categoryRowLayout: ConstraintLayout, category: Category) {
             categoryRowLayout.setOnClickListener {
                 try {
-                    val action = CategoriesFragmentDirections.actionCategoriesFragmentToProductsFragment(category.id, category.type, null)
+                    val action = CategoriesFragmentDirections.actionCategoriesFragmentToProductsFragment(category.id, null, null, category.type)
                     categoryRowLayout.findNavController().navigate(action)
                 }catch (e: Exception) {
                     Log.e("onCategoryClickListener", e.message.toString())

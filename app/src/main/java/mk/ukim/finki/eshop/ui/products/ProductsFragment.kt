@@ -42,7 +42,6 @@ class ProductsFragment : Fragment() {
     private var menuItemType = true
     private val mAdapterList by lazy { ProductsListAdapter(productsViewModel, productsViewModel.loginManager.loggedIn.value) }
     private val mAdapterGrid by lazy { ProductsGridAdapter(productsViewModel, productsViewModel.loginManager.loggedIn.value) }
-    private var searchedText: String = ""
     private lateinit var menuItem: MenuItem
 
 
@@ -105,8 +104,8 @@ class ProductsFragment : Fragment() {
     }
 
     private fun getProducts() {
-        if (searchedText.isNotEmpty()) {
-            productsViewModel.getFilteredProductsForCategory(args.categoryId, searchedText)
+        if (!args.searchText.isNullOrEmpty()) {
+            productsViewModel.getFilteredProductsForCategory(args.categoryId, args.searchText!!)
         }
         else if(args.priceRangeDto != null) {
             productsViewModel.getProductsInPriceRange(args.priceRangeDto!!)
@@ -116,15 +115,6 @@ class ProductsFragment : Fragment() {
         }
     }
 
-    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val data: Intent? = result.data
-            val searchText = data?.getStringExtra(SEARCH_HISTORY_EXTRAS)
-            if (searchText != null) {
-                searchedText = searchText
-            }
-        }
-    }
 
     private fun navigateToSearchFragment() {
         val action = ProductsFragmentDirections.actionProductsFragmentToSearchFragment()
@@ -204,7 +194,6 @@ class ProductsFragment : Fragment() {
                 true
             }
             R.id.search_menuItem -> {
-                searchedText = ""
                 navigateToSearchFragment()
                 true
             }

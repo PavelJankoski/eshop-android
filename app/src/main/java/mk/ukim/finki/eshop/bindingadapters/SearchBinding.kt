@@ -5,6 +5,9 @@ import android.content.Intent
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import mk.ukim.finki.eshop.ui.search.SearchFragmentDirections
 import mk.ukim.finki.eshop.ui.search.SearchViewModel
 import mk.ukim.finki.eshop.util.Constants
 
@@ -23,10 +26,8 @@ class SearchBinding {
         @BindingAdapter("searchRowClickListener")
         fun searchRowClickListener(constraintLayout: ConstraintLayout, text: String) {
             constraintLayout.setOnClickListener {
-                val intent = Intent()
-                intent.putExtra(Constants.SEARCH_HISTORY_EXTRAS, text)
-                (constraintLayout.context as Activity).setResult(Activity.RESULT_OK, intent)
-                (constraintLayout.context as Activity).finish()
+                val action = SearchFragmentDirections.actionSearchFragmentToProductsFragment(1, null, text, "\"".plus(text).plus("\""))
+                constraintLayout.findNavController().navigate(action)
             }
         }
     }
