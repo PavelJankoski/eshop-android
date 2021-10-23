@@ -1,7 +1,6 @@
 package mk.ukim.finki.eshop.ui.account
 
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,7 +11,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.viewpager2.widget.ViewPager2
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -27,7 +25,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.PagerAdapter
-import mk.ukim.finki.eshop.api.dto.TokenDto
 import mk.ukim.finki.eshop.databinding.FragmentAccountBinding
 import mk.ukim.finki.eshop.ui.account.login.LoginFragment
 import mk.ukim.finki.eshop.ui.account.register.RegisterFragment
@@ -63,7 +60,7 @@ class AccountFragment : Fragment() {
             .registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
                 override fun onSuccess(loginResult: LoginResult?) {
                     Log.i("login", "success")
-                    accountViewModel.loginWithFacebook(TokenDto(loginResult?.accessToken?.token))
+                    //accountViewModel.loginWithFacebook(TokenDto(loginResult?.accessToken?.token))
                 }
 
                 override fun onCancel() {
@@ -104,7 +101,7 @@ class AccountFragment : Fragment() {
         try {
             val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)
             val idToken = account.idToken
-            accountViewModel.loginWithGoogle(TokenDto(idToken))
+            //accountViewModel.loginWithGoogle(TokenDto(idToken))
         } catch (e: ApiException) {
             Utils.showToast(
                 requireContext(),
@@ -116,8 +113,14 @@ class AccountFragment : Fragment() {
 
     private fun setupRegistrationObserver() {
         accountViewModel.registerResponse.observe(viewLifecycleOwner, { response ->
-            if (response is NetworkResult.Success)
+            if (response is NetworkResult.Success){
                 binding.accountViewPager.setCurrentItem(0, true)
+                Utils.showToast(requireContext(), "Successfully registered. Please log in", Toast.LENGTH_LONG)
+            }
+            else {
+                Utils.showToast(requireContext(), response.message!!, Toast.LENGTH_LONG)
+            }
+
         })
     }
 

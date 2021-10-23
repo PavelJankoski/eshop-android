@@ -22,7 +22,6 @@ import mk.ukim.finki.eshop.adapters.ProductsGridAdapter
 import mk.ukim.finki.eshop.adapters.ProductsListAdapter
 import mk.ukim.finki.eshop.databinding.FragmentProductsBinding
 import mk.ukim.finki.eshop.ui.account.LoginManager
-import mk.ukim.finki.eshop.util.Constants.Companion.SEARCH_HISTORY_EXTRAS
 import mk.ukim.finki.eshop.util.GlobalVariables.Companion.productsInBagNumber
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
@@ -107,8 +106,8 @@ class ProductsFragment : Fragment() {
         if (!args.searchText.isNullOrEmpty()) {
             productsViewModel.getFilteredProductsForCategory(args.searchText!!)
         }
-        else if(args.priceRangeDto != null) {
-            productsViewModel.getProductsInPriceRange(args.priceRangeDto!!)
+        else if(args.filterDto != null) {
+            productsViewModel.getProductsInPriceRange(args.filterDto!!)
         }
         else {
             productsViewModel.getProductsForCategory(args.categoryId)

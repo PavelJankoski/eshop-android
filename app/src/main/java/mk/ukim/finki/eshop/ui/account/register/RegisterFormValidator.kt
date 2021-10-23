@@ -11,7 +11,6 @@ import mk.ukim.finki.eshop.util.validators.ValidationMessagesAndRules.Companion.
 import mk.ukim.finki.eshop.util.validators.ValidationMessagesAndRules.Companion.PASSWORD_REQUIRED
 import mk.ukim.finki.eshop.util.validators.ValidationMessagesAndRules.Companion.PASSWORD_VALID
 import mk.ukim.finki.eshop.util.validators.ValidationMessagesAndRules.Companion.SURNAME_REQUIRED
-import mk.ukim.finki.eshop.util.validators.ValidationMessagesAndRules.Companion.USERNAME_REQUIRED
 
 class RegisterFormValidator {
 
@@ -23,11 +22,6 @@ class RegisterFormValidator {
     val surnameLiveData = MutableLiveData<String>()
     val surnameValidator = LiveDataValidator(surnameLiveData).apply {
         addRule(SURNAME_REQUIRED) { it.isNullOrBlank() }
-    }
-
-    val usernameLiveData = MutableLiveData<String>()
-    val usernameValidator = LiveDataValidator(usernameLiveData).apply {
-        addRule(USERNAME_REQUIRED) { it.isNullOrBlank() }
     }
 
     val emailLiveData = MutableLiveData<String>()
@@ -46,7 +40,6 @@ class RegisterFormValidator {
         val validators = listOf(
             nameValidator,
             surnameValidator,
-            usernameValidator,
             emailValidator,
             passwordValidator
         )

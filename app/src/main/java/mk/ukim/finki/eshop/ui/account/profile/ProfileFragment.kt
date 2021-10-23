@@ -1,6 +1,5 @@
 package mk.ukim.finki.eshop.ui.account.profile
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,14 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import dagger.hilt.android.AndroidEntryPoint
-import mk.ukim.finki.eshop.R
-import mk.ukim.finki.eshop.api.dto.RegisterDto
 import mk.ukim.finki.eshop.api.model.User
 import mk.ukim.finki.eshop.databinding.FragmentProfileBinding
-import mk.ukim.finki.eshop.databinding.FragmentRegisterBinding
 import mk.ukim.finki.eshop.ui.account.AccountViewModel
 import mk.ukim.finki.eshop.ui.account.LoginManager
 import mk.ukim.finki.eshop.util.NetworkResult

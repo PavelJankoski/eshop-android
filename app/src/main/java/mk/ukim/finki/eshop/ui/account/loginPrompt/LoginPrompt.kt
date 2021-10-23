@@ -20,7 +20,7 @@ class LoginPrompt : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentLoginPromptBinding.inflate(inflater, container, false)
 
         binding.loginBtn.setOnClickListener {

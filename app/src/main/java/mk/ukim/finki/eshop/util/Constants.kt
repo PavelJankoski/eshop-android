@@ -4,18 +4,11 @@ class Constants {
     companion object {
         const val PRODUCT_RESULT_KEY = "productBundle"
 
-        const val BASE_URL = "http://192.168.6.4:8080"
-
         // ROOM Database
         const val DATABASE_NAME = "clothing_eshop_db"
         const val CATEGORY_TABLE = "categories"
         const val WISHLIST_TABLE = "wishlist"
         const val SEARCH_TABLE = "search_history"
-
-        const val SEARCH_HISTORY_EXTRAS = "search_history_extras"
-        const val QR_CODE_PRODUCT_DETAILS_EXTRAS = "qr_code_product_details_extras"
-        const val PRODUCT_CODE_EXTRAS = "product_code_extras"
-
 
         // DATA STORE - PREFERENCE KEYS
         const val PREFERENCE_NAME = "eshop-preferences"
@@ -40,5 +33,17 @@ class Constants {
 
         // Stripe publishable key
         const val STRIPE_PUBLISHABLE_KEY = "pk_test_51H0AUpKlrDn4L6TppUjWu90nNVVYxLPfCctgG9DoaMIdMB4SSGbM4SIb1vvxldSyzw7f9k2TRGnZ2OnHYJFGXEO300ZAVYUir2"
+
+        // RETROFIT PARAMS
+        const val CATEGORY_ID_PARAM = "categoryId"
+        const val USER_ID_PARAM = "userId"
+        const val SEARCH_TEXT_PARAM = "searchText"
+        const val CODE_PARAM = "code"
+        const val USERNAME_PARAM = "username"
+        const val GRANT_TYPE_PARAM = "grant_type"
+        const val PASSWORD_PARAM = "password"
+        const val CLIENT_ID_PARAM = "client_id"
+        const val CLIENT_SECRET_PARAM = "client_secret"
+
     }
 }

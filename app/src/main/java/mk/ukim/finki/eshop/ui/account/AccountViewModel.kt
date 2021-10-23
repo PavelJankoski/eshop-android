@@ -6,32 +6,26 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ActivityRetainedScoped
-import dagger.hilt.android.scopes.ViewModelScoped
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import mk.ukim.finki.eshop.api.dto.LoginDto
-import mk.ukim.finki.eshop.api.dto.RegisterDto
-import mk.ukim.finki.eshop.api.dto.TokenDto
-import mk.ukim.finki.eshop.api.model.AuthResponse
-import mk.ukim.finki.eshop.api.model.ShoppingCart
+import mk.ukim.finki.eshop.api.dto.request.RegisterDto
+import mk.ukim.finki.eshop.api.dto.response.LoginDto
 import mk.ukim.finki.eshop.api.model.User
-import mk.ukim.finki.eshop.data.datastore.DataStoreRepository
-import mk.ukim.finki.eshop.data.datastore.UserId
 import mk.ukim.finki.eshop.data.source.Repository
+import mk.ukim.finki.eshop.util.Constants.Companion.CLIENT_ID_PARAM
+import mk.ukim.finki.eshop.util.Constants.Companion.CLIENT_SECRET_PARAM
 import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_JWT
 import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_USER_ID
 import mk.ukim.finki.eshop.util.Constants.Companion.GOOGLE_TYPE
+import mk.ukim.finki.eshop.util.Constants.Companion.GRANT_TYPE_PARAM
+import mk.ukim.finki.eshop.util.Constants.Companion.PASSWORD_PARAM
+import mk.ukim.finki.eshop.util.Constants.Companion.USERNAME_PARAM
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
@@ -40,7 +34,7 @@ class AccountViewModel @Inject constructor(
     application: Application
 ): AndroidViewModel(application) {
 
-    var authResponse: MutableLiveData<NetworkResult<AuthResponse>> = MutableLiveData()
+    var loginResponse: MutableLiveData<NetworkResult<LoginDto>> = MutableLiveData()
     var userExistsResponseLogin: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
     var userExistsResponseRegister: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
     var registerResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
@@ -87,47 +81,66 @@ class AccountViewModel @Inject constructor(
         }
     }
 
-    fun login(dto: LoginDto) = viewModelScope.launch {
-        authResponse.value = NetworkResult.Loading()
+    private fun buildLoginRequestBody(email: String, password: String): RequestBody {
+        return MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart(USERNAME_PARAM, email)
+            .addFormDataPart(PASSWORD_PARAM, password)
+            .addFormDataPart(GRANT_TYPE_PARAM, "password")
+            .addFormDataPart(CLIENT_ID_PARAM, "User")
+            .addFormDataPart(CLIENT_SECRET_PARAM, "bar")
+            .build()
+    }
+
+    fun login(email: String, password: String) = viewModelScope.launch {
+        loginResponse.value = NetworkResult.Loading()
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {
-                handleResponse(repository.remote.login(dto))
+                handleLoginResponse(repository.remote.loginUser(buildLoginRequestBody(email, password)))
             } catch (e: Exception) {
-                authResponse.value = NetworkResult.Error("Cannot authenticate user")
+                loginResponse.value = NetworkResult.Error("Cannot authenticate user")
             }
         }
     }
 
-    fun loginWithFacebook(dto: TokenDto) = viewModelScope.launch {
-        authResponse.value = NetworkResult.Loading()
-        if(Utils.hasInternetConnection(getApplication<Application>())) {
-            try {
-                handleResponse(repository.remote.loginWithFacebook(dto))
-            } catch (e: Exception) {
-                authResponse.value = NetworkResult.Error("Cannot authenticate user")
-            }
-        }
-    }
+//    fun loginWithFacebook(dto: TokenDto) = viewModelScope.launch {
+//        authResponse.value = NetworkResult.Loading()
+//        if(Utils.hasInternetConnection(getApplication<Application>())) {
+//            try {
+//                handleLoginResponse(repository.remote.loginWithFacebook(dto))
+//            } catch (e: Exception) {
+//                authResponse.value = NetworkResult.Error("Cannot authenticate user")
+//            }
+//        }
+//    }
 
-    fun loginWithGoogle(dto: TokenDto) = viewModelScope.launch {
-        authResponse.value = NetworkResult.Loading()
-        if(Utils.hasInternetConnection(getApplication<Application>())) {
-            try {
-                handleResponse(repository.remote.loginWithGoogle(dto))
-            } catch (e: Exception) {
-                authResponse.value = NetworkResult.Error("Cannot authenticate user")
-            }
-        }
-    }
+//    fun loginWithGoogle(dto: TokenDto) = viewModelScope.launch {
+//        authResponse.value = NetworkResult.Loading()
+//        if(Utils.hasInternetConnection(getApplication<Application>())) {
+//            try {
+//                handleLoginResponse(repository.remote.loginWithGoogle(dto))
+//            } catch (e: Exception) {
+//                authResponse.value = NetworkResult.Error("Cannot authenticate user")
+//            }
+//        }
+//   }
 
     fun registerUser(dto: RegisterDto) = viewModelScope.launch {
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {
-                repository.remote.registerUser(dto)
-                registerResponse.value = NetworkResult.Success(true)
+                handleRegisterResponse(repository.remote.registerUser(dto))
             } catch (e: Exception) {
                 Log.e("AccountViewModel: registerUser", "User registration failed")
             }
+        }
+    }
+
+    private fun handleRegisterResponse(response: Response<Void>) {
+        if(response.isSuccessful) {
+            registerResponse.value = NetworkResult.Success(true)
+        }
+        else {
+            registerResponse.value = NetworkResult.Error("Registration failed. Please try again")
         }
     }
 
@@ -140,7 +153,7 @@ class AccountViewModel @Inject constructor(
                     repository.remote.getUser(userId)
                 )
             } catch (e: Exception) {
-                authResponse.value = NetworkResult.Error("Cannot authenticate user")
+                loginResponse.value = NetworkResult.Error("Cannot authenticate user")
             }
         }
     }
@@ -163,38 +176,23 @@ class AccountViewModel @Inject constructor(
     }
 
 
-    private fun handleResponse(response: Response<AuthResponse>) {
-        val handledResponse = handleAuthResponse(response)
-
-        if (handledResponse is NetworkResult.Success) {
-            handledResponse.data?.getToken()?.let { token ->
-                loginManager.saveToken(token)
-            }
-            handledResponse.data?.getUserId()?.let { userId->
-                loginManager.saveUserId(userId)
-                getUserData()
-            }
-        }
-
-        authResponse.value = handledResponse
-    }
-
-    private fun handleAuthResponse(response: Response<AuthResponse>): NetworkResult<AuthResponse> {
+    private fun handleLoginResponse(response: Response<LoginDto>): NetworkResult<LoginDto> {
         return when {
             response.message().toString().contains("timeout") -> {
                 NetworkResult.Error("Timeout")
             }
             response.isSuccessful -> {
+                loginManager.saveToken(response.body()!!.token)
+                loginManager.saveUserId(response.body()!!.userId)
+                //getUserData()
                 NetworkResult.Success(response.body()!!)
             }
             else -> {
-                var errorMessage = response.message()
-                if (response.errorBody()?.string()?.contains("Invalid password") == true)
-                    errorMessage = "Invalid password...."
-                NetworkResult.Error(errorMessage)
+                NetworkResult.Error(response.message())
             }
         }
     }
+
 
     private fun handleUserExistsResponse(response: Response<Boolean>): NetworkResult<Boolean> {
         return when {
@@ -215,11 +213,4 @@ class AccountViewModel @Inject constructor(
         loginManager.googleClient = googleApiClient
     }
 
-    private fun readUserId() {
-        userId = loginManager.readUserId()
-    }
-
-    private fun readToken() {
-        jwt = "Bearer ${loginManager.readToken()}"
-    }
 }

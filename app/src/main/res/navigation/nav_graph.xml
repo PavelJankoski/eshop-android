@@ -68,8 +68,8 @@
             android:id="@+id/action_productsFragment_to_filterBottomSheetFragment"
             app:destination="@id/filterBottomSheetFragment" />
         <argument
-            android:name="priceRangeDto"
-            app:argType="mk.ukim.finki.eshop.api.dto.PriceRangeDto"
+            android:name="filterDto"
+            app:argType="mk.ukim.finki.eshop.api.dto.request.FilterProductDto"
             app:nullable="true" />
         <action
             android:id="@+id/action_productsFragment_to_shoppingBagFragment"

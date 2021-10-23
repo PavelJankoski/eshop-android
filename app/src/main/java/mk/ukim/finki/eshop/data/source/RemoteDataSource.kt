@@ -2,8 +2,13 @@ package mk.ukim.finki.eshop.data.source
 
 import mk.ukim.finki.eshop.api.WebServices
 import mk.ukim.finki.eshop.api.dto.*
+import mk.ukim.finki.eshop.api.dto.request.FilterProductDto
+import mk.ukim.finki.eshop.api.dto.request.RegisterDto
+import mk.ukim.finki.eshop.api.dto.response.LoginDto
 import mk.ukim.finki.eshop.api.model.*
+import okhttp3.RequestBody
 import retrofit2.Response
+import java.util.*
 import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(
@@ -17,7 +22,7 @@ class RemoteDataSource @Inject constructor(
                 return webServices.getProductsByCategory(categoryId, userId)
         }
 
-        suspend fun getFilteredProductsForCategory(dto: PriceRangeDto, userId: Long): Response<List<Product>> {
+        suspend fun getFilteredProductsForCategory(dto: FilterProductDto, userId: Long): Response<List<Product>> {
                 return webServices.getFilteredProductsForCategory(dto, userId)
         }
 
@@ -29,21 +34,25 @@ class RemoteDataSource @Inject constructor(
                 return webServices.getProductByProductCode(productCode, userId)
         }
 
-        suspend fun registerUser(dto: RegisterDto) {
-                webServices.registerUser(dto)
+        suspend fun loginUser(body: RequestBody): Response<LoginDto> {
+                return webServices.loginUser(body)
         }
 
-        suspend fun login(dto: LoginDto): Response<AuthResponse> {
-                return webServices.login(dto)
+        suspend fun registerUser(dto: RegisterDto): Response<Void> {
+                return webServices.registerUser(dto)
         }
 
-        suspend fun loginWithFacebook(dto: TokenDto): Response<AuthResponse> {
-                return webServices.loginWithFacebook(dto)
-        }
-
-        suspend fun loginWithGoogle(dto: TokenDto): Response<AuthResponse> {
-                return webServices.loginWithGoogle(dto)
-        }
+//        suspend fun login(dto: LoginDto): Response<AuthResponse> {
+//                return webServices.login(dto)
+//        }
+//
+//        suspend fun loginWithFacebook(dto: TokenDto): Response<AuthResponse> {
+//                return webServices.loginWithFacebook(dto)
+//        }
+//
+//        suspend fun loginWithGoogle(dto: TokenDto): Response<AuthResponse> {
+//                return webServices.loginWithGoogle(dto)
+//        }
 
         suspend fun userWithUsernameExist(username: String): Response<Boolean> {
                 return webServices.existsUsername(username)

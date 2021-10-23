@@ -1,7 +1,12 @@
 package mk.ukim.finki.eshop.api
 
 import mk.ukim.finki.eshop.api.dto.*
+import mk.ukim.finki.eshop.api.dto.request.FilterProductDto
+import mk.ukim.finki.eshop.api.dto.request.RegisterDto
+import mk.ukim.finki.eshop.api.dto.response.LoginDto
 import mk.ukim.finki.eshop.api.model.*
+import mk.ukim.finki.eshop.util.Constants
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -11,39 +16,44 @@ interface WebServices {
 
     @GET("/api/product-catalog-service/products/{categoryId}")
     suspend fun getProductsByCategory(
-        @Path("categoryId") categoryId: Long,
-        @Query(value = "userId") userId: Long
+        @Path(Constants.CATEGORY_ID_PARAM) categoryId: Long,
+        @Query(Constants.USER_ID_PARAM) userId: Long
     ) : Response<List<Product>>
 
     @POST("/api/product-catalog-service/products/filter")
     suspend fun getFilteredProductsForCategory(
-        @Body dto: PriceRangeDto,
-        @Query(value = "userId") userId: Long
+        @Body dto: FilterProductDto,
+        @Query(value = Constants.USER_ID_PARAM) userId: Long
     ): Response<List<Product>>
 
     @GET("/api/product-catalog-service/products/search")
     suspend fun getSearchedProducts(
-        @Query(value = "searchText") searchText: String,
-        @Query(value = "userId") userId: Long
+        @Query(value = Constants.SEARCH_TEXT_PARAM) searchText: String,
+        @Query(value = Constants.USER_ID_PARAM) userId: Long
     ): Response<List<Product>>
 
     @GET("/api/product-catalog-service/products/code/{code}")
     suspend fun getProductByProductCode(
-        @Path("code") productCode: String,
-        @Query(value = "userId") userId: Long
+        @Path(value = Constants.CODE_PARAM) productCode: String,
+        @Query(value = Constants.USER_ID_PARAM) userId: Long
     ): Response<Product>
 
-    @POST("/api/users")
-    suspend fun registerUser(@Body dto: RegisterDto)
+    @POST("/api/users-api-gateway/oauth/token")
+    suspend fun loginUser(
+        @Body body: RequestBody
+    ): Response<LoginDto>
 
-    @POST("/api/authenticate")
-    suspend fun login(@Body dto: LoginDto): Response<AuthResponse>
+    @POST("/api/users-api-gateway/persons/register")
+    suspend fun registerUser(@Body dto: RegisterDto): Response<Void>
 
-    @POST("/api/authenticate/social-login/facebook")
-    suspend fun loginWithFacebook(@Body dto: TokenDto): Response<AuthResponse>
-
-    @POST("/api/authenticate/social-login/google")
-    suspend fun loginWithGoogle(@Body dto: TokenDto): Response<AuthResponse>
+//    @POST("/api/authenticate")
+//    suspend fun login(@Body dto: LoginDto): Response<AuthResponse>
+//
+//    @POST("/api/authenticate/social-login/facebook")
+//    suspend fun loginWithFacebook(@Body dto: TokenDto): Response<AuthResponse>
+//
+//    @POST("/api/authenticate/social-login/google")
+//    suspend fun loginWithGoogle(@Body dto: TokenDto): Response<AuthResponse>
 
     @GET("/api/users/{userId}")
     suspend fun getUserInfo(

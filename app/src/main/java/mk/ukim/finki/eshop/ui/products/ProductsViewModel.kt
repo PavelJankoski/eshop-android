@@ -8,7 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import mk.ukim.finki.eshop.api.dto.PriceRangeDto
+import mk.ukim.finki.eshop.api.dto.request.FilterProductDto
 import mk.ukim.finki.eshop.api.model.Product
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.ui.account.LoginManager
@@ -70,7 +70,7 @@ class ProductsViewModel @Inject constructor(
         getProductsSafeCall(categoryId)
     }
 
-    fun getProductsInPriceRange(dto: PriceRangeDto) = viewModelScope.launch {
+    fun getProductsInPriceRange(dto: FilterProductDto) = viewModelScope.launch {
         getProductsInPriceRangeSafeCall(dto)
     }
 
@@ -104,7 +104,7 @@ class ProductsViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getProductsInPriceRangeSafeCall(dto: PriceRangeDto) {
+    private suspend fun getProductsInPriceRangeSafeCall(dto: FilterProductDto) {
         productsResponse.value = NetworkResult.Loading()
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {

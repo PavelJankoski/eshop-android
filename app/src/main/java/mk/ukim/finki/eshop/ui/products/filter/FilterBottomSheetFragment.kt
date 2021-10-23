@@ -1,23 +1,16 @@
 package mk.ukim.finki.eshop.ui.products.filter
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mohammedalaa.seekbar.DoubleValueSeekBarView
 import com.mohammedalaa.seekbar.OnDoubleValueSeekBarChangeListener
-import mk.ukim.finki.eshop.R
-import mk.ukim.finki.eshop.api.dto.PriceRangeDto
+import mk.ukim.finki.eshop.api.dto.request.FilterProductDto
 import mk.ukim.finki.eshop.databinding.FragmentFilterBottomSheetBinding
-import mk.ukim.finki.eshop.databinding.FragmentProductsBinding
-import mk.ukim.finki.eshop.ui.products.ProductsFragmentArgs
-import mk.ukim.finki.eshop.ui.products.ProductsViewModel
 
 class FilterBottomSheetFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentFilterBottomSheetBinding? = null
@@ -59,7 +52,7 @@ class FilterBottomSheetFragment : BottomSheetDialogFragment() {
         })
 
         binding.applyButton.setOnClickListener {
-            val dto = PriceRangeDto(args.categoryId, binding.priceRangeSeekbar.currentMinValue.toFloat(), binding.priceRangeSeekbar.currentMaxValue.toFloat())
+            val dto = FilterProductDto(args.categoryId, binding.priceRangeSeekbar.currentMinValue.toFloat(), binding.priceRangeSeekbar.currentMaxValue.toFloat())
             val action = FilterBottomSheetFragmentDirections.actionFilterBottomSheetFragmentToProductsFragment(1, dto, null, "")
             findNavController().navigate(action)
         }

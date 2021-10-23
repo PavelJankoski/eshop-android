@@ -7,9 +7,10 @@ import mk.ukim.finki.eshop.util.validators.ValidationMessagesAndRules
 
 class LoginFormValidator {
 
-    val usernameLiveData = MutableLiveData<String>()
-    val usernameValidator = LiveDataValidator(usernameLiveData).apply {
-        addRule(ValidationMessagesAndRules.USERNAME_REQUIRED) { it.isNullOrBlank() }
+    val emailLiveData = MutableLiveData<String>()
+    val emailValidator = LiveDataValidator(emailLiveData).apply {
+        addRule(ValidationMessagesAndRules.EMAIL_REQUIRED) { it.isNullOrBlank() }
+        addRule(ValidationMessagesAndRules.EMAIL_VALID) { !ValidationMessagesAndRules.EMAIL_REGEX.matcher(it ?: "").matches() }
     }
 
     val passwordLiveData = MutableLiveData<String>()
@@ -18,7 +19,10 @@ class LoginFormValidator {
     }
 
     fun validateForm(): Boolean {
-        val validators = listOf(usernameValidator, passwordValidator)
+        val validators = listOf(
+            emailValidator,
+            passwordValidator
+        )
         val validatorResolver = LiveDataValidatorResolver(validators)
         return validatorResolver.isValid()
     }
