@@ -52,11 +52,6 @@
             app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/accountFragment"
-        android:name="mk.ukim.finki.eshop.ui.account.AccountFragment"
-        android:label="Account"
-        tools:layout="@layout/fragment_account" />
-    <fragment
         android:id="@+id/productsFragment"
         android:name="mk.ukim.finki.eshop.ui.products.ProductsFragment"
         android:label="{categoryType}"
