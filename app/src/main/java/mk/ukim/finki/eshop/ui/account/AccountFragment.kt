@@ -23,8 +23,10 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import mk.ukim.finki.eshop.BuildConfig
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.PagerAdapter
+import mk.ukim.finki.eshop.api.dto.request.TokenDto
 import mk.ukim.finki.eshop.databinding.FragmentAccountBinding
 import mk.ukim.finki.eshop.ui.account.login.LoginFragment
 import mk.ukim.finki.eshop.ui.account.register.RegisterFragment
@@ -60,7 +62,7 @@ class AccountFragment : Fragment() {
             .registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
                 override fun onSuccess(loginResult: LoginResult?) {
                     Log.i("login", "success")
-                    //accountViewModel.loginWithFacebook(TokenDto(loginResult?.accessToken?.token))
+                    accountViewModel.loginWithFacebook(TokenDto(loginResult?.accessToken?.token!!))
                 }
 
                 override fun onCancel() {
@@ -81,7 +83,7 @@ class AccountFragment : Fragment() {
     private fun setupGoogleButton() {
         val googleButton = binding.signInButton
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(Constants.GOOGLE_CLIENT_ID)
+            .requestIdToken(BuildConfig.GOOGLE_CLIENT_ID)
             .requestEmail()
             .build()
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
@@ -101,7 +103,7 @@ class AccountFragment : Fragment() {
         try {
             val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)
             val idToken = account.idToken
-            //accountViewModel.loginWithGoogle(TokenDto(idToken))
+            accountViewModel.loginWithGoogle(TokenDto(idToken!!))
         } catch (e: ApiException) {
             Utils.showToast(
                 requireContext(),

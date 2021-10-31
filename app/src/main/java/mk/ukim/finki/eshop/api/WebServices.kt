@@ -3,6 +3,7 @@ package mk.ukim.finki.eshop.api
 import mk.ukim.finki.eshop.api.dto.*
 import mk.ukim.finki.eshop.api.dto.request.FilterProductDto
 import mk.ukim.finki.eshop.api.dto.request.RegisterDto
+import mk.ukim.finki.eshop.api.dto.request.TokenDto
 import mk.ukim.finki.eshop.api.dto.response.LoginDto
 import mk.ukim.finki.eshop.api.model.*
 import mk.ukim.finki.eshop.util.Constants
@@ -43,27 +44,19 @@ interface WebServices {
         @Body body: RequestBody
     ): Response<LoginDto>
 
+    @POST("/api/users-api-gateway/persons/oauth/google")
+    suspend fun loginWithGoogle(
+        @Body body: TokenDto
+    ): Response<LoginDto>
+
+    @POST("/api/users-api-gateway/persons/oauth/facebook")
+    suspend fun loginWithFacebook(
+        @Body body: TokenDto
+    ): Response<LoginDto>
+
     @POST("/api/users-api-gateway/persons/register")
     suspend fun registerUser(@Body dto: RegisterDto): Response<Void>
 
-//    @POST("/api/authenticate")
-//    suspend fun login(@Body dto: LoginDto): Response<AuthResponse>
-//
-//    @POST("/api/authenticate/social-login/facebook")
-//    suspend fun loginWithFacebook(@Body dto: TokenDto): Response<AuthResponse>
-//
-//    @POST("/api/authenticate/social-login/google")
-//    suspend fun loginWithGoogle(@Body dto: TokenDto): Response<AuthResponse>
-
-    @GET("/api/users/{userId}")
-    suspend fun getUserInfo(
-        @Path("userId") userId: Long
-    ): Response<User>
-
-    @GET("/api/users/exists/{username}")
-    suspend fun existsUsername(
-        @Path("username") username: String
-    ): Response<Boolean>
 
     @GET("/api/shopping-cart/exists-active/{userId}")
     suspend fun userHaveActiveShoppingCart(

@@ -10,26 +10,20 @@ class Constants {
         const val WISHLIST_TABLE = "wishlist"
         const val SEARCH_TABLE = "search_history"
 
-        // DATA STORE - PREFERENCE KEYS
-        const val PREFERENCE_NAME = "eshop-preferences"
-        const val PREFERENCE_JSON_WEB_TOKEN = "jwt"
-        const val PREFERENCE_USER_ID = "userId"
-
         // ENCRYPTED SHARED PREFERENCES
         const val ENCRYPTED_SHARED_PREFERENCES_NAME = "secure-storage_eshop"
-
-        //DEFAULT VALUES
-        const val DEFAULT_JWT = "1111111111111111111111111111111111111"
-        const val DEFAULT_USER_ID = -1
+        const val PREFERENCE_NAME = "eshop-preferences"
+        const val PREFERENCE_TOKEN = "token"
+        const val PREFERENCE_USER_ID = "userId"
+        const val PREFERENCE_FULL_NAME = "fullName"
+        const val PREFERENCE_EMAIL = "email"
+        const val PREFERENCE_IMAGE_URL = "imageUrl"
 
         // STATE KEYS
         const val LOGIN_STATE = "authenticated"
 
         // Google sign in
         const val GOOGLE_TYPE = "google"
-
-        // NOTE: CLIENT ID FOR WEB APP SAME ON BACKEND AND IN APP!!!!!!!!!!!!
-        const val GOOGLE_CLIENT_ID = "467495057025-lqpkn4mpl6bor6b6ga9d0hdo68prmvi4.apps.googleusercontent.com"
 
         // Stripe publishable key
         const val STRIPE_PUBLISHABLE_KEY = "pk_test_51H0AUpKlrDn4L6TppUjWu90nNVVYxLPfCctgG9DoaMIdMB4SSGbM4SIb1vvxldSyzw7f9k2TRGnZ2OnHYJFGXEO300ZAVYUir2"

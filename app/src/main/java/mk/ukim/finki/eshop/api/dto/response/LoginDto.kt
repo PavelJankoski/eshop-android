@@ -7,6 +7,7 @@ data class LoginDto(
     val token: String,
     val fullName: String,
     val userId: Long,
-    val email: String
+    val email: String,
+    val imageUrl: String
 )
 

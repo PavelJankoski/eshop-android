@@ -18,8 +18,6 @@ import mk.ukim.finki.eshop.api.model.Product
 import mk.ukim.finki.eshop.api.model.ShoppingCart
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.ui.account.LoginManager
-import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_JWT
-import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_USER_ID
 import mk.ukim.finki.eshop.util.GlobalVariables.Companion.productsInBagNumber
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils

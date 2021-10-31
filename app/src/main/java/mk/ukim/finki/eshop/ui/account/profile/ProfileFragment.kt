@@ -26,20 +26,15 @@ class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var user: User
-
     override fun onResume() {
         super.onResume()
-        if (loginManager.loggedIn.value) {
-            accountViewModel.getUserData()
-        }
+        accountViewModel.checkLoggedInUser()
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         showShimmerEffect(binding.shimmerProfileFrame, binding.profileView)
         binding.logoutBtn.setOnClickListener {
@@ -51,27 +46,29 @@ class ProfileFragment : Fragment() {
     }
 
     private fun observeUserData() {
-        accountViewModel.userDataResponse.observe(viewLifecycleOwner, { response ->
+        accountViewModel.loginResponse.observe(viewLifecycleOwner, { response ->
             if (response is NetworkResult.Error) {
                 hideShimmerEffect(binding.shimmerProfileFrame, binding.profileView)
                 binding.profileView.visibility = View.GONE
                 Utils.showToast(requireContext(), "There seems to be a problem. Try again later", Toast.LENGTH_SHORT)
             } else if (response is NetworkResult.Success) {
                 hideShimmerEffect(binding.shimmerProfileFrame, binding.profileView)
-                binding.user = response.data!!
+                response.data?.let {
+                    binding.user = User(response.data.email, response.data.userId, response.data.imageUrl, response.data.fullName.split(" ")[0], response.data.fullName.split(" ")[1])
+                }
             } else {
                 showShimmerEffect(binding.shimmerProfileFrame, binding.profileView)
             }
         })
     }
 
-    fun showShimmerEffect(shimmerFrameLayout: ShimmerFrameLayout, view: View) {
+    private fun showShimmerEffect(shimmerFrameLayout: ShimmerFrameLayout, view: View) {
         shimmerFrameLayout.startShimmer()
         shimmerFrameLayout.visibility = View.VISIBLE
         view.visibility = View.GONE
     }
 
-    fun hideShimmerEffect(shimmerFrameLayout: ShimmerFrameLayout, view: View) {
+    private fun hideShimmerEffect(shimmerFrameLayout: ShimmerFrameLayout, view: View) {
         if(shimmerFrameLayout.isShimmerVisible) {
             shimmerFrameLayout.visibility = View.GONE
             shimmerFrameLayout.stopShimmer()

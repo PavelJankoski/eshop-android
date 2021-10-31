@@ -47,6 +47,7 @@ android {
         dev {
             resValue "string", "app_name", "dev-eshop"
             buildConfigField ("String", "BASE_URL", "\"http://192.168.1.5:8080\"")
+            buildConfigField ("String", "GOOGLE_CLIENT_ID", "\"388007982358-ira5dsi7067613rkqc75p2o9esvvarf9.apps.googleusercontent.com\"")
         }
     }
 }

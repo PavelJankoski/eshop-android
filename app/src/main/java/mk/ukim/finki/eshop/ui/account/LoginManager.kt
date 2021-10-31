@@ -1,26 +1,18 @@
 package mk.ukim.finki.eshop.ui.account
 
-import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import dagger.hilt.android.scopes.ActivityRetainedScoped
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import mk.ukim.finki.eshop.data.datastore.DataStoreRepository
+import mk.ukim.finki.eshop.api.dto.response.LoginDto
 import mk.ukim.finki.eshop.data.sharedpreferences.SecureStorage
-import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_JWT
-import mk.ukim.finki.eshop.util.Constants.Companion.DEFAULT_USER_ID
 import mk.ukim.finki.eshop.util.Constants.Companion.GOOGLE_TYPE
-import mk.ukim.finki.eshop.util.Constants.Companion.PREFERENCE_JSON_WEB_TOKEN
+import mk.ukim.finki.eshop.util.Constants.Companion.PREFERENCE_EMAIL
+import mk.ukim.finki.eshop.util.Constants.Companion.PREFERENCE_FULL_NAME
+import mk.ukim.finki.eshop.util.Constants.Companion.PREFERENCE_IMAGE_URL
+import mk.ukim.finki.eshop.util.Constants.Companion.PREFERENCE_TOKEN
 import mk.ukim.finki.eshop.util.Constants.Companion.PREFERENCE_USER_ID
 import mk.ukim.finki.eshop.util.GlobalVariables
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @ActivityRetainedScoped
 class LoginManager @Inject constructor(
@@ -39,23 +31,62 @@ class LoginManager @Inject constructor(
         GlobalVariables.productsInBagNumber.value = 0
         loggedIn.value = false
     }
-    fun saveToken(token: String) {
-        secureStorage.putString(PREFERENCE_JSON_WEB_TOKEN, token)
+    private fun saveToken(token: String) {
+        secureStorage.putString(PREFERENCE_TOKEN, token)
         loggedIn.value = true
     }
 
+    private fun saveUserId(userId: Long) {
+        secureStorage.putString(PREFERENCE_USER_ID, userId.toString())
+    }
+
+    private fun saveUserFullName(fullName: String) {
+        secureStorage.putString(PREFERENCE_FULL_NAME, fullName)
+    }
+
+    private fun saveUserEmail(email: String) {
+        secureStorage.putString(PREFERENCE_EMAIL, email)
+    }
+
+    private fun saveUserImageUrl(imageUrl: String) {
+        secureStorage.putString(PREFERENCE_IMAGE_URL, imageUrl)
+    }
+
+    fun saveUser(user: LoginDto) {
+        this.saveToken(user.token)
+        this.saveUserId(user.userId)
+        this.saveUserFullName(user.fullName)
+        this.saveUserEmail(user.email)
+        this.saveUserImageUrl(user.imageUrl)
+    }
+
     fun readToken(): String {
-        val token = secureStorage.getString(PREFERENCE_JSON_WEB_TOKEN)
+        val token = secureStorage.getString(PREFERENCE_TOKEN)
         if(token.isNullOrBlank()) return ""
         return "Bearer ${token}"
     }
 
-    fun saveUserId(userId: Long) {
-        secureStorage.putString(PREFERENCE_USER_ID, userId.toString())
-    }
-
     fun readUserId(): Long {
         return secureStorage.getString(PREFERENCE_USER_ID)!!.toLong()
+    }
+
+    fun readUserFullName(): String
+    {
+        return secureStorage.getString(PREFERENCE_FULL_NAME) ?: ""
+    }
+
+    fun readUserEmail(): String
+    {
+        return secureStorage.getString(PREFERENCE_EMAIL) ?: ""
+    }
+
+    fun readUserImageUrl(): String
+    {
+        return secureStorage.getString(PREFERENCE_IMAGE_URL) ?: ""
+    }
+
+    fun getLoggedInUser(): LoginDto {
+        return LoginDto(this.readToken(), this.readUserFullName(), this.readUserId(), this.readUserEmail(), this.readUserImageUrl())
     }
 
     fun updateAuthState() {

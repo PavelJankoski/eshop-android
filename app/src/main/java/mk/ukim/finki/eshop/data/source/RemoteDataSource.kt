@@ -4,6 +4,7 @@ import mk.ukim.finki.eshop.api.WebServices
 import mk.ukim.finki.eshop.api.dto.*
 import mk.ukim.finki.eshop.api.dto.request.FilterProductDto
 import mk.ukim.finki.eshop.api.dto.request.RegisterDto
+import mk.ukim.finki.eshop.api.dto.request.TokenDto
 import mk.ukim.finki.eshop.api.dto.response.LoginDto
 import mk.ukim.finki.eshop.api.model.*
 import okhttp3.RequestBody
@@ -38,25 +39,18 @@ class RemoteDataSource @Inject constructor(
                 return webServices.loginUser(body)
         }
 
+        suspend fun loginWithGoogle(body: TokenDto): Response<LoginDto> {
+                return webServices.loginWithGoogle(body)
+        }
+
+        suspend fun loginWithFacebook(body: TokenDto): Response<LoginDto> {
+                return webServices.loginWithFacebook(body)
+        }
+
         suspend fun registerUser(dto: RegisterDto): Response<Void> {
                 return webServices.registerUser(dto)
         }
 
-//        suspend fun login(dto: LoginDto): Response<AuthResponse> {
-//                return webServices.login(dto)
-//        }
-//
-//        suspend fun loginWithFacebook(dto: TokenDto): Response<AuthResponse> {
-//                return webServices.loginWithFacebook(dto)
-//        }
-//
-//        suspend fun loginWithGoogle(dto: TokenDto): Response<AuthResponse> {
-//                return webServices.loginWithGoogle(dto)
-//        }
-
-        suspend fun userWithUsernameExist(username: String): Response<Boolean> {
-                return webServices.existsUsername(username)
-        }
 
         suspend fun userHasActiveShoppingCart(userId: Long): Response<Boolean> {
                 return webServices.userHaveActiveShoppingCart(userId)
