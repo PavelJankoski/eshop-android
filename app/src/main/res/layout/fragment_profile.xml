@@ -107,6 +107,7 @@
                     <include
                         layout="@layout/profile_row_layout"
                         app:myText="@{`Log out`}"
+                        android:onClick="@{()-> listener.onLogoutClick()}"
                         app:mySrc="@{@drawable/ic_exit}"/>
                 </LinearLayout>
 

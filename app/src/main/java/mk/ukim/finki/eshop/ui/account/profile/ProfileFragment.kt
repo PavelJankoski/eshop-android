@@ -97,6 +97,10 @@ class ProfileFragment : Fragment() {
         biometricPrompt.authenticate(promptInfo)
     }
 
+    fun onLogoutClick() {
+        accountViewModel.logout()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

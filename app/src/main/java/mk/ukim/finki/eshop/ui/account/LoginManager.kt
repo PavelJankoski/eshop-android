@@ -5,6 +5,7 @@ import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.MutableStateFlow
 import mk.ukim.finki.eshop.api.dto.response.LoginDto
 import mk.ukim.finki.eshop.data.sharedpreferences.SecureStorage
+import mk.ukim.finki.eshop.util.Constants.Companion.FACEBOOK_TYPE
 import mk.ukim.finki.eshop.util.Constants.Companion.GOOGLE_TYPE
 import mk.ukim.finki.eshop.util.Constants.Companion.PREFERENCE_EMAIL
 import mk.ukim.finki.eshop.util.Constants.Companion.PREFERENCE_FULL_NAME
@@ -20,13 +21,16 @@ class LoginManager @Inject constructor(
 ) {
 
     var loginType = ""
-    var googleClient: GoogleSignInClient? = null
+    lateinit var googleClient: GoogleSignInClient
     var loggedIn: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     fun logoutUser() {
         secureStorage.clearStorage()
         if (loginType.equals(GOOGLE_TYPE, true)) {
-            googleClient?.signOut()
+            googleClient.signOut()
+        }
+        else if(loginType.equals(FACEBOOK_TYPE, true)) {
+            com.facebook.login.LoginManager.getInstance().logOut()
         }
         GlobalVariables.productsInBagNumber.value = 0
         loggedIn.value = false

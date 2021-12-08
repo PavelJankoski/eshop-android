@@ -22,8 +22,9 @@ class Constants {
         // STATE KEYS
         const val LOGIN_STATE = "authenticated"
 
-        // Google sign in
+        // Sign in type
         const val GOOGLE_TYPE = "google"
+        const val FACEBOOK_TYPE = "facebook"
 
         // Stripe publishable key
         const val STRIPE_PUBLISHABLE_KEY = "pk_test_51H0AUpKlrDn4L6TppUjWu90nNVVYxLPfCctgG9DoaMIdMB4SSGbM4SIb1vvxldSyzw7f9k2TRGnZ2OnHYJFGXEO300ZAVYUir2"

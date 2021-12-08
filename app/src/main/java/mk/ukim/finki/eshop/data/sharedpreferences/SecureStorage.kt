@@ -35,8 +35,7 @@ class SecureStorage @Inject constructor(@ApplicationContext context : Context) {
     }
 
     fun clearStorage() {
-        editor.clear()
-        editor.apply()
+        editor.clear().apply()
     }
 
 }

@@ -15,6 +15,7 @@ import mk.ukim.finki.eshop.api.model.User
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.util.Constants.Companion.CLIENT_ID_PARAM
 import mk.ukim.finki.eshop.util.Constants.Companion.CLIENT_SECRET_PARAM
+import mk.ukim.finki.eshop.util.Constants.Companion.FACEBOOK_TYPE
 import mk.ukim.finki.eshop.util.Constants.Companion.GOOGLE_TYPE
 import mk.ukim.finki.eshop.util.Constants.Companion.GRANT_TYPE_PARAM
 import mk.ukim.finki.eshop.util.Constants.Companion.PASSWORD_PARAM
@@ -77,6 +78,7 @@ class AccountViewModel @Inject constructor(
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {
                 loginResponse.value = handleLoginResponse(repository.remote.loginWithFacebook(dto))
+                setFacebookClient()
             } catch (e: Exception) {
                 loginResponse.value = NetworkResult.Error("Cannot authenticate user")
                 Log.e("FACEBOOK_AUTH: ", "Cannot authenticate user")
@@ -126,9 +128,17 @@ class AccountViewModel @Inject constructor(
     }
 
 
+    private fun setFacebookClient() {
+        loginManager.loginType = FACEBOOK_TYPE
+    }
+
     fun setGoogleClient(googleApiClient: GoogleSignInClient) {
         loginManager.loginType = GOOGLE_TYPE
         loginManager.googleClient = googleApiClient
+    }
+
+    fun logout() {
+        loginManager.logoutUser()
     }
 
 }
