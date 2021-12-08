@@ -8,13 +8,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "mk.ukim.finki.eshop"
         minSdkVersion 24
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -46,7 +46,7 @@ android {
     productFlavors {
         dev {
             resValue "string", "app_name", "dev-eshop"
-            buildConfigField ("String", "BASE_URL", "\"http://192.168.1.5:8080\"")
+            buildConfigField ("String", "BASE_URL", "\"http://192.168.100.6:8080\"")
             buildConfigField ("String", "GOOGLE_CLIENT_ID", "\"388007982358-ira5dsi7067613rkqc75p2o9esvvarf9.apps.googleusercontent.com\"")
         }
     }
@@ -56,9 +56,9 @@ dependencies {
     implementation 'androidx.security:security-crypto-ktx:1.1.0-alpha03'
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation 'androidx.core:core-ktx:1.6.0'
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
@@ -108,9 +108,9 @@ dependencies {
 
     // Lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
 
     // Image Loading library Coil
     implementation 'io.coil-kt:coil:1.2.2'

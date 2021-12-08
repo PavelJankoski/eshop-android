@@ -7,88 +7,111 @@
         <variable
             name="user"
             type="mk.ukim.finki.eshop.api.model.User" />
+        <variable
+            name="listener"
+            type="mk.ukim.finki.eshop.ui.account.profile.ProfileFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.account.profile.ProfileFragment">
-
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:layout_width="350dp"
-            android:layout_height="150dp"
-            android:id="@+id/shimmerProfileFrame"
-            app:layout_constraintEnd_toEndOf="parent"
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="100dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <include layout="@layout/placeholder_profile"/>
-
-            </LinearLayout>
-        </com.facebook.shimmer.ShimmerFrameLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="350dp"
-            android:layout_height="150dp"
-            android:id="@+id/profileView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="100dp"
-            android:background="@color/lightGray">
-
-            <ImageView
-                android:layout_width="150dp"
-                android:layout_height="match_parent"
-                android:id="@+id/profileImage"
-                loadImageFromUrl="@{user.image}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
+            app:layout_constraintBaseline_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/profileImage"
-                app:layout_constraintEnd_toEndOf="parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{user.fullName()}"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/cover"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:id="@+id/fullNameField"/>
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/view2"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="30dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView4"
+                    app:layout_constraintStart_toStartOf="@+id/imageView4"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView4">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center"
+                        app:cardCornerRadius="30dp">
+
+                        <ImageView
+                            loadImageFromUrl="@{user.image}"
+                            tools:src="@drawable/placeholder"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:scaleType="centerCrop" />
+
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.cardview.widget.CardView>
+
                 <TextView
+                    android:id="@+id/textView16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{user.email}"
-                    android:textSize="12sp"
-                    android:textColor="@color/dark_gray"
+                    android:layout_marginTop="8dp"
+                    tools:text="Pavel Jankoski"
+                    android:text="@{user.fullName()}"
                     android:textStyle="bold"
-                    app:layout_constraintTop_toBottomOf="@id/fullNameField"
-                    app:layout_constraintStart_toStartOf="parent"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="@+id/view2"
+                    app:layout_constraintStart_toStartOf="@+id/view2"
+                    app:layout_constraintTop_toBottomOf="@+id/view2" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/logout_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="12dp"
-            android:text="@string/log_out"
-            app:icon="@drawable/ic_log_out"
-            app:backgroundTint="@color/black"
-            app:layout_constraintBottom_toTopOf="@id/profileView"
-            app:layout_constraintEnd_toEndOf="parent"/>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/textView16"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+                    <include
+                        android:id="@+id/orderHistory_include"
+                        layout="@layout/profile_row_layout"
+                        app:myText="@{`Order history`}"
+                        android:onClick="@{()-> listener.onOrderHistoryClick()}"
+                        app:mySrc="@{@drawable/ic_history}"/>
+                    <include
+                        layout="@layout/profile_row_layout"
+                        app:myText="@{`My details`}"
+                        app:mySrc="@{@drawable/ic_user}"/>
+                    <include
+                        layout="@layout/profile_row_layout"
+                        app:myText="@{`Address book`}"
+                        app:mySrc="@{@drawable/ic_home}"/>
+                    <include
+                        layout="@layout/profile_row_layout"
+                        app:myText="@{`Payment methods`}"
+                        app:mySrc="@{@drawable/ic_pay}"/>
+                    <include
+                        layout="@layout/profile_row_layout"
+                        app:myText="@{`Log out`}"
+                        app:mySrc="@{@drawable/ic_exit}"/>
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

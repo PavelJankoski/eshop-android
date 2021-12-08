@@ -1,6 +1,7 @@
 package mk.ukim.finki.eshop.ui.account.profile
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -36,11 +37,7 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        showShimmerEffect(binding.shimmerProfileFrame, binding.profileView)
-        binding.logoutBtn.setOnClickListener {
-            loginManager.logoutUser()
-        }
-
+        binding.listener = this
         observeUserData();
         return binding.root
     }
@@ -48,34 +45,20 @@ class ProfileFragment : Fragment() {
     private fun observeUserData() {
         accountViewModel.loginResponse.observe(viewLifecycleOwner, { response ->
             if (response is NetworkResult.Error) {
-                hideShimmerEffect(binding.shimmerProfileFrame, binding.profileView)
-                binding.profileView.visibility = View.GONE
                 Utils.showToast(requireContext(), "There seems to be a problem. Try again later", Toast.LENGTH_SHORT)
             } else if (response is NetworkResult.Success) {
-                hideShimmerEffect(binding.shimmerProfileFrame, binding.profileView)
                 response.data?.let {
                     binding.user = User(response.data.email, response.data.userId, response.data.imageUrl, response.data.fullName.split(" ")[0], response.data.fullName.split(" ")[1])
                 }
             } else {
-                showShimmerEffect(binding.shimmerProfileFrame, binding.profileView)
+                Log.i("ProfileFragment: observeUserData", "Loading user data")
             }
         })
     }
 
-    private fun showShimmerEffect(shimmerFrameLayout: ShimmerFrameLayout, view: View) {
-        shimmerFrameLayout.startShimmer()
-        shimmerFrameLayout.visibility = View.VISIBLE
-        view.visibility = View.GONE
+    fun onOrderHistoryClick() {
+        Log.i("sd", "asdsd");
     }
-
-    private fun hideShimmerEffect(shimmerFrameLayout: ShimmerFrameLayout, view: View) {
-        if(shimmerFrameLayout.isShimmerVisible) {
-            shimmerFrameLayout.visibility = View.GONE
-            shimmerFrameLayout.stopShimmer()
-        }
-        view.visibility = View.VISIBLE
-    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

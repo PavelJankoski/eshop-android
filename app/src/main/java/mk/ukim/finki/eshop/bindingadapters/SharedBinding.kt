@@ -7,10 +7,12 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import coil.load
+import coil.transition.CrossfadeTransition
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import de.hdodenhof.circleimageview.CircleImageView
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.api.model.Product
 import org.w3c.dom.Text
@@ -30,20 +32,8 @@ class SharedBinding {
         fun loadImageFromUrl(imageView: ImageView, imageUrl: String?) {
             imageView.load(imageUrl) {
                 crossfade(600)
-                error(R.drawable.ic_placeholder_image)
-            }
-        }
-
-        @BindingAdapter("loadImageFromBitmap")
-        @JvmStatic
-        fun loadImageFromBitmap(imageView: ImageView, bitmap: Bitmap?) {
-            if (bitmap!= null) {
-                imageView.load(bitmap) {
-                    crossfade(600)
-                    error(R.drawable.ic_account)
-                }
-            } else {
-                imageView.load(R.drawable.ic_account)
+                error(R.drawable.ic_account)
+                placeholder(R.drawable.ic_account)
             }
         }
 

@@ -6,12 +6,26 @@
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/custom_input.xml" value="0.14739583333333334" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/custom_phone_icon.xml" value="0.10729166666666666" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/custom_user_icon.xml" value="0.10729166666666666" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_account.xml" value="0.2703125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_arrow_back.xml" value="0.2703125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_arrow_down.xml" value="0.2703125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_arrow_right.xml" value="0.2703125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_cart.xml" value="0.2703125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_exit.xml" value="0.2703125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_heart.xml" value="0.2703125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_home.xml" value="0.2703125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_log_out.xml" value="0.2703125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_login.xml" value="0.2703125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_pay.xml" value="0.2703125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_phone.xml" value="0.10729166666666666" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_phone_focused.xml" value="0.10729166666666666" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_placeholder_image.xml" value="0.10729166666666666" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_remove_from_bag.xml" value="0.2703125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_shopping_bag.xml" value="0.2703125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_user.xml" value="0.2703125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_user_focused.xml" value="0.2703125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_user_outlined.xml" value="0.14739583333333334" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/profile.xml" value="0.2703125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/search_bg.xml" value="0.14739583333333334" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/activity_details.xml" value="0.1621376811594203" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/activity_main.xml" value="0.1621376811594203" />
@@ -27,17 +41,21 @@
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_history.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_login.xml" value="0.1" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_more_details.xml" value="0.13125" />
-        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_products.xml" value="0.17685185185185184" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_qr_code.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_register.xml" value="0.2" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_reviews.xml" value="0.22056159420289856" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_search.xml" value="0.13125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_shopping_bag.xml" value="0.13125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/history_row_layout.xml" value="0.13125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/placeholder_history_row.xml" value="0.13125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/placeholder_products_row_layout.xml" value="0.15670289855072464" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/products_item_layout.xml" value="0.13125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/products_row_layout.xml" value="0.13125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/profile_row_layout.xml" value="0.4" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/reviews_row_layout.xml" value="0.264" />
-        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/search_row_layout.xml" value="0.13125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/search_row_layout.xml" value="0.72" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/sorting_dropdown_item.xml" value="0.13125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/wishlist_row_layout.xml" value="0.13125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
