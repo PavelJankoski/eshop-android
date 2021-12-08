@@ -102,6 +102,7 @@
                     <include
                         layout="@layout/profile_row_layout"
                         app:myText="@{`Payment methods`}"
+                        android:onClick="@{()-> listener.onPaymentMethodsClick()}"
                         app:mySrc="@{@drawable/ic_pay}"/>
                     <include
                         layout="@layout/profile_row_layout"
