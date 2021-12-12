@@ -11,12 +11,19 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
+import androidx.navigation.fragment.findNavController
 import com.facebook.shimmer.ShimmerFrameLayout
 import dagger.hilt.android.AndroidEntryPoint
+import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.api.model.User
 import mk.ukim.finki.eshop.databinding.FragmentProfileBinding
+import mk.ukim.finki.eshop.ui.account.AccountFragment
 import mk.ukim.finki.eshop.ui.account.AccountViewModel
+import mk.ukim.finki.eshop.ui.account.HomeAccountFragmentDirections
 import mk.ukim.finki.eshop.ui.account.LoginManager
+import mk.ukim.finki.eshop.ui.userinfo.UserInfoFragment
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 import java.util.concurrent.Executor
@@ -46,17 +53,18 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         binding.listener = this
         observeUserData();
+        accountViewModel.getUserInfo();
         setupBiometricPrompt()
         return binding.root
     }
 
     private fun observeUserData() {
-        accountViewModel.loginResponse.observe(viewLifecycleOwner, { response ->
+        accountViewModel.userInfoResponse.observe(viewLifecycleOwner, { response ->
             if (response is NetworkResult.Error) {
                 Utils.showToast(requireContext(), "There seems to be a problem. Try again later", Toast.LENGTH_SHORT)
             } else if (response is NetworkResult.Success) {
                 response.data?.let {
-                    binding.user = User(response.data.email, response.data.userId, response.data.imageUrl, response.data.fullName.split(" ")[0], response.data.fullName.split(" ")[1])
+                    binding.user = response.data
                 }
             } else {
                 Log.i("ProfileFragment: observeUserData", "Loading user data")
@@ -91,6 +99,15 @@ class ProfileFragment : Fragment() {
 
     fun onOrderHistoryClick() {
         Log.i("sd", "asdsd");
+    }
+
+    fun onMyDetailsClick() {
+        findNavController().navigate(HomeAccountFragmentDirections.actionHomeAccountFragmentToUserInfoFragment3(binding.user!!))
+//        parentFragmentManager.commit {
+//            setReorderingAllowed(true)
+//            replace<UserInfoFragment>(R.id.account_container_view)
+//            addToBackStack("user-info")
+//        }
     }
 
     fun onPaymentMethodsClick() {

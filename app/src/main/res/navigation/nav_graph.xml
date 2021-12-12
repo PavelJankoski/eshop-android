@@ -139,7 +139,15 @@
         android:id="@+id/homeAccountFragment"
         android:name="mk.ukim.finki.eshop.ui.account.HomeAccountFragment"
         android:label="Account"
-        tools:layout="@layout/fragment_home_account" />
+        tools:layout="@layout/fragment_home_account" >
+        <action
+            android:id="@+id/action_homeAccountFragment_to_userInfoFragment3"
+            app:destination="@id/userInfoFragment3"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
     <activity
         android:id="@+id/shoppingCartDetailsActivity"
         android:name="mk.ukim.finki.eshop.ui.shoppingBag.history.ShoppingCartDetails.ShoppingCartDetailsActivity"
@@ -194,5 +202,14 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@id/productsFragment"
             app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/userInfoFragment3"
+        android:name="mk.ukim.finki.eshop.ui.userinfo.UserInfoFragment"
+        android:label="My details"
+        tools:layout="@layout/fragment_user_info" >
+        <argument
+            android:name="user"
+            app:argType="mk.ukim.finki.eshop.api.model.User" />
     </fragment>
 </navigation>

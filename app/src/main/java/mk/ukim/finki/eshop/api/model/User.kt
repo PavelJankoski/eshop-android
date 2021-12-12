@@ -5,11 +5,12 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class User(
-    val email: String,
     val id: Long,
+    val email: String,
     val image: String,
     val name: String,
-    val surname: String
+    val surname: String,
+    val phoneNumber: String
 ) : Parcelable {
     fun fullName(): String {
         return String.format("%s %s", name, surname)

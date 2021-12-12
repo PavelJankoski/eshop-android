@@ -39,6 +39,5 @@ class Constants {
         const val PASSWORD_PARAM = "password"
         const val CLIENT_ID_PARAM = "client_id"
         const val CLIENT_SECRET_PARAM = "client_secret"
-
     }
 }

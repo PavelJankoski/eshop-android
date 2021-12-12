@@ -32,8 +32,8 @@ class SharedBinding {
         fun loadImageFromUrl(imageView: ImageView, imageUrl: String?) {
             imageView.load(imageUrl) {
                 crossfade(600)
-                error(R.drawable.ic_account)
-                placeholder(R.drawable.ic_account)
+                error(R.drawable.ic_placeholder_image)
+                placeholder(R.drawable.ic_placeholder_image)
             }
         }
 

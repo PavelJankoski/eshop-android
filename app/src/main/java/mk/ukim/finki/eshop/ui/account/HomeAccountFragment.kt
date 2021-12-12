@@ -18,6 +18,8 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mk.ukim.finki.eshop.R
+import mk.ukim.finki.eshop.databinding.FragmentHomeAccountBinding
+import mk.ukim.finki.eshop.databinding.FragmentProfileBinding
 import mk.ukim.finki.eshop.ui.account.profile.ProfileFragment
 import javax.inject.Inject
 
@@ -25,16 +27,19 @@ import javax.inject.Inject
 class HomeAccountFragment : Fragment() {
 
     @Inject lateinit var loginManager: LoginManager
+    private var _binding: FragmentHomeAccountBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        _binding = FragmentHomeAccountBinding.inflate(inflater, container, false)
         if (savedInstanceState == null) {
             setupLoginListener()
             setupInterface()
         }
-        return inflater.inflate(R.layout.fragment_home_account, container, false)
+        return binding.root
     }
 
     private fun setupInterface() {
@@ -42,10 +47,14 @@ class HomeAccountFragment : Fragment() {
         lifecycleScope.launchWhenResumed {
             parentFragmentManager.commit {
                 setReorderingAllowed(true)
-                if (isLoggedIn.value)
+                if (isLoggedIn.value) {
                     replace<ProfileFragment>(R.id.account_container_view)
-                else
+                    addToBackStack(null)
+                }
+                else {
                     replace<AccountFragment>(R.id.account_container_view)
+                    addToBackStack(null)
+                }
             }
         }
     }
@@ -58,5 +67,10 @@ class HomeAccountFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

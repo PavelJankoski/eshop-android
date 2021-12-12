@@ -42,6 +42,7 @@
                 android:inputType="textEmailAddress"
                 android:textCursorDrawable="@null"
                 android:drawableStart="@drawable/custom_user_icon"
+                android:imeOptions="actionNext"
                 android:drawablePadding="12dp"
                 android:text="@{validator.emailLiveData}"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -70,6 +71,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:textCursorDrawable="@null"
+                android:imeOptions="actionDone"
                 android:drawableStart="@drawable/custom_password_icon"
                 android:drawablePadding="12dp"
                 android:text="@{validator.passwordLiveData}"/>

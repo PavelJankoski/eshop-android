@@ -9,7 +9,6 @@ import mk.ukim.finki.eshop.api.dto.response.LoginDto
 import mk.ukim.finki.eshop.api.model.*
 import okhttp3.RequestBody
 import retrofit2.Response
-import java.util.*
 import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(
@@ -51,6 +50,9 @@ class RemoteDataSource @Inject constructor(
                 return webServices.registerUser(dto)
         }
 
+        suspend fun getUserInfo(userId: Long): Response<User> {
+                return webServices.getUserInfo(userId)
+        }
 
         suspend fun userHasActiveShoppingCart(userId: Long): Response<Boolean> {
                 return webServices.userHaveActiveShoppingCart(userId)
@@ -99,10 +101,6 @@ class RemoteDataSource @Inject constructor(
 
         suspend fun getShoppingCarts(userId: Long): Response<List<ShoppingCart>> {
                 return webServices.getShoppingCarts(userId)
-        }
-
-        suspend fun getUser(userId: Long): Response<User> {
-                return webServices.getUser(userId)
         }
 
 }

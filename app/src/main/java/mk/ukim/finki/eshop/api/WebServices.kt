@@ -57,6 +57,11 @@ interface WebServices {
     @POST("/api/users-api-gateway/persons/register")
     suspend fun registerUser(@Body dto: RegisterDto): Response<Void>
 
+    @GET("/api/users-api-gateway/persons/{userId}")
+    suspend fun getUserInfo(
+        @Path(value = Constants.USER_ID_PARAM) userId: Long,
+    ): Response<User>
+
 
     @GET("/api/shopping-cart/exists-active/{userId}")
     suspend fun userHaveActiveShoppingCart(
@@ -126,9 +131,5 @@ interface WebServices {
         @Path("userId") userId: Long
     ): Response<List<ShoppingCart>>
 
-    @GET("/api/users/{userId}")
-    suspend fun getUser(
-        @Path("userId") userId: Long
-    ): Response<User>
 
 }

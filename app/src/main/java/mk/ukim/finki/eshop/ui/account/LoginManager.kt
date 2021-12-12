@@ -44,53 +44,35 @@ class LoginManager @Inject constructor(
         secureStorage.putString(PREFERENCE_USER_ID, userId.toString())
     }
 
-    private fun saveUserFullName(fullName: String) {
-        secureStorage.putString(PREFERENCE_FULL_NAME, fullName)
-    }
 
     private fun saveUserEmail(email: String) {
         secureStorage.putString(PREFERENCE_EMAIL, email)
     }
 
-    private fun saveUserImageUrl(imageUrl: String) {
-        secureStorage.putString(PREFERENCE_IMAGE_URL, imageUrl)
-    }
-
     fun saveUser(user: LoginDto) {
         this.saveToken(user.token)
         this.saveUserId(user.userId)
-        this.saveUserFullName(user.fullName)
         this.saveUserEmail(user.email)
-        this.saveUserImageUrl(user.imageUrl)
     }
 
     fun readToken(): String {
         val token = secureStorage.getString(PREFERENCE_TOKEN)
         if(token.isNullOrBlank()) return ""
-        return "Bearer ${token}"
+        return "Bearer $token"
     }
 
     fun readUserId(): Long {
         return secureStorage.getString(PREFERENCE_USER_ID)!!.toLong()
     }
 
-    fun readUserFullName(): String
-    {
-        return secureStorage.getString(PREFERENCE_FULL_NAME) ?: ""
-    }
 
     fun readUserEmail(): String
     {
         return secureStorage.getString(PREFERENCE_EMAIL) ?: ""
     }
 
-    fun readUserImageUrl(): String
-    {
-        return secureStorage.getString(PREFERENCE_IMAGE_URL) ?: ""
-    }
-
     fun getLoggedInUser(): LoginDto {
-        return LoginDto(this.readToken(), this.readUserFullName(), this.readUserId(), this.readUserEmail(), this.readUserImageUrl())
+        return LoginDto(this.readToken(), this.readUserId(), this.readUserEmail())
     }
 
     fun updateAuthState() {

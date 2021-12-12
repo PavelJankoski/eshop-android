@@ -94,6 +94,7 @@
                     <include
                         layout="@layout/profile_row_layout"
                         app:myText="@{`My details`}"
+                        android:onClick="@{()-> listener.onMyDetailsClick()}"
                         app:mySrc="@{@drawable/ic_user}"/>
                     <include
                         layout="@layout/profile_row_layout"

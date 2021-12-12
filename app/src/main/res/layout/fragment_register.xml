@@ -38,6 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
+                android:imeOptions="actionNext"
                 android:textCursorDrawable="@null"
                 android:text="@{validator.nameLiveData}"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -69,6 +70,7 @@
                 android:inputType="textCapSentences"
                 android:textCursorDrawable="@null"
                 app:errorEnabled="true"
+                android:imeOptions="actionNext"
                 android:text="@{validator.surnameLiveData}"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -96,6 +98,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="phone"
                 android:textCursorDrawable="@null"
+                android:imeOptions="actionNext"
                 android:drawableStart="@drawable/custom_phone_icon"
                 android:drawablePadding="12dp"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -126,6 +129,7 @@
                 android:textCursorDrawable="@null"
                 android:drawableStart="@drawable/custom_email_icon"
                 android:drawablePadding="12dp"
+                android:imeOptions="actionNext"
                 android:text="@{validator.emailLiveData}"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -153,6 +157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
+                android:imeOptions="actionDone"
                 android:textCursorDrawable="@null"
                 android:drawableStart="@drawable/custom_password_icon"
                 android:drawablePadding="12dp"

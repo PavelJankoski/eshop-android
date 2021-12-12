@@ -12,6 +12,7 @@ import mk.ukim.finki.eshop.api.dto.request.RegisterDto
 import mk.ukim.finki.eshop.api.dto.request.TokenDto
 import mk.ukim.finki.eshop.api.dto.response.LoginDto
 import mk.ukim.finki.eshop.api.model.User
+import mk.ukim.finki.eshop.data.datastore.UserId
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.util.Constants.Companion.CLIENT_ID_PARAM
 import mk.ukim.finki.eshop.util.Constants.Companion.CLIENT_SECRET_PARAM
@@ -36,7 +37,7 @@ class AccountViewModel @Inject constructor(
 
     var loginResponse: MutableLiveData<NetworkResult<LoginDto>> = MutableLiveData()
     var registerResponse: MutableLiveData<NetworkResult<Boolean>> = MutableLiveData()
-
+    var userInfoResponse: MutableLiveData<NetworkResult<User>> = MutableLiveData()
 
     private fun buildLoginRequestBody(email: String, password: String): RequestBody {
         return MultipartBody.Builder()
@@ -54,6 +55,17 @@ class AccountViewModel @Inject constructor(
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {
                 loginResponse.value = handleLoginResponse(repository.remote.loginUser(buildLoginRequestBody(email, password)))
+            } catch (e: Exception) {
+                loginResponse.value = NetworkResult.Error("Cannot authenticate user")
+            }
+        }
+    }
+
+    fun getUserInfo() = viewModelScope.launch {
+        userInfoResponse.value = NetworkResult.Loading()
+        if(Utils.hasInternetConnection(getApplication<Application>())) {
+            try {
+                userInfoResponse.value = handleGetUserInfoResponse(repository.remote.getUserInfo(loginManager.readUserId()))
             } catch (e: Exception) {
                 loginResponse.value = NetworkResult.Error("Cannot authenticate user")
             }
@@ -127,6 +139,19 @@ class AccountViewModel @Inject constructor(
         }
     }
 
+    private fun handleGetUserInfoResponse(response: Response<User>): NetworkResult<User> {
+        return when {
+            response.message().toString().contains("timeout") -> {
+                NetworkResult.Error("Timeout")
+            }
+            response.isSuccessful -> {
+                NetworkResult.Success(response.body()!!)
+            }
+            else -> {
+                NetworkResult.Error(response.message())
+            }
+        }
+    }
 
     private fun setFacebookClient() {
         loginManager.loginType = FACEBOOK_TYPE
