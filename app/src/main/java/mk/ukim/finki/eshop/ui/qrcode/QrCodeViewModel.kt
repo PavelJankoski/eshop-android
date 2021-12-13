@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import mk.ukim.finki.eshop.api.model.Product
 import mk.ukim.finki.eshop.data.source.Repository
+import mk.ukim.finki.eshop.ui.account.LoginManager
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 import retrofit2.Response
@@ -17,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class QrCodeViewModel @Inject constructor(
     private val repository: Repository,
+    val loginManager: LoginManager,
     application: Application
 ) : AndroidViewModel(application) {
     var product: MutableLiveData<NetworkResult<Product>> = MutableLiveData()
@@ -29,7 +31,7 @@ class QrCodeViewModel @Inject constructor(
         product.value = NetworkResult.Loading()
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {
-                val response = repository.remote.getProductByProductCode(productCode, 0)
+                val response = repository.remote.getProductByProductCode(productCode, loginManager.readUserId())
                 product.value = handleProductsResponse(response, productCode)
 
             } catch (e: Exception) {

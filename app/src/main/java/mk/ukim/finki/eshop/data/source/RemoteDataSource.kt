@@ -7,8 +7,12 @@ import mk.ukim.finki.eshop.api.dto.request.RegisterDto
 import mk.ukim.finki.eshop.api.dto.request.TokenDto
 import mk.ukim.finki.eshop.api.dto.response.LoginDto
 import mk.ukim.finki.eshop.api.model.*
+import mk.ukim.finki.eshop.util.Constants
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
+import retrofit2.http.Part
+import retrofit2.http.Path
 import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(
@@ -52,6 +56,14 @@ class RemoteDataSource @Inject constructor(
 
         suspend fun getUserInfo(userId: Long): Response<User> {
                 return webServices.getUserInfo(userId)
+        }
+
+        suspend fun updateUserInfo(userId: Long,
+                                   image: MultipartBody.Part?,
+                                   name: RequestBody,
+                                   surname: RequestBody,
+                                   phoneNumber: RequestBody): Response<Unit> {
+                return webServices.updateUserInfo(userId, image, name, surname, phoneNumber)
         }
 
         suspend fun userHasActiveShoppingCart(userId: Long): Response<Boolean> {

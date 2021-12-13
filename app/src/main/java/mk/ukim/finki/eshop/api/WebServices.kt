@@ -7,6 +7,7 @@ import mk.ukim.finki.eshop.api.dto.request.TokenDto
 import mk.ukim.finki.eshop.api.dto.response.LoginDto
 import mk.ukim.finki.eshop.api.model.*
 import mk.ukim.finki.eshop.util.Constants
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -61,6 +62,16 @@ interface WebServices {
     suspend fun getUserInfo(
         @Path(value = Constants.USER_ID_PARAM) userId: Long,
     ): Response<User>
+
+    @Multipart
+    @PATCH("/api/users-api-gateway/persons/{userId}")
+    suspend fun updateUserInfo(
+        @Path(value = Constants.USER_ID_PARAM) userId: Long,
+        @Part image: MultipartBody.Part?,
+        @Part("name") name: RequestBody,
+        @Part("surname") surname: RequestBody,
+        @Part("phoneNumber") phoneNumber: RequestBody
+    ): Response<Unit>
 
 
     @GET("/api/shopping-cart/exists-active/{userId}")

@@ -3,8 +3,10 @@ package mk.ukim.finki.eshop.util
 import android.app.Application
 import android.app.Notification
 import android.content.Context
+import android.database.Cursor
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.Uri
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -19,6 +21,10 @@ import mk.ukim.finki.eshop.R
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+import android.provider.MediaStore
+
+
+
 
 class Utils {
     companion object {
@@ -78,5 +84,21 @@ class Utils {
             return  formattedDate
         }
 
+        fun getRealPathFromURI(context: Context, contentUri: Uri?): String? {
+            var cursor: Cursor? = null
+            if (contentUri != null) {
+                return try {
+                    val proj = arrayOf(MediaStore.Images.Media.DATA)
+                    cursor = context.contentResolver.query(contentUri, proj, null, null, null)
+                    val column_index: Int =
+                        cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                    cursor.moveToFirst()
+                    cursor.getString(column_index)
+                } finally {
+                    cursor?.close()
+                }
+            }
+            return null
+        }
     }
 }

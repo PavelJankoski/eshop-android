@@ -95,11 +95,11 @@ class ProductsViewModel @Inject constructor(
         productsResponse.value = NetworkResult.Loading()
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {
-                val response = repository.remote.getProductsByCategory(categoryId, 0)
+                val response = repository.remote.getProductsByCategory(categoryId, loginManager.readUserId())
                 productsResponse.value = handleProductsResponse(response)
 
             } catch (e: Exception) {
-                productsResponse.value = NetworkResult.Error("Products not found.")
+                productsResponse.value = NetworkResult.Error("Error fetching products")
             }
         }
     }
@@ -108,7 +108,7 @@ class ProductsViewModel @Inject constructor(
         productsResponse.value = NetworkResult.Loading()
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {
-                val response = repository.remote.getFilteredProductsForCategory(dto, 0)
+                val response = repository.remote.getFilteredProductsForCategory(dto, loginManager.readUserId())
                 productsResponse.value = handleProductsResponse(response)
 
             } catch (e: Exception) {
@@ -122,7 +122,7 @@ class ProductsViewModel @Inject constructor(
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {
                 withContext(Dispatchers.Main) {
-                    val response = repository.remote.getSearchedProducts(searchText, 0)
+                    val response = repository.remote.getSearchedProducts(searchText, loginManager.readUserId())
                     productsResponse.postValue(handleProductsResponse(response))
                 }
 
