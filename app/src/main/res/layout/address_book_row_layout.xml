@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="address"
+            type="mk.ukim.finki.eshop.api.model.Address" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        onAddressClickListener="@{address}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/strokeColor">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:background="@color/cardBackgroundColor">
+                <LinearLayout
+                    android:id="@+id/address_linearLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Mit. Teodosij Gologanov 149/2-23"
+                        android:text="@{address.street + ` ` + address.streetNo}"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Macedonia, 1000 Skopje"
+                        android:text="@{address.country + `, ` + address.postalCode + ` ` + address.city}"
+                        android:layout_marginTop="8dp"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/address_linearLayout"
+                    app:layout_constraintBottom_toBottomOf="@id/address_linearLayout"
+                    android:src="@drawable/ic_arrow_right"
+                    />
+
+                <View
+                    android:id="@+id/greyBorder_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lightMediumGray"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/address_linearLayout"/>
+                <LinearLayout
+                    android:id="@+id/default_linearLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    isAddressDefault="@{address.isDefault}"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/greyBorder_view"
+                    app:layout_constraintStart_toStartOf="parent"
+                    >
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        app:tint="@color/green"
+                        android:src="@drawable/ic_checkmark"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:gravity="center"
+                        tools:text="Default"
+                        android:text="@string/default_address"
+                        />
+                </LinearLayout>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_trash"
+                    android:layout_marginTop="16dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_constraintTop_toBottomOf="@id/greyBorder_view"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

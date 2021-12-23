@@ -73,6 +73,11 @@ interface WebServices {
         @Part("phoneNumber") phoneNumber: RequestBody
     ): Response<Unit>
 
+    @GET("/api/users-api-gateway/addresses/{userId}")
+    suspend fun getAddressesForUser(
+        @Path(value = Constants.USER_ID_PARAM) userId: Long,
+    ): Response<List<Address>>
+
 
     @GET("/api/shopping-cart/exists-active/{userId}")
     suspend fun userHaveActiveShoppingCart(

@@ -66,6 +66,10 @@ class RemoteDataSource @Inject constructor(
                 return webServices.updateUserInfo(userId, image, name, surname, phoneNumber)
         }
 
+        suspend fun getAddressesForUser(userId: Long): Response<List<Address>> {
+                return webServices.getAddressesForUser(userId)
+        }
+
         suspend fun userHasActiveShoppingCart(userId: Long): Response<Boolean> {
                 return webServices.userHaveActiveShoppingCart(userId)
         }
