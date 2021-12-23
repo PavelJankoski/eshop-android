@@ -46,7 +46,7 @@ android {
     productFlavors {
         dev {
             resValue "string", "app_name", "dev-eshop"
-            buildConfigField ("String", "BASE_URL", "\"http://192.168.100.6:8080\"")
+            buildConfigField ("String", "BASE_URL", "\"http://192.168.100.5:8080\"")
             buildConfigField ("String", "GOOGLE_CLIENT_ID", "\"388007982358-ira5dsi7067613rkqc75p2o9esvvarf9.apps.googleusercontent.com\"")
         }
     }
@@ -103,8 +103,8 @@ dependencies {
 
 
     // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
 
     // Lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"

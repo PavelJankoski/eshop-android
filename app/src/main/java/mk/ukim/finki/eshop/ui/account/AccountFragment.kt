@@ -75,7 +75,6 @@ class AccountFragment : Fragment() {
             })
 
         setupGoogleButton()
-
         setupViewPager()
         return binding.root
     }

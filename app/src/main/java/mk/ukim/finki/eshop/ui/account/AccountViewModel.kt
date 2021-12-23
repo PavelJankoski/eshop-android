@@ -134,7 +134,7 @@ class AccountViewModel @Inject constructor(
                 NetworkResult.Success(response.body()!!)
             }
             else -> {
-                NetworkResult.Error(response.message())
+                NetworkResult.Error("Bad credentials. Please try again")
             }
         }
     }

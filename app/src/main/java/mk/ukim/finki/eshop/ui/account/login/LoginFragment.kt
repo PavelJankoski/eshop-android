@@ -36,6 +36,17 @@ class LoginFragment : Fragment() {
         binding.loginBtn.setOnClickListener {
             login()
         }
+        accountViewModel.loginResponse.observe(viewLifecycleOwner, {response ->
+            when (response) {
+                is NetworkResult.Error -> {
+                    binding.alertTextView.text = response.message!!
+                    binding.alertConstraintLayout.visibility = View.VISIBLE
+                }
+                else -> {
+                    binding.alertConstraintLayout.visibility = View.GONE
+                }
+            }
+        })
         return binding.root
     }
 
