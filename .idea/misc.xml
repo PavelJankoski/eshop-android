@@ -43,6 +43,7 @@
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_categories_woman.xml" value="0.22916666666666666" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_custom_order.xml" value="0.1" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_details.xml" value="0.245018115942029" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_enter_address.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_history.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_home_account.xml" value="0.36666666666666664" />
@@ -70,6 +71,10 @@
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/sorting_dropdown_item.xml" value="0.13125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/wishlist_row_layout.xml" value="0.13125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/menu/categories_toolbar_menu.xml" value="0.2078125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/menu/create_toolbar_menu.xml" value="0.2078125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/menu/products_toolbar_menu.xml" value="0.2078125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/menu/shopping_cart_toolbar_menu.xml" value="0.2078125" />
       </map>
     </option>
   </component>

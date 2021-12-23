@@ -11,6 +11,7 @@ import androidx.navigation.findNavController
 import mk.ukim.finki.eshop.api.model.Address
 import mk.ukim.finki.eshop.api.model.Category
 import mk.ukim.finki.eshop.data.model.CategoriesEntity
+import mk.ukim.finki.eshop.ui.addressbook.AddressBookFragmentDirections
 import mk.ukim.finki.eshop.ui.categories.CategoriesFragmentDirections
 import mk.ukim.finki.eshop.util.NetworkResult
 
@@ -21,13 +22,14 @@ class AddressBookBinding {
         fun onAddressClickListener(addressRowLayout: ConstraintLayout, address: Address) {
             addressRowLayout.setOnClickListener {
                 try {
-//                    val action = CategoriesFragmentDirections.actionCategoriesFragmentToProductsFragment(category.id, null, null, category.type)
-//                    categoryRowLayout.findNavController().navigate(action)
+                    val action = AddressBookFragmentDirections.actionAddressBookFragmentToEnterAddressFragment(address)
+                    addressRowLayout.findNavController().navigate(action)
                 } catch (e: Exception) {
-//                    Log.e("onCategoryClickListener", e.message.toString())
+                    Log.e("onAddressClickListener", e.message.toString())
                 }
             }
         }
+
         @BindingAdapter("isAddressDefault")
         @JvmStatic
         fun isAddressDefault(defaultLinearLayout: LinearLayout, isDefault: Boolean) {

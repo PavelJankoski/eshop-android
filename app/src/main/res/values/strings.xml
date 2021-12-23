@@ -64,6 +64,7 @@
     <string name="phone_number">Phone number</string>
     <string name="update">Update</string>
     <string name="default_address">Default</string>
+    <string name="add">Add</string>
 
 
     <string-array name="sorting_products">

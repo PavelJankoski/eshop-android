@@ -223,5 +223,24 @@
         android:id="@+id/addressBookFragment"
         android:name="mk.ukim.finki.eshop.ui.addressbook.AddressBookFragment"
         android:label="Address book"
-        tools:layout="@layout/fragment_address_book" />
+        tools:layout="@layout/fragment_address_book" >
+        <action
+            android:id="@+id/action_addressBookFragment_to_enterAddressFragment"
+            app:destination="@id/enterAddressFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/enterAddressFragment"
+        android:name="mk.ukim.finki.eshop.ui.addressbook.enteraddress.EnterAddressFragment"
+        android:label="Address information"
+        tools:layout="@layout/fragment_enter_address" >
+        <argument
+            android:name="address"
+            app:argType="mk.ukim.finki.eshop.api.model.Address"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 </navigation>
