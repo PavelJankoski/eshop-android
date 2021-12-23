@@ -55,8 +55,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="Macedonia, 1000 Skopje"
-                        android:text="@{address.country + `, ` + address.postalCode + ` ` + address.city}"
+                        tools:text="1000 Skopje, Macedonia"
+                        android:text="@{address.postalCode + ` ` + address.city + `, ` + address.country}"
                         android:layout_marginTop="8dp"/>
                 </LinearLayout>
 
