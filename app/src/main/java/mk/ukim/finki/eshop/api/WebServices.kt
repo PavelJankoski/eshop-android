@@ -45,26 +45,26 @@ interface WebServices {
         @Body body: RequestBody
     ): Response<LoginDto>
 
-    @POST("/api/users-api-gateway/persons/oauth/google")
+    @POST("/api/users-api-gateway/users/oauth/google")
     suspend fun loginWithGoogle(
         @Body body: TokenDto
     ): Response<LoginDto>
 
-    @POST("/api/users-api-gateway/persons/oauth/facebook")
+    @POST("/api/users-api-gateway/users/oauth/facebook")
     suspend fun loginWithFacebook(
         @Body body: TokenDto
     ): Response<LoginDto>
 
-    @POST("/api/users-api-gateway/persons/register")
+    @POST("/api/users-api-gateway/users/register")
     suspend fun registerUser(@Body dto: RegisterDto): Response<Void>
 
-    @GET("/api/users-api-gateway/persons/{userId}")
+    @GET("/api/users-api-gateway/users/{userId}")
     suspend fun getUserInfo(
         @Path(value = Constants.USER_ID_PARAM) userId: Long,
     ): Response<User>
 
     @Multipart
-    @PATCH("/api/users-api-gateway/persons/{userId}")
+    @PATCH("/api/users-api-gateway/users/{userId}")
     suspend fun updateUserInfo(
         @Path(value = Constants.USER_ID_PARAM) userId: Long,
         @Part image: MultipartBody.Part?,
