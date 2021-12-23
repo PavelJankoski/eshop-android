@@ -99,6 +99,7 @@
                     <include
                         layout="@layout/profile_row_layout"
                         app:myText="@{`Address book`}"
+                        android:onClick="@{()-> listener.onAddressBookClick()}"
                         app:mySrc="@{@drawable/ic_home}"/>
                     <include
                         layout="@layout/profile_row_layout"

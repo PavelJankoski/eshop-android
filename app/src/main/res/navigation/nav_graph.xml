@@ -147,6 +147,13 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_homeAccountFragment_to_addressBookFragment"
+            app:destination="@id/addressBookFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <activity
         android:id="@+id/shoppingCartDetailsActivity"
@@ -212,4 +219,9 @@
             android:name="user"
             app:argType="mk.ukim.finki.eshop.api.model.User" />
     </fragment>
+    <fragment
+        android:id="@+id/addressBookFragment"
+        android:name="mk.ukim.finki.eshop.ui.addressbook.AddressBookFragment"
+        android:label="Address book"
+        tools:layout="@layout/fragment_address_book" />
 </navigation>

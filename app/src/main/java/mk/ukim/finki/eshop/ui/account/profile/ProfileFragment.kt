@@ -103,11 +103,10 @@ class ProfileFragment : Fragment() {
 
     fun onMyDetailsClick() {
         findNavController().navigate(HomeAccountFragmentDirections.actionHomeAccountFragmentToUserInfoFragment3(binding.user!!))
-//        parentFragmentManager.commit {
-//            setReorderingAllowed(true)
-//            replace<UserInfoFragment>(R.id.account_container_view)
-//            addToBackStack("user-info")
-//        }
+    }
+
+    fun onAddressBookClick() {
+        findNavController().navigate(HomeAccountFragmentDirections.actionHomeAccountFragmentToAddressBookFragment())
     }
 
     fun onPaymentMethodsClick() {
