@@ -16,7 +16,9 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.databinding.FragmentUserInfoBinding
@@ -74,7 +76,8 @@ class UserInfoFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                     binding.updateButton.isEnabled = true
-                    Utils.showToast(requireContext(), "Successfully updated info!", Toast.LENGTH_LONG)
+                    Utils.showSnackbar(binding.root, "Successfully updated info!", Snackbar.LENGTH_LONG)
+                    findNavController().popBackStack()
                 }
                 is NetworkResult.Error -> {
                     binding.updateButton.isEnabled = true

@@ -103,11 +103,6 @@
                         app:mySrc="@{@drawable/ic_home}"/>
                     <include
                         layout="@layout/profile_row_layout"
-                        app:myText="@{`Payment methods`}"
-                        android:onClick="@{()-> listener.onPaymentMethodsClick()}"
-                        app:mySrc="@{@drawable/ic_pay}"/>
-                    <include
-                        layout="@layout/profile_row_layout"
                         app:myText="@{`Log out`}"
                         android:onClick="@{()-> listener.onLogoutClick()}"
                         app:mySrc="@{@drawable/ic_exit}"/>

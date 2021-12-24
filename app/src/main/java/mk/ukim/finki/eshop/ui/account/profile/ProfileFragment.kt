@@ -87,7 +87,7 @@ class ProfileFragment : Fragment() {
 
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
-                Utils.showToast(requireContext(), "Authentication Success!", Toast.LENGTH_SHORT)
+                findNavController().navigate(HomeAccountFragmentDirections.actionHomeAccountFragmentToUserInfoFragment3(binding.user!!))
             }
         })
         promptInfo = BiometricPrompt.PromptInfo.Builder()
@@ -102,15 +102,11 @@ class ProfileFragment : Fragment() {
     }
 
     fun onMyDetailsClick() {
-        findNavController().navigate(HomeAccountFragmentDirections.actionHomeAccountFragmentToUserInfoFragment3(binding.user!!))
+        biometricPrompt.authenticate(promptInfo)
     }
 
     fun onAddressBookClick() {
         findNavController().navigate(HomeAccountFragmentDirections.actionHomeAccountFragmentToAddressBookFragment())
-    }
-
-    fun onPaymentMethodsClick() {
-        biometricPrompt.authenticate(promptInfo)
     }
 
     fun onLogoutClick() {
