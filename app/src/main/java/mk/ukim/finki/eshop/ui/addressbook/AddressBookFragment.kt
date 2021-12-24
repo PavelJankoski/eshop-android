@@ -61,8 +61,12 @@ class AddressBookFragment : Fragment() {
                         binding.addressBookShimmerFrameLayout,
                         binding.addressBookRecyclerView
                     )
-                    if(response.data != null) {
+                    if(!response.data.isNullOrEmpty()) {
+                        addressesNotEmpty()
                         mAdapter.setData(response.data)
+                    }
+                    else {
+                        addressesEmpty()
                     }
                 }
                 is NetworkResult.Error -> {
@@ -94,6 +98,18 @@ class AddressBookFragment : Fragment() {
             }
             else -> return super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun addressesNotEmpty() {
+        binding.addressBookRecyclerView.visibility = View.VISIBLE
+        binding.addressCardLottie.visibility = View.GONE
+        binding.noAddressesTextView.visibility = View.GONE
+    }
+
+    private fun addressesEmpty() {
+        binding.addressBookRecyclerView.visibility = View.GONE
+        binding.addressCardLottie.visibility = View.VISIBLE
+        binding.noAddressesTextView.visibility = View.VISIBLE
     }
 
     private fun setupRecyclerView() {

@@ -72,6 +72,7 @@
     <string name="postal_code">Postal code*</string>
     <string name="save">Save</string>
     <string name="make_default">Make Default</string>
+    <string name="no_addresses_found_in_your_address_book">No addresses found in your address book. Please add some</string>
 
 
     <string-array name="sorting_products">

@@ -36,4 +36,32 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/addressCard_Lottie"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/address_card" />
+    <TextView
+        android:id="@+id/noAddresses_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:text="@string/no_addresses_found_in_your_address_book"
+        tools:text="No addresses found in your address book. Please add some"
+        app:layout_constraintTop_toBottomOf="@id/addressCard_Lottie"
+        app:layout_constraintLeft_toLeftOf="@id/addressCard_Lottie"
+        app:layout_constraintRight_toRightOf="@id/addressCard_Lottie"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

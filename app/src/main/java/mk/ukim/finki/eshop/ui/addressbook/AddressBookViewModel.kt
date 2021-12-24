@@ -48,9 +48,6 @@ class AddressBookViewModel @Inject constructor(
             response.message().toString().contains("timeout") -> {
                 NetworkResult.Error("Timeout")
             }
-            response.body()!!.isNullOrEmpty() -> {
-                NetworkResult.Error("Addresses not found.")
-            }
             response.isSuccessful -> {
                 NetworkResult.Success(response.body()!!)
             }
