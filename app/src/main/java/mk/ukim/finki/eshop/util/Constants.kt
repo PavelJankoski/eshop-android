@@ -32,6 +32,7 @@ class Constants {
         // RETROFIT PARAMS
         const val CATEGORY_ID_PARAM = "categoryId"
         const val USER_ID_PARAM = "userId"
+        const val ADDRESS_ID_PARAM = "addressId"
         const val SEARCH_TEXT_PARAM = "searchText"
         const val CODE_PARAM = "code"
         const val USERNAME_PARAM = "username"

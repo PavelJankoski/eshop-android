@@ -1,6 +1,7 @@
 package mk.ukim.finki.eshop.api
 
 import mk.ukim.finki.eshop.api.dto.*
+import mk.ukim.finki.eshop.api.dto.request.CreateEditAddressDto
 import mk.ukim.finki.eshop.api.dto.request.FilterProductDto
 import mk.ukim.finki.eshop.api.dto.request.RegisterDto
 import mk.ukim.finki.eshop.api.dto.request.TokenDto
@@ -77,6 +78,19 @@ interface WebServices {
     suspend fun getAddressesForUser(
         @Path(value = Constants.USER_ID_PARAM) userId: Long,
     ): Response<List<Address>>
+
+    @POST("/api/users-api-gateway/addresses/{userId}")
+    suspend fun createAddressesForUser(
+        @Path(value = Constants.USER_ID_PARAM) userId: Long,
+        @Body body: CreateEditAddressDto
+    ): Response<Address>
+
+    @PATCH("/api/users-api-gateway/addresses/{addressId}/users/{userId}")
+    suspend fun editAddressesForUser(
+        @Path(value = Constants.ADDRESS_ID_PARAM) addressId: Long,
+        @Path(value = Constants.USER_ID_PARAM) userId: Long,
+        @Body body: CreateEditAddressDto
+    ): Response<Address>
 
 
     @GET("/api/shopping-cart/exists-active/{userId}")

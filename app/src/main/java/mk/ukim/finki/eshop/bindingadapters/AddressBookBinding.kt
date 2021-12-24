@@ -42,12 +42,5 @@ class AddressBookBinding {
                 defaultLinearLayout.visibility = View.GONE
             }
         }
-
-        @BindingAdapter("isAddressDefaultSwitch")
-        @JvmStatic
-        fun isAddressDefaultSwitch(defaultSwitch: SwitchMaterial, isDefault: MutableLiveData<Boolean>) {
-            defaultSwitch.isEnabled = isDefault.value!!
-        }
-
     }
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import mk.ukim.finki.eshop.api.dto.request.CreateEditAddressDto
 import mk.ukim.finki.eshop.api.model.Address
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.ui.account.LoginManager
@@ -22,6 +23,7 @@ class AddressBookViewModel @Inject constructor(
     application: Application
 ): AndroidViewModel(application) {
     var addressesResponse: MutableLiveData<NetworkResult<List<Address>>> = MutableLiveData()
+    var createEditAddressResponse: MutableLiveData<NetworkResult<Address>> = MutableLiveData()
 
     fun getAddressesForUser() = viewModelScope.launch {
         getAddressesSafeCall()
@@ -47,6 +49,46 @@ class AddressBookViewModel @Inject constructor(
             }
             response.body()!!.isNullOrEmpty() -> {
                 NetworkResult.Error("Addresses not found.")
+            }
+            response.isSuccessful -> {
+                NetworkResult.Success(response.body()!!)
+            }
+            else -> {
+                NetworkResult.Error(response.message())
+            }
+        }
+    }
+
+    fun createAddressesForUser(body: CreateEditAddressDto) = viewModelScope.launch {
+        createEditAddressesSafeCall(body)
+    }
+
+    fun editAddressesForUser(addressId: Long, body: CreateEditAddressDto) = viewModelScope.launch {
+        createEditAddressesSafeCall(body, addressId)
+    }
+
+    private suspend fun createEditAddressesSafeCall(body: CreateEditAddressDto, addressId: Long = 0L) {
+        createEditAddressResponse.value = NetworkResult.Loading()
+        if(Utils.hasInternetConnection(getApplication<Application>())) {
+            try {
+                val response: Response<Address> = if(addressId == 0L) {
+                    repository.remote.createAddressForUser(loginManager.readUserId(), body)
+                } else {
+                    repository.remote.editAddressForUser(addressId, loginManager.readUserId(), body)
+                }
+                createEditAddressResponse.value = handleCreateEditAddressResponse(response)
+            } catch (e: Exception) {
+                Log.e("AddressBookViewModel:createEditAddressesSafeCall", "Error saving address for user")
+                createEditAddressResponse.value = NetworkResult.Error("Error saving address.")
+            }
+        }
+    }
+
+
+    private fun handleCreateEditAddressResponse(response: Response<Address>): NetworkResult<Address> {
+        return when {
+            response.message().toString().contains("timeout") -> {
+                NetworkResult.Error("Timeout")
             }
             response.isSuccessful -> {
                 NetworkResult.Success(response.body()!!)
