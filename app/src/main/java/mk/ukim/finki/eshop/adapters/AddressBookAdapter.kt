@@ -5,16 +5,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import mk.ukim.finki.eshop.api.model.Address
 import mk.ukim.finki.eshop.databinding.AddressBookRowLayoutBinding
+import mk.ukim.finki.eshop.ui.addressbook.AddressBookViewModel
 import mk.ukim.finki.eshop.util.DiffUtil
 
-class AddressBookAdapter: RecyclerView.Adapter<AddressBookAdapter.MyViewHolder>() {
+class AddressBookAdapter(private val vm: AddressBookViewModel): RecyclerView.Adapter<AddressBookAdapter.MyViewHolder>() {
     private var addresses = emptyList<Address>()
 
     class MyViewHolder(
         private val binding: AddressBookRowLayoutBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(address: Address) {
+        fun bind(address: Address, vm: AddressBookViewModel) {
             binding.address = address
+            binding.vm = vm
             binding.executePendingBindings()
         }
 
@@ -33,7 +35,7 @@ class AddressBookAdapter: RecyclerView.Adapter<AddressBookAdapter.MyViewHolder>(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentAddress = addresses[position]
-        holder.bind(currentAddress)
+        holder.bind(currentAddress, vm)
     }
 
     override fun getItemCount(): Int {

@@ -92,6 +92,10 @@ interface WebServices {
         @Body body: CreateEditAddressDto
     ): Response<Address>
 
+    @PATCH("/api/users-api-gateway/addresses/delete/{addressId}")
+    suspend fun deleteAddress(
+        @Path(value = Constants.ADDRESS_ID_PARAM) addressId: Long,
+    ): Response<Unit>
 
     @GET("/api/shopping-cart/exists-active/{userId}")
     suspend fun userHaveActiveShoppingCart(

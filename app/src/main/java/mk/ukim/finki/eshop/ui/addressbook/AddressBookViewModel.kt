@@ -24,6 +24,7 @@ class AddressBookViewModel @Inject constructor(
 ): AndroidViewModel(application) {
     var addressesResponse: MutableLiveData<NetworkResult<List<Address>>> = MutableLiveData()
     var createEditAddressResponse: MutableLiveData<NetworkResult<Address>> = MutableLiveData()
+    var deleteAddressResponse: MutableLiveData<NetworkResult<Unit>> = MutableLiveData()
 
     fun getAddressesForUser() = viewModelScope.launch {
         getAddressesSafeCall()
@@ -91,6 +92,38 @@ class AddressBookViewModel @Inject constructor(
                 NetworkResult.Error("Timeout")
             }
             response.isSuccessful -> {
+                NetworkResult.Success(response.body()!!)
+            }
+            else -> {
+                NetworkResult.Error(response.message())
+            }
+        }
+    }
+
+    fun deleteAddress(addressId: Long) = viewModelScope.launch {
+        deleteAddressSafeCall(addressId)
+    }
+
+    private suspend fun deleteAddressSafeCall(addressId: Long) {
+        deleteAddressResponse.value = NetworkResult.Loading()
+        if(Utils.hasInternetConnection(getApplication<Application>())) {
+            try {
+                val response = repository.remote.deleteAddress(addressId)
+                deleteAddressResponse.value = handleDeleteAddressResponse(response, addressId)
+            } catch (e: Exception) {
+                Log.e("AddressBookViewModel:deleteAddressSafeCall", "Error deleting address.")
+                deleteAddressResponse.value = NetworkResult.Error("Error deleting address.")
+            }
+        }
+    }
+
+    private fun handleDeleteAddressResponse(response: Response<Unit>, addressId: Long): NetworkResult<Unit> {
+        return when {
+            response.message().toString().contains("timeout") -> {
+                NetworkResult.Error("Timeout")
+            }
+            response.isSuccessful -> {
+                addressesResponse.value = NetworkResult.Success(addressesResponse.value?.data!!.filter { it.id != addressId })
                 NetworkResult.Success(response.body()!!)
             }
             else -> {

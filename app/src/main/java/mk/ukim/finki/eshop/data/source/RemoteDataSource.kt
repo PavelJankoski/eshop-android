@@ -79,6 +79,10 @@ class RemoteDataSource @Inject constructor(
                 return webServices.editAddressesForUser(addressId, userId, body)
         }
 
+        suspend fun deleteAddress(addressId: Long): Response<Unit> {
+                return webServices.deleteAddress(addressId)
+        }
+
         suspend fun userHasActiveShoppingCart(userId: Long): Response<Boolean> {
                 return webServices.userHaveActiveShoppingCart(userId)
         }

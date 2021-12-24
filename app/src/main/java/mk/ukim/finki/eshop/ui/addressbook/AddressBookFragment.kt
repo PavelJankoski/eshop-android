@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.AddressBookAdapter
@@ -23,7 +25,7 @@ class AddressBookFragment : Fragment() {
     private var _binding: FragmentAddressBookBinding? = null
     private val binding get() = _binding!!
     private val addressBookViewModel by viewModels<AddressBookViewModel>()
-    private val mAdapter by lazy { AddressBookAdapter() }
+    private val mAdapter by lazy { AddressBookAdapter(addressBookViewModel) }
 
 
     override fun onCreateView(
@@ -34,8 +36,21 @@ class AddressBookFragment : Fragment() {
         setHasOptionsMenu(true)
         setupRecyclerView()
         observeAddressesResponse()
+        observeDeleteAddressResponse()
         addressBookViewModel.getAddressesForUser()
         return binding.root
+    }
+
+    private fun observeDeleteAddressResponse() {
+        addressBookViewModel.deleteAddressResponse.value = NetworkResult.Loading()
+        addressBookViewModel.deleteAddressResponse.observe(viewLifecycleOwner, {
+            when(it) {
+                is NetworkResult.Success -> {
+                    Utils.showSnackbar(binding.root, "Successfully deleted address.", Snackbar.LENGTH_LONG)
+                }
+                else -> {}
+            }
+        })
     }
 
     private fun observeAddressesResponse() {
