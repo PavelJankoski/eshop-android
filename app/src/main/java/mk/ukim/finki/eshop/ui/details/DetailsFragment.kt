@@ -26,6 +26,7 @@ import mk.ukim.finki.eshop.ui.details.moredetails.MoreDetailsFragment
 import mk.ukim.finki.eshop.ui.details.reviews.ReviewsFragment
 import mk.ukim.finki.eshop.util.Constants
 import mk.ukim.finki.eshop.util.GlobalVariables
+import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 
 @AndroidEntryPoint
@@ -39,7 +40,6 @@ class DetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
         binding.product = args.product
         binding.isLoggedIn = detailsViewModel.loginManager.readToken() != ""
@@ -54,6 +54,7 @@ class DetailsFragment : Fragment() {
         }
         Utils.setupCartItemsBadge(binding.cartBadge, GlobalVariables.productsInBagNumber.value!!)
         observeShoppingBagActions()
+        observeAddOrRemoveProductFromWishlist()
         setupAddToWishlistBtn()
         setupAddToBagBtn()
         setupViewPager()
@@ -64,6 +65,31 @@ class DetailsFragment : Fragment() {
         detailsViewModel.addProductToBagResponse.observe(viewLifecycleOwner, {
             if(it.data!!) {
                 addProductToBagSuccess()
+            }
+        })
+    }
+
+    private fun observeAddOrRemoveProductFromWishlist() {
+        detailsViewModel.removeProductFromWishlistResponse.observe(viewLifecycleOwner, {
+            when (it) {
+                is NetworkResult.Success -> {
+                    removeProductFromWishlistSuccess()
+                }
+                is NetworkResult.Error -> {
+                    Utils.showSnackbar(binding.root, "Error removing product from wishlist!", Snackbar.LENGTH_SHORT)
+                }
+                else -> {}
+            }
+        })
+        detailsViewModel.addProductToWishlistResponse.observe(viewLifecycleOwner, {
+            when (it) {
+                is NetworkResult.Success -> {
+                   addProductToWishlistSuccess()
+                }
+                is NetworkResult.Error -> {
+                    Utils.showSnackbar(binding.root, "Error adding product to wishlist!", Snackbar.LENGTH_SHORT)
+                }
+                else -> {}
             }
         })
     }
@@ -95,10 +121,10 @@ class DetailsFragment : Fragment() {
         }
         binding.addToWishlistFab.setOnClickListener {
             if(args.product.isFavourite) {
-                detailsViewModel.deleteProductFromWishlist(args.product.id)
+                detailsViewModel.removeProductFromWishlistForUser(args.product.id)
             }
             else {
-                detailsViewModel.insertProductInWishlist(args.product)
+                detailsViewModel.addProductToWishlistForUser(args.product.id)
             }
         }
     }

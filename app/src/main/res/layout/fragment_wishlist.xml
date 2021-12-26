@@ -74,17 +74,6 @@
         app:layout_constraintStart_toStartOf="@+id/wishlist_iv"
         app:layout_constraintTop_toBottomOf="@+id/wishlist_iv" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/startShopping_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/start_shopping"
-        android:visibility="gone"
-        app:backgroundTint="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/wishlistEmpty_textView"
-        app:layout_constraintStart_toStartOf="@+id/wishlistEmpty_textView"
-        app:layout_constraintTop_toBottomOf="@+id/wishlistEmpty_textView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

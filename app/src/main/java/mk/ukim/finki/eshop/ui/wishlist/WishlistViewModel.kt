@@ -28,7 +28,6 @@ class WishlistViewModel @Inject constructor(
 
     /** RETROFIT */
     var wishlistProductsResponse: MutableLiveData<NetworkResult<List<Product>>> = MutableLiveData()
-    var addProductToWishlistResponse: MutableLiveData<NetworkResult<Long>> = MutableLiveData()
     var removeProductFromWishlistResponse: MutableLiveData<NetworkResult<Long>> = MutableLiveData()
     var productsInBagNumber = GlobalVariables.productsInBagNumber
 
@@ -37,18 +36,13 @@ class WishlistViewModel @Inject constructor(
         wishlistProductsResponse.value = wishlistManager.getWishlistProductsForUserSafeCall()
     }
 
-    fun addProductToWishlistForUser(productId: Long) = viewModelScope.launch {
-        addProductToWishlistResponse.value = NetworkResult.Loading()
-        addProductToWishlistResponse.value = wishlistManager.addProductToWishlistForUserSafeCall(productId)
-    }
-
     fun removeProductFromWishlistForUser(productId: Long) = viewModelScope.launch {
         removeProductFromWishlistResponse.value = NetworkResult.Loading()
         removeProductFromWishlistResponse.value = wishlistManager.removeProductFromWishlistForUserSafeCall(productId)
     }
 
     fun removeProductFromWishlistAfterResponse(productId: Long) {
-        wishlistProductsResponse.value = NetworkResult.Success(wishlistProductsResponse.value!!.data!!.filter { p -> p.id != productId })
+        wishlistProductsResponse.value = NetworkResult.Success(wishlistProductsResponse.value?.data!!.filter { p -> p.id != productId })
     }
 
     fun removeFromBag(id: Long) {

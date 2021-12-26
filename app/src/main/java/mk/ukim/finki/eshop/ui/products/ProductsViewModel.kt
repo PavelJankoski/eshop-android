@@ -29,14 +29,6 @@ class ProductsViewModel @Inject constructor(
     application: Application
 ): AndroidViewModel(application) {
 
-    var listingType: MutableLiveData<Boolean> = MutableLiveData(true)
-    var addOrRemoveProductResponse = shoppingBagManager.addOrRemoveProductResponse
-    var addProductResponse = shoppingBagManager.addProductToBagResponse
-    var removeProductResponse = shoppingBagManager.removeProductFromBagResponse
-    var addOrRemovedProduct: Long? = null
-    var isRemoveProduct: Boolean? = null
-
-
     fun changeListing() {
         listingType.value = !listingType.value!!
     }
@@ -58,13 +50,14 @@ class ProductsViewModel @Inject constructor(
 
     }
 
-    suspend fun isProductInWishlist(id: Int): Boolean {
-        return repository.local.isProductInWishlist(id) != 0
-    }
-
     /** RETROFIT */
     var productsResponse: MutableLiveData<NetworkResult<List<Product>>> = MutableLiveData()
-
+    var listingType: MutableLiveData<Boolean> = MutableLiveData(true)
+    var addOrRemoveProductResponse = shoppingBagManager.addOrRemoveProductResponse
+    var addProductResponse = shoppingBagManager.addProductToBagResponse
+    var removeProductResponse = shoppingBagManager.removeProductFromBagResponse
+    var addProductToWishlistResponse: MutableLiveData<NetworkResult<Long>> = MutableLiveData()
+    var removeProductFromWishlistResponse: MutableLiveData<NetworkResult<Long>> = MutableLiveData()
 
     fun getProductsForCategory(categoryId: Long) = viewModelScope.launch {
         getProductsSafeCall(categoryId)
@@ -78,16 +71,14 @@ class ProductsViewModel @Inject constructor(
         getFilteredProductsForCategorySafeCall(searchText)
     }
 
-    fun addProductToShoppingCart(id: Long) {
-        addOrRemovedProduct = id
-        isRemoveProduct = false
-        shoppingBagManager.addProductToShoppingCart(id)
+    fun addProductToWishlistForUser(productId: Long) = viewModelScope.launch {
+        addProductToWishlistResponse.value = NetworkResult.Loading()
+        addProductToWishlistResponse.value = wishlistManager.addProductToWishlistForUserSafeCall(productId)
     }
 
-    fun removeProductFromShoppingCart(id: Long) {
-        addOrRemovedProduct = id
-        isRemoveProduct = true
-        shoppingBagManager.removeProductFromShoppingCart(id)
+    fun removeProductFromWishlistForUser(productId: Long) = viewModelScope.launch {
+        removeProductFromWishlistResponse.value = NetworkResult.Loading()
+        removeProductFromWishlistResponse.value = wishlistManager.removeProductFromWishlistForUserSafeCall(productId)
     }
 
 
@@ -152,16 +143,9 @@ class ProductsViewModel @Inject constructor(
         }
     }
 
-    fun deleteProductFromWishlist(id: Long) {
-        productsResponse.value?.data!!.find { it.id == id }?.isFavourite = false
+    fun addOrRemoveProductFromWishlist(productId: Long, isAdd: Boolean) {
+        productsResponse.value?.data!!.find { it.id == productId }?.isFavourite = isAdd
         productsResponse.value = NetworkResult.Success(productsResponse.value?.data!!)
-        //wishlistManager.removeProductFromWishlist(id)
-    }
-
-    fun insertProductInWishlist(product: Product) {
-        productsResponse.value?.data!!.find { it.id == product.id }?.isFavourite = true
-        productsResponse.value = NetworkResult.Success(productsResponse.value?.data!!)
-        //wishlistManager.addProductToWishlist(product.id)
     }
 
 }

@@ -15,6 +15,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import me.ibrahimsn.lib.SmoothBottomBar
 import mk.ukim.finki.eshop.R
@@ -67,9 +68,39 @@ class ProductsFragment : Fragment() {
             findNavController().navigate(action)
         }
         observeProductsResponse()
+        observeAddOrRemoveFromWishlistResponse()
         observeAddOrRemoveToShoppingCartResponse()
         setupSwipeToRefresh()
         return binding.root
+    }
+
+    private fun observeAddOrRemoveFromWishlistResponse() {
+        productsViewModel.removeProductFromWishlistResponse.value = NetworkResult.Loading()
+        productsViewModel.addProductToWishlistResponse.value = NetworkResult.Loading()
+        productsViewModel.removeProductFromWishlistResponse.observe(viewLifecycleOwner, {
+            when (it) {
+                is NetworkResult.Success -> {
+                    productsViewModel.addOrRemoveProductFromWishlist(it.data!!, false)
+                    Utils.showSnackbar(binding.root, "Removed product from wishlist!", Snackbar.LENGTH_SHORT)
+                }
+                is NetworkResult.Error -> {
+                    Utils.showSnackbar(binding.root, "Error removing product from wishlist!", Snackbar.LENGTH_SHORT)
+                }
+                else -> {}
+            }
+        })
+        productsViewModel.addProductToWishlistResponse.observe(viewLifecycleOwner, {
+            when (it) {
+                is NetworkResult.Success -> {
+                    productsViewModel.addOrRemoveProductFromWishlist(it.data!!, true)
+                    Utils.showSnackbar(binding.root, "Added product to wishlist!", Snackbar.LENGTH_SHORT)
+                }
+                is NetworkResult.Error -> {
+                    Utils.showSnackbar(binding.root, "Error adding product to wishlist!", Snackbar.LENGTH_SHORT)
+                }
+                else -> {}
+            }
+        })
     }
 
     private fun setupSwipeToRefresh () {

@@ -57,9 +57,7 @@ class WishlistFragment : Fragment() {
             observeRemoveProductFromWishlist()
             setHasOptionsMenu(true)
             wishlistViewModel.getWishlistProductsForUser()
-            binding.startShoppingBtn.setOnClickListener {
-                requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.categoriesFragment
-            }
+
         }
         return binding.root
     }
@@ -69,7 +67,6 @@ class WishlistFragment : Fragment() {
         binding.wishlistRecyclerView.visibility = View.GONE
         binding.wishlistIv.setImageResource(R.drawable.ic_forbidden)
         binding.wishlistIv.visibility = View.VISIBLE
-        binding.startShoppingBtn.visibility = View.GONE
         binding.wishlistEmptyTextView.text = "Please login to access wishlist"
         binding.wishlistEmptyTextView.visibility = View.VISIBLE
     }
@@ -107,6 +104,7 @@ class WishlistFragment : Fragment() {
     }
 
     private fun observeRemoveProductFromWishlist() {
+        wishlistViewModel.removeProductFromWishlistResponse.value = NetworkResult.Loading()
         wishlistViewModel.removeProductFromWishlistResponse.observe(viewLifecycleOwner, {
             when (it) {
                 is NetworkResult.Success -> {
@@ -125,14 +123,12 @@ class WishlistFragment : Fragment() {
         binding.wishlistIv.setImageResource(R.drawable.ic_wishlist_empty)
         binding.wishlistRecyclerView.visibility = View.GONE
         binding.wishlistIv.visibility = View.VISIBLE
-        binding.startShoppingBtn.visibility = View.VISIBLE
         binding.wishlistEmptyTextView.text = "Your wishlist is empty"
         binding.wishlistEmptyTextView.visibility = View.VISIBLE
     }
 
     private fun setupWishlistNotEmpty() {
         binding.wishlistIv.visibility = View.GONE
-        binding.startShoppingBtn.visibility = View.GONE
         binding.wishlistEmptyTextView.visibility = View.GONE
         binding.wishlistRecyclerView.visibility = View.VISIBLE
     }

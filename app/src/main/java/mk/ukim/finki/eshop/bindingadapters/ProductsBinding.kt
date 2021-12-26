@@ -81,12 +81,10 @@ class ProductsBinding {
         fun onFavouriteClickListener(iv: ImageView, product: Product, vm: ProductsViewModel) {
             iv.setOnClickListener {
                 if(product.isFavourite) {
-                    vm.deleteProductFromWishlist(product.id)
-                    showSnackbar(iv, "Removed product from wishlist!", Snackbar.LENGTH_SHORT)
+                    vm.removeProductFromWishlistForUser(product.id)
                 }
                 else {
-                    vm.insertProductInWishlist(product)
-                    showSnackbar(iv, "Added product to wishlist!", Snackbar.LENGTH_SHORT)
+                    vm.addProductToWishlistForUser(product.id)
                 }
             }
         }
