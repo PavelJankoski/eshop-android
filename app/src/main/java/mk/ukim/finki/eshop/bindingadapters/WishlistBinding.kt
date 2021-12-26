@@ -1,5 +1,6 @@
 package mk.ukim.finki.eshop.bindingadapters
 
+import android.app.AlertDialog
 import android.util.Log
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
@@ -33,9 +34,14 @@ class WishlistBinding {
         @JvmStatic
         fun onTrashClickListener(btn: MaterialButton, product: Product, vm: WishlistViewModel) {
             btn.setOnClickListener {
-                vm.removeProductFromWishlist(product.id)
-                Utils.showSnackbar(btn, "Removed product from wishlist!", Snackbar.LENGTH_SHORT)
-
+                AlertDialog.Builder(btn.context)
+                    .setTitle("Delete wishlist product")
+                    .setMessage("Are you sure you want to remove this product from wishlist?")
+                    .setPositiveButton("Yes") { _, _ ->
+                        vm.removeProductFromWishlistForUser(product.id)
+                    }
+                    .setNegativeButton("Cancel", null)
+                    .show()
             }
         }
 

@@ -6,16 +6,21 @@ import android.view.*
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import me.ibrahimsn.lib.SmoothBottomBar
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.WishlistAdapter
 import mk.ukim.finki.eshop.databinding.FragmentWishlistBinding
@@ -49,6 +54,7 @@ class WishlistFragment : Fragment() {
         } else {
             setupRecyclerView()
             observeWishlistProducts()
+            observeRemoveProductFromWishlist()
             setHasOptionsMenu(true)
             wishlistViewModel.getWishlistProductsForUser()
             binding.startShoppingBtn.setOnClickListener {
@@ -96,6 +102,21 @@ class WishlistFragment : Fragment() {
                 is NetworkResult.Loading -> {
                     Utils.showShimmerEffect(binding.wishlistShimmerFrameLayout, binding.wishlistRecyclerView)
                 }
+            }
+        })
+    }
+
+    private fun observeRemoveProductFromWishlist() {
+        wishlistViewModel.removeProductFromWishlistResponse.observe(viewLifecycleOwner, {
+            when (it) {
+                is NetworkResult.Success -> {
+                    wishlistViewModel.removeProductFromWishlistAfterResponse(it.data!!)
+                    Utils.showSnackbar(binding.root, "Removed product from wishlist!", Snackbar.LENGTH_SHORT)
+                }
+                is NetworkResult.Error -> {
+                    Utils.showSnackbar(binding.root, "Error removing product from wishlist!", Snackbar.LENGTH_SHORT)
+                }
+                else -> {}
             }
         })
     }

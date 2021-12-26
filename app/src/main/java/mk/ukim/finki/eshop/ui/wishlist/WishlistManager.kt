@@ -60,5 +60,49 @@ class WishlistManager @Inject constructor(
         }
     }
 
+    suspend fun addProductToWishlistForUserSafeCall(productId: Long): NetworkResult<Long> {
+        return if(Utils.hasInternetConnection(getApplication<Application>())) {
+            try {
+                val response = repository.remote.addProductToWishlistForUser(productId, loginManager.readUserId())
+                handleAddOrRemoveProductFromWishlistResponse(response)
+            } catch (e: Exception) {
+                Log.e("WishlistManager:addProductToWishlistForUserSafeCall", "Error adding product to wishlist for user")
+                NetworkResult.Error("Error adding product to wishlist for user")
+            }
+        } else {
+            Log.e("WishlistManager:addProductToWishlistForUserSafeCall", "No internet connection.")
+            NetworkResult.Error("No internet connection, please try again.")
+        }
+    }
+
+    suspend fun removeProductFromWishlistForUserSafeCall(productId: Long): NetworkResult<Long> {
+        return if(Utils.hasInternetConnection(getApplication<Application>())) {
+            try {
+                val response = repository.remote.removeProductFromWishlistForUser(productId, loginManager.readUserId())
+                handleAddOrRemoveProductFromWishlistResponse(response)
+            } catch (e: Exception) {
+                Log.e("WishlistManager:removeProductFromWishlistForUserSafeCall", "Error removing product from wishlist for user")
+                NetworkResult.Error("Error removing product from wishlist for user")
+            }
+        } else {
+            Log.e("WishlistManager:removeProductFromWishlistForUserSafeCall", "No internet connection.")
+            NetworkResult.Error("No internet connection, please try again.")
+        }
+    }
+
+    private fun handleAddOrRemoveProductFromWishlistResponse(response: Response<Long>): NetworkResult<Long> {
+        return when {
+            response.message().toString().contains("timeout") -> {
+                NetworkResult.Error("Timeout")
+            }
+            response.isSuccessful -> {
+                NetworkResult.Success(response.body()!!)
+            }
+            else -> {
+                NetworkResult.Error(response.message())
+            }
+        }
+    }
+
 
 }

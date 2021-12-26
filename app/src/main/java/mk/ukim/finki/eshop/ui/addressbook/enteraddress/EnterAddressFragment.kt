@@ -47,11 +47,11 @@ class EnterAddressFragment : Fragment() {
         addressBookViewModel.createEditAddressResponse.observe(viewLifecycleOwner, {
             when(it) {
                 is NetworkResult.Success -> {
-                    Utils.showSnackbar(binding.root, "Successfully saved address.", Snackbar.LENGTH_LONG)
+                    Utils.showSnackbar(binding.root, "Successfully saved address.", Snackbar.LENGTH_SHORT)
                     findNavController().popBackStack()
                 }
                 is NetworkResult.Error -> {
-                    Utils.showSnackbar(binding.root, it.message!!, Snackbar.LENGTH_LONG)
+                    Utils.showSnackbar(binding.root, it.message!!, Snackbar.LENGTH_SHORT)
                 }
                 else -> {}
             }

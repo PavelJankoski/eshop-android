@@ -167,7 +167,7 @@ class CustomOrderFragment : Fragment() {
                 shoppingBagViewModel.removeProductFromShoppingCart(adapter.getProduct(position), price.toInt())
                 adapter.removeProduct(position)
 
-                Snackbar.make(binding.shoppingBagShimmerRecyclerView, "Undo remove of products", Snackbar.LENGTH_LONG)
+                Snackbar.make(binding.shoppingBagShimmerRecyclerView, "Undo remove of products", Snackbar.LENGTH_SHORT)
                     .setAction("Undo") {
                         shoppingBagViewModel.addProductToShoppingCart(cartItem.product.id, price.toInt())
                     }.setActionTextColor(ContextCompat.getColor(requireContext(), R.color.white)).show()

@@ -76,7 +76,7 @@ class UserInfoFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                     binding.updateButton.isEnabled = true
-                    Utils.showSnackbar(binding.root, "Successfully updated info!", Snackbar.LENGTH_LONG)
+                    Utils.showSnackbar(binding.root, "Successfully updated info!", Snackbar.LENGTH_SHORT)
                     findNavController().popBackStack()
                 }
                 is NetworkResult.Error -> {

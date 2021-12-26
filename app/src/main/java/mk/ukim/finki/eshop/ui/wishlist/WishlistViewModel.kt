@@ -37,9 +37,18 @@ class WishlistViewModel @Inject constructor(
         wishlistProductsResponse.value = wishlistManager.getWishlistProductsForUserSafeCall()
     }
 
-    fun removeProductFromWishlist(id: Long) {
-        wishlistProductsResponse.value = NetworkResult.Success(wishlistProductsResponse.value!!.data!!.filter { p -> p.id != id })
-        // wishlistManager.removeProductFromWishlist(id)
+    fun addProductToWishlistForUser(productId: Long) = viewModelScope.launch {
+        addProductToWishlistResponse.value = NetworkResult.Loading()
+        addProductToWishlistResponse.value = wishlistManager.addProductToWishlistForUserSafeCall(productId)
+    }
+
+    fun removeProductFromWishlistForUser(productId: Long) = viewModelScope.launch {
+        removeProductFromWishlistResponse.value = NetworkResult.Loading()
+        removeProductFromWishlistResponse.value = wishlistManager.removeProductFromWishlistForUserSafeCall(productId)
+    }
+
+    fun removeProductFromWishlistAfterResponse(productId: Long) {
+        wishlistProductsResponse.value = NetworkResult.Success(wishlistProductsResponse.value!!.data!!.filter { p -> p.id != productId })
     }
 
     fun removeFromBag(id: Long) {

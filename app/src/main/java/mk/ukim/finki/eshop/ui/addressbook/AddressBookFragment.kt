@@ -46,7 +46,7 @@ class AddressBookFragment : Fragment() {
         addressBookViewModel.deleteAddressResponse.observe(viewLifecycleOwner, {
             when(it) {
                 is NetworkResult.Success -> {
-                    Utils.showSnackbar(binding.root, "Successfully deleted address.", Snackbar.LENGTH_LONG)
+                    Utils.showSnackbar(binding.root, "Successfully deleted address.", Snackbar.LENGTH_SHORT)
                 }
                 else -> {}
             }
