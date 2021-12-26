@@ -26,66 +26,20 @@ class WishlistViewModel @Inject constructor(
     application: Application
 ): AndroidViewModel(application) {
 
-    /** ROOM DATABASE */
-    val readWishlistProducts: LiveData<List<WishlistEntity>> = repository.local.readWishlistProducts().asLiveData()
-
-    fun deleteProductFromWishlist(id: Int) {
-        viewModelScope.launch {
-            repository.local.deleteProductFromWishlist(id)
-        }
-    }
-
     /** RETROFIT */
     var wishlistProductsResponse: MutableLiveData<NetworkResult<List<Product>>> = MutableLiveData()
-    var addProductResponse = shoppingBagManager.addProductToBagResponse
-    var removeProductResponse = shoppingBagManager.removeProductFromBagResponse
+    var addProductToWishlistResponse: MutableLiveData<NetworkResult<Long>> = MutableLiveData()
+    var removeProductFromWishlistResponse: MutableLiveData<NetworkResult<Long>> = MutableLiveData()
     var productsInBagNumber = GlobalVariables.productsInBagNumber
 
-    fun getCartItems() = viewModelScope.launch {
-        if (Utils.hasInternetConnection(getApplication<Application>())) {
-            try {
-                val userId = loginManager.readUserId()
-                wishlistProductsResponse.value = handleWishlistResponse(
-                    repository.remote.getAllProductsInWishlist(userId)
-                )
-            } catch (e: Exception) {
-                wishlistProductsResponse.value = NetworkResult.Error("Error loading wishlist products...")
-            }
-        }
-    }
-
-    private fun handleWishlistResponse(response: Response<List<Product>>): NetworkResult<List<Product>> {
-        return when {
-            response.message().toString().contains("timeout") -> {
-                NetworkResult.Error("Timeout")
-            }
-            response.isSuccessful -> {
-                val products = response.body()!!
-                viewModelScope.launch(Dispatchers.IO) {
-                    products.forEach { p ->
-
-                        val dto = shoppingBagManager.isInShoppingCartAndFaveSafeCall(p.id)
-                        if (dto != null) {
-                            p.isFavourite = dto.isFavorite.toBoolean()
-                        }
-                    }
-                    wishlistProductsResponse.postValue(NetworkResult.Success(products))
-                }
-                NetworkResult.Success(response.body()!!)
-            }
-            else -> {
-                NetworkResult.Error(response.message())
-            }
-        }
+    fun getWishlistProductsForUser() = viewModelScope.launch {
+        wishlistProductsResponse.value = NetworkResult.Loading()
+        wishlistProductsResponse.value = wishlistManager.getWishlistProductsForUserSafeCall()
     }
 
     fun removeProductFromWishlist(id: Long) {
         wishlistProductsResponse.value = NetworkResult.Success(wishlistProductsResponse.value!!.data!!.filter { p -> p.id != id })
-        wishlistManager.removeProductFromWishlist(id)
-    }
-
-    fun moveToBag(id: Long) {
-        shoppingBagManager.addProductToShoppingCart(id)
+        // wishlistManager.removeProductFromWishlist(id)
     }
 
     fun removeFromBag(id: Long) {

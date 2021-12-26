@@ -22,16 +22,13 @@ class DetailsViewModel @Inject constructor(
     var addProductToBagResponse = shoppingBagManager.addProductToBagResponse
     var removeProductFromBagResponse = shoppingBagManager.removeProductFromBagResponse
 
-    var addProductToWishlistResponse = wishlistManager.addProductToWishlistResponse
-    var removeProductFromWishlistResponse = wishlistManager.removeProductFromWishlistResponse
-
 
     fun deleteProductFromWishlist(id: Long) {
-        wishlistManager.removeProductFromWishlist(id)
+        // wishlistManager.removeProductFromWishlist(id)
     }
 
     fun insertProductInWishlist(product: Product) {
-        wishlistManager.addProductToWishlist(product.id)
+        // wishlistManager.addProductToWishlist(product.id)
     }
 
     fun addProductToShoppingCart(id: Long, price: Int) {

@@ -54,7 +54,6 @@ class DetailsFragment : Fragment() {
         }
         Utils.setupCartItemsBadge(binding.cartBadge, GlobalVariables.productsInBagNumber.value!!)
         observeShoppingBagActions()
-        observeWishlistActions()
         setupAddToWishlistBtn()
         setupAddToBagBtn()
         setupViewPager()
@@ -69,18 +68,6 @@ class DetailsFragment : Fragment() {
         })
     }
 
-    private fun observeWishlistActions() {
-        detailsViewModel.addProductToWishlistResponse.observe(viewLifecycleOwner, {
-            if(it.data!!) {
-                addProductToWishlistSuccess()
-            }
-        })
-        detailsViewModel.removeProductFromWishlistResponse.observe(viewLifecycleOwner, {
-            if(it.data!!) {
-                removeProductFromWishlistSuccess()
-            }
-        })
-    }
 
     private fun addProductToBagSuccess() {
         Utils.setupCartItemsBadge(binding.cartBadge, GlobalVariables.productsInBagNumber.value!!)

@@ -83,6 +83,18 @@ class RemoteDataSource @Inject constructor(
                 return webServices.deleteAddress(addressId)
         }
 
+        suspend fun getWishlistProductsForUser(userId: Long): Response<List<Product>> {
+                return webServices.getWishlistProductsForUser(userId)
+        }
+
+        suspend fun addProductToWishlistForUser(productId: Long, userId: Long): Response<Long> {
+                return webServices.addProductToWishlistForUser(productId, userId)
+        }
+
+        suspend fun removeProductFromWishlistForUser(productId: Long, userId: Long): Response<Long> {
+                return webServices.removeProductFromWishlistForUser(productId, userId)
+        }
+
         suspend fun userHasActiveShoppingCart(userId: Long): Response<Boolean> {
                 return webServices.userHaveActiveShoppingCart(userId)
         }
@@ -99,28 +111,12 @@ class RemoteDataSource @Inject constructor(
                 return webServices.addProductToShoppingCart(productId, userId, 1)
         }
 
-        suspend fun isProductInShoppingCart(userId: Long, productId: Long): Response<Boolean> {
-                return webServices.isInShoppingCart(productId, userId)
-        }
-
         suspend fun removeProductFromShoppingCart(userId: Long, productId: Long): Response<ShoppingCart> {
                 return webServices.removeFromShoppingCart(productId, userId)
         }
 
         suspend fun isInCartAndFave(userId: Long, productId: Long): Response<FavCartDto> {
                 return webServices.isFavAndInCart(productId, userId)
-        }
-
-        suspend fun addProductToWishlist(userId: Long, productId: Long): Response<Void> {
-                return webServices.addProductToWishlist(userId, productId)
-        }
-
-        suspend fun removeProductFromWishlist(userId: Long, productId: Long): Response<Void> {
-                return webServices.removeProductFromWishlist(userId, productId)
-        }
-
-        suspend fun getAllProductsInWishlist(userId: Long): Response<List<Product>> {
-                return webServices.getAllProductsInWishlist(userId)
         }
 
 

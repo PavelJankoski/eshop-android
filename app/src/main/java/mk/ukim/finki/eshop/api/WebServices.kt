@@ -97,6 +97,23 @@ interface WebServices {
         @Path(value = Constants.ADDRESS_ID_PARAM) addressId: Long,
     ): Response<Unit>
 
+    @GET("/api/product-catalog-service/wishlists/{userId}")
+    suspend fun getWishlistProductsForUser(
+        @Path(Constants.USER_ID_PARAM) userId: Long
+    ) : Response<List<Product>>
+
+    @PATCH("/api/product-catalog-service/wishlists/add/{productId}/users/{userId}")
+    suspend fun addProductToWishlistForUser(
+        @Path(Constants.PRODUCT_ID_PARAM) productId: Long,
+        @Path(Constants.USER_ID_PARAM) userId: Long
+    ) : Response<Long>
+
+    @PATCH("/api/product-catalog-service/wishlists/remove/{productId}/users/{userId}")
+    suspend fun removeProductFromWishlistForUser(
+        @Path(Constants.PRODUCT_ID_PARAM) productId: Long,
+        @Path(Constants.USER_ID_PARAM) userId: Long
+    ) : Response<Long>
+
     @GET("/api/shopping-cart/exists-active/{userId}")
     suspend fun userHaveActiveShoppingCart(
         @Path("userId") userId: Long
@@ -119,12 +136,6 @@ interface WebServices {
         @Path("copies") copies: Int
     ): Response<ShoppingCart>
 
-    @GET("/api/shopping-cart/is-in-shopping-cart/{userId}/{productId}")
-    suspend fun isInShoppingCart(
-        @Path("productId") productId: Long,
-        @Path("userId") userId: Long
-    ): Response<Boolean>
-
     @PATCH("/api/shopping-cart/remove-product/{productId}/{userId}")
     suspend fun removeFromShoppingCart(
         @Path("productId") productId: Long,
@@ -137,23 +148,6 @@ interface WebServices {
         @Path("userId") userId: Long
     ): Response<FavCartDto>
 
-
-    @GET("/api/users/add-fave/{userId}/{productId}")
-    suspend fun addProductToWishlist(
-        @Path("userId") userId: Long,
-        @Path("productId") productId: Long
-    ): Response<Void>
-
-    @GET("/api/users/remove-fave/{userId}/{productId}")
-    suspend fun removeProductFromWishlist(
-        @Path("userId") userId: Long,
-        @Path("productId") productId: Long
-    ): Response<Void>
-
-    @GET("/api/users/all-fave/{userId}")
-    suspend fun getAllProductsInWishlist(
-        @Path("userId") userId: Long
-    ): Response<List<Product>>
 
     @POST("/api/strpe-mobile-endpoint/payment-sheet/{amount}")
     suspend fun getPaymentSheetParams(

@@ -160,13 +160,13 @@ class ProductsViewModel @Inject constructor(
     fun deleteProductFromWishlist(id: Long) {
         productsResponse.value?.data!!.find { it.id == id }?.isFavourite = false
         productsResponse.value = NetworkResult.Success(productsResponse.value?.data!!)
-        wishlistManager.removeProductFromWishlist(id)
+        //wishlistManager.removeProductFromWishlist(id)
     }
 
     fun insertProductInWishlist(product: Product) {
         productsResponse.value?.data!!.find { it.id == product.id }?.isFavourite = true
         productsResponse.value = NetworkResult.Success(productsResponse.value?.data!!)
-        wishlistManager.addProductToWishlist(product.id)
+        //wishlistManager.addProductToWishlist(product.id)
     }
 
 }

@@ -50,26 +50,12 @@ class WishlistFragment : Fragment() {
             setupRecyclerView()
             observeWishlistProducts()
             setHasOptionsMenu(true)
+            wishlistViewModel.getWishlistProductsForUser()
             binding.startShoppingBtn.setOnClickListener {
                 requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.categoriesFragment
             }
         }
         return binding.root
-    }
-
-    private fun observeSetBagBadge() {
-        wishlistViewModel.addProductResponse.observe(viewLifecycleOwner, {
-            if(it.data!!) {
-                val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
-                Utils.setupCartItemsBadge(tv, wishlistViewModel.productsInBagNumber.value!!)
-            }
-        })
-        wishlistViewModel.removeProductResponse.observe(viewLifecycleOwner, {
-            if(it.data!!) {
-                val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
-                Utils.setupCartItemsBadge(tv, wishlistViewModel.productsInBagNumber.value!!)
-            }
-        })
     }
 
     private fun setupUserNotAuthenticatedInterface() {
@@ -93,7 +79,6 @@ class WishlistFragment : Fragment() {
     }
 
     private fun observeWishlistProducts()  {
-        wishlistViewModel.getCartItems()
         wishlistViewModel.wishlistProductsResponse.observe(viewLifecycleOwner, { response ->
             when (response) {
                 is NetworkResult.Success -> {
@@ -136,7 +121,7 @@ class WishlistFragment : Fragment() {
         menuItem = menu.findItem(R.id.shoppingCart_menuItem)
         val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
         Utils.setupCartItemsBadge(tv, wishlistViewModel.productsInBagNumber.value!!)
-        observeSetBagBadge()
+        // observeSetBagBadge()
         menuItem.actionView.setOnClickListener {
             onOptionsItemSelected(menuItem)
         }
