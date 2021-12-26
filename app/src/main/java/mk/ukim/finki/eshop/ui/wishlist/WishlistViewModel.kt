@@ -67,7 +67,6 @@ class WishlistViewModel @Inject constructor(
                         val dto = shoppingBagManager.isInShoppingCartAndFaveSafeCall(p.id)
                         if (dto != null) {
                             p.isFavourite = dto.isFavorite.toBoolean()
-                            p.isInShoppingCart = dto.isInShoppingCart.toBoolean()
                         }
                     }
                     wishlistProductsResponse.postValue(NetworkResult.Success(products))

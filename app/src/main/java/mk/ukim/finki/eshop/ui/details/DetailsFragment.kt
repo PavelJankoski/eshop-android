@@ -67,11 +67,6 @@ class DetailsFragment : Fragment() {
                 addProductToBagSuccess()
             }
         })
-        detailsViewModel.removeProductFromBagResponse.observe(viewLifecycleOwner, {
-            if(it.data!!) {
-                removeProductFromBagSuccess()
-            }
-        })
     }
 
     private fun observeWishlistActions() {
@@ -89,18 +84,7 @@ class DetailsFragment : Fragment() {
 
     private fun addProductToBagSuccess() {
         Utils.setupCartItemsBadge(binding.cartBadge, GlobalVariables.productsInBagNumber.value!!)
-        args.product.isInShoppingCart = true
-        binding.addToBagBtn.strokeColor = ColorStateList.valueOf(ContextCompat.getColor(binding.addToBagBtn.context, R.color.red))
-        binding.addToBagBtn.text = getString(R.string.remove_from_bag)
         Utils.showSnackbar(binding.addToBagBtn, "Added product to shopping bag!", Snackbar.LENGTH_SHORT)
-    }
-
-    private fun removeProductFromBagSuccess() {
-        Utils.setupCartItemsBadge(binding.cartBadge, GlobalVariables.productsInBagNumber.value!!)
-        args.product.isInShoppingCart = false
-        binding.addToBagBtn.text = getString(R.string.add_to_bag)
-        binding.addToBagBtn.strokeColor = ColorStateList.valueOf(ContextCompat.getColor(binding.addToBagBtn.context, R.color.green))
-        Utils.showSnackbar(binding.addToBagBtn, "Removed product from shopping bag!", Snackbar.LENGTH_SHORT)
     }
 
     private fun addProductToWishlistSuccess() {
@@ -134,12 +118,7 @@ class DetailsFragment : Fragment() {
 
     private fun setupAddToBagBtn() {
         binding.addToBagBtn.setOnClickListener {
-            if(args.product.isInShoppingCart) {
-                detailsViewModel.removeProductFromShoppingCart(args.product.id, args.product.price.toInt())
-            }
-            else {
-                detailsViewModel.addProductToShoppingCart(args.product.id, args.product.price.toInt())
-            }
+            detailsViewModel.addProductToShoppingCart(args.product.id, args.product.price.toInt())
         }
     }
 

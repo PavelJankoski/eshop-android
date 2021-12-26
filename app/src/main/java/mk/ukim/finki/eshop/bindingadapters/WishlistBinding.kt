@@ -20,9 +20,10 @@ class WishlistBinding {
         fun onWishlistProductClickListener(productLayout: ConstraintLayout, product: Product) {
             productLayout.setOnClickListener {
                 try {
-                    val action = WishlistFragmentDirections.actionWishlistFragmentToDetailsFragment(product)
+                    val action =
+                        WishlistFragmentDirections.actionWishlistFragmentToDetailsFragment(product)
                     productLayout.findNavController().navigate(action)
-                }catch (e: Exception) {
+                } catch (e: Exception) {
                     Log.e("onProductClickListener", e.message.toString())
                 }
             }
@@ -32,8 +33,8 @@ class WishlistBinding {
         @JvmStatic
         fun onTrashClickListener(btn: MaterialButton, product: Product, vm: WishlistViewModel) {
             btn.setOnClickListener {
-                    vm.removeProductFromWishlist(product.id)
-                    Utils.showSnackbar(btn, "Removed product from wishlist!", Snackbar.LENGTH_SHORT)
+                vm.removeProductFromWishlist(product.id)
+                Utils.showSnackbar(btn, "Removed product from wishlist!", Snackbar.LENGTH_SHORT)
 
             }
         }
@@ -43,17 +44,8 @@ class WishlistBinding {
         fun onMoveToBagBtnListener(btn: MaterialButton, product: Product, vm: WishlistViewModel) {
             val sb = SharedBinding()
             btn.setOnClickListener {
-                if(!product.isInShoppingCart) {
-                    sb.setupButtonRemove(btn)
-                    vm.moveToBag(product.id)
-                    Utils.showSnackbar(btn, "Moved product to shopping bag!", Snackbar.LENGTH_SHORT)
-                }
-                else {
-                    vm.removeFromBag(product.id)
-                    sb.setupButtonMoveToBag(btn)
-                    Utils.showSnackbar(btn, "Removed product from shopping bag!", Snackbar.LENGTH_SHORT)
-                }
-                product.isInShoppingCart = !product.isInShoppingCart
+                vm.removeFromBag(product.id)
+                sb.setupButtonMoveToBag(btn)
             }
         }
 

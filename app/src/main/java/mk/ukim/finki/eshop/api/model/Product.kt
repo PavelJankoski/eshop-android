@@ -22,6 +22,5 @@ data class Product(
     val productCode: String,
     val name: String,
     @SerializedName("isInWishlist")
-    var isFavourite: Boolean = false,
-    var isInShoppingCart: Boolean = false
+    var isFavourite: Boolean = false
 ) : Parcelable

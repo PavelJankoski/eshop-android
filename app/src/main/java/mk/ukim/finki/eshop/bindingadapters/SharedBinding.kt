@@ -61,12 +61,7 @@ class SharedBinding {
             else {
                 btn.isEnabled = true
                 val sb = SharedBinding()
-                if(!product.isInShoppingCart) {
-                    sb.setupButtonMoveToBag(btn)
-                }
-                else {
-                    sb.setupButtonRemove(btn)
-                }
+                sb.setupButtonMoveToBag(btn)
             }
 
         }
@@ -97,9 +92,5 @@ class SharedBinding {
     fun setupButtonMoveToBag(btn: MaterialButton) {
         btn.text = "Move to bag"
         btn.strokeColor = ColorStateList.valueOf(ContextCompat.getColor(btn.context, R.color.green))
-    }
-    fun setupButtonRemove(btn: MaterialButton) {
-        btn.text = "Remove from bag"
-        btn.strokeColor = ColorStateList.valueOf(ContextCompat.getColor(btn.context, R.color.red))
     }
 }

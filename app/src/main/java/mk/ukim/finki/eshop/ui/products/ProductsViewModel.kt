@@ -153,7 +153,6 @@ class ProductsViewModel @Inject constructor(
 
     fun addOrRemoveProductShoppingCart() {
         viewModelScope.launch {
-            productsResponse.value?.data!!.find { it.id == addOrRemovedProduct }?.isInShoppingCart = !isRemoveProduct!!
             productsResponse.value = NetworkResult.Success(productsResponse.value?.data!!)
         }
     }

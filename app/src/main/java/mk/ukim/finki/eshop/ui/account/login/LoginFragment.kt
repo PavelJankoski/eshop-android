@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import mk.ukim.finki.eshop.databinding.FragmentLoginBinding
 import mk.ukim.finki.eshop.ui.account.AccountViewModel
+import mk.ukim.finki.eshop.ui.addressbook.AddressBookViewModel
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 
@@ -41,6 +43,7 @@ class LoginFragment : Fragment() {
                 is NetworkResult.Error -> {
                     binding.alertTextView.text = response.message!!
                     binding.alertConstraintLayout.visibility = View.VISIBLE
+                    accountViewModel.logout()
                 }
                 else -> {
                     binding.alertConstraintLayout.visibility = View.GONE

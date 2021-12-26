@@ -89,8 +89,8 @@ class AccountViewModel @Inject constructor(
         loginResponse.value = NetworkResult.Loading()
         if(Utils.hasInternetConnection(getApplication<Application>())) {
             try {
-                loginResponse.value = handleLoginResponse(repository.remote.loginWithFacebook(dto))
                 setFacebookClient()
+                loginResponse.value = handleLoginResponse(repository.remote.loginWithFacebook(dto))
             } catch (e: Exception) {
                 loginResponse.value = NetworkResult.Error("Cannot authenticate user")
                 Log.e("FACEBOOK_AUTH: ", "Cannot authenticate user")
