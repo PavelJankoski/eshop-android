@@ -102,5 +102,35 @@
             />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/shoppingBagErrorProducts_Lottie"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/greyBorder_view"
+        app:lottie_speed="1.4"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/shopping_bag_error" />
+
+    <TextView
+        android:id="@+id/noProducts_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:textColor="@color/black"
+        tools:text="No products found for this category"
+        android:text="@string/no_products_found_for_this_category"
+        app:layout_constraintEnd_toEndOf="@+id/shoppingBagErrorProducts_Lottie"
+        app:layout_constraintStart_toStartOf="@+id/shoppingBagErrorProducts_Lottie"
+        app:layout_constraintTop_toBottomOf="@+id/shoppingBagErrorProducts_Lottie" />
+
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

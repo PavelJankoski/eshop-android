@@ -133,13 +133,9 @@ class ProductsViewModel @Inject constructor(
     }
 
     private fun handleProductsResponse(response: Response<List<Product>>): NetworkResult<List<Product>>{
-
         return when {
             response.message().toString().contains("timeout") -> {
                 NetworkResult.Error("Timeout")
-            }
-            response.body()!!.isNullOrEmpty() -> {
-                NetworkResult.Error("Products not found.")
             }
             response.isSuccessful -> {
                 NetworkResult.Success(response.body()!!)
@@ -149,7 +145,6 @@ class ProductsViewModel @Inject constructor(
             }
         }
     }
-
 
     fun addOrRemoveProductShoppingCart() {
         viewModelScope.launch {

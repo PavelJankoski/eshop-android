@@ -126,8 +126,12 @@ class ProductsFragment : Fragment() {
                 is NetworkResult.Success -> {
                     hideShimmerEffect(binding.productsShimmerFrameLayout, binding.productsRecyclerView)
                     if(!response.data.isNullOrEmpty()) {
+                        setupProductsNotEmpty()
                         mAdapterList.setData(response.data)
                         mAdapterGrid.setData(response.data)
+                    }
+                    else {
+                        setupProductsEmpty()
                     }
                     binding.productsSwipeRefresh.isRefreshing = false
                 }
@@ -140,7 +144,20 @@ class ProductsFragment : Fragment() {
                 }
             }
         })
+    }
 
+    private fun setupProductsEmpty() {
+        binding.noProductsTextView.visibility = View.VISIBLE
+        binding.shoppingBagErrorProductsLottie.visibility = View.VISIBLE
+        binding.sortAndFilterConstraintLayout.visibility = View.GONE
+        binding.productsSwipeRefresh.visibility = View.GONE
+    }
+
+    private fun setupProductsNotEmpty() {
+        binding.noProductsTextView.visibility = View.GONE
+        binding.shoppingBagErrorProductsLottie.visibility = View.GONE
+        binding.sortAndFilterConstraintLayout.visibility = View.VISIBLE
+        binding.productsSwipeRefresh.visibility = View.VISIBLE
     }
 
     private fun observeTypeMenuItemValue() {

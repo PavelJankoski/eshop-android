@@ -73,6 +73,7 @@
     <string name="save">Save</string>
     <string name="make_default">Make Default</string>
     <string name="no_addresses_found_in_your_address_book">No addresses found in your address book. Please add some</string>
+    <string name="no_products_found_for_this_category">No products found for this category</string>
 
 
     <string-array name="sorting_products">
