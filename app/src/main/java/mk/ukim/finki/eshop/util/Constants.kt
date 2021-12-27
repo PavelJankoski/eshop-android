@@ -37,6 +37,7 @@ class Constants {
         const val SEARCH_TEXT_PARAM = "searchText"
         const val CODE_PARAM = "code"
         const val USERNAME_PARAM = "username"
+        const val RATING_PARAM = "rating"
         const val GRANT_TYPE_PARAM = "grant_type"
         const val PASSWORD_PARAM = "password"
         const val CLIENT_ID_PARAM = "client_id"

@@ -99,20 +99,31 @@ interface WebServices {
 
     @GET("/api/product-catalog-service/wishlists/{userId}")
     suspend fun getWishlistProductsForUser(
-        @Path(Constants.USER_ID_PARAM) userId: Long
+        @Path(value = Constants.USER_ID_PARAM) userId: Long
     ) : Response<List<Product>>
 
     @PATCH("/api/product-catalog-service/wishlists/add/{productId}/users/{userId}")
     suspend fun addProductToWishlistForUser(
-        @Path(Constants.PRODUCT_ID_PARAM) productId: Long,
-        @Path(Constants.USER_ID_PARAM) userId: Long
+        @Path(value = Constants.PRODUCT_ID_PARAM) productId: Long,
+        @Path(value = Constants.USER_ID_PARAM) userId: Long
     ) : Response<Long>
 
     @PATCH("/api/product-catalog-service/wishlists/remove/{productId}/users/{userId}")
     suspend fun removeProductFromWishlistForUser(
-        @Path(Constants.PRODUCT_ID_PARAM) productId: Long,
-        @Path(Constants.USER_ID_PARAM) userId: Long
+        @Path(value = Constants.PRODUCT_ID_PARAM) productId: Long,
+        @Path(value = Constants.USER_ID_PARAM) userId: Long
     ) : Response<Long>
+
+    @GET("/api/product-catalog-service/reviews/{productId}")
+    suspend fun getReviewsForProduct(
+        @Path(value = Constants.PRODUCT_ID_PARAM) productId: Long
+    ) : Response<List<Review>>
+
+    @GET("/api/product-catalog-service/reviews/by-rating/{productId}")
+    suspend fun getReviewsByRatingForProduct(
+        @Path(value = Constants.PRODUCT_ID_PARAM) productId: Long,
+        @Query(value = Constants.RATING_PARAM) rating: Float
+    ) : Response<List<Review>>
 
     @GET("/api/shopping-cart/exists-active/{userId}")
     suspend fun userHaveActiveShoppingCart(

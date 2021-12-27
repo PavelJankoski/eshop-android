@@ -3,17 +3,17 @@ package mk.ukim.finki.eshop.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import mk.ukim.finki.eshop.api.model.Rating
+import mk.ukim.finki.eshop.api.model.Review
 import mk.ukim.finki.eshop.databinding.ReviewsRowLayoutBinding
 import mk.ukim.finki.eshop.util.DiffUtil
 
 class ReviewsAdapter: RecyclerView.Adapter<ReviewsAdapter.MyViewHolder>() {
-    private var reviews = emptyList<Rating>()
+    private var reviews = emptyList<Review>()
 
     class MyViewHolder(
         private val binding: ReviewsRowLayoutBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(review: Rating) {
+        fun bind(review: Review) {
             binding.review = review
             binding.executePendingBindings()
         }
@@ -40,7 +40,7 @@ class ReviewsAdapter: RecyclerView.Adapter<ReviewsAdapter.MyViewHolder>() {
         return reviews.size
     }
 
-    fun setData(newData: List<Rating>) {
+    fun setData(newData: List<Review>) {
         val diffUtil = DiffUtil(reviews, newData)
         val diffUtilResult = androidx.recyclerview.widget.DiffUtil.calculateDiff(diffUtil)
         reviews = newData

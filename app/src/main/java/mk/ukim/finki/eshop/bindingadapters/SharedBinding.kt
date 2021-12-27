@@ -83,15 +83,15 @@ class SharedBinding {
             }
         }
 
-        @BindingAdapter("formatDateFromString")
-        @JvmStatic
-        fun formatDateFromString(tv: TextView, date: String) {
-            val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
-            val output = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault())
-            val d = sdf.parse(date)
-            val formattedTime = output.format(d!!)
-            tv.text = formattedTime
-        }
+//        @BindingAdapter("formatDateFromString")
+//        @JvmStatic
+//        fun formatDateFromString(tv: TextView, date: String) {
+//            val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+//            val output = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault())
+//            val d = sdf.parse(date)
+//            val formattedTime = output.format(d!!)
+//            tv.text = formattedTime
+//        }
 
     }
     fun setupButtonMoveToBag(btn: MaterialButton) {

@@ -95,6 +95,14 @@ class RemoteDataSource @Inject constructor(
                 return webServices.removeProductFromWishlistForUser(productId, userId)
         }
 
+        suspend fun getReviewsForProduct(productId: Long): Response<List<Review>> {
+                return webServices.getReviewsForProduct(productId)
+        }
+
+        suspend fun getReviewsByRatingForProduct(productId: Long, rating: Float): Response<List<Review>> {
+                return webServices.getReviewsByRatingForProduct(productId, rating)
+        }
+
         suspend fun userHasActiveShoppingCart(userId: Long): Response<Boolean> {
                 return webServices.userHaveActiveShoppingCart(userId)
         }

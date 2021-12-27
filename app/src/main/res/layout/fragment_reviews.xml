@@ -6,15 +6,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.details.reviews.ReviewsFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/reviewsRecyclerView"
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/reviews_shimmerFrameLayout"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <include layout="@layout/placeholder_reviews_row_layout"/>
+            <include layout="@layout/placeholder_reviews_row_layout"/>
+            <include layout="@layout/placeholder_reviews_row_layout"/>
+            <include layout="@layout/placeholder_reviews_row_layout"/>
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/reviews_recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/reviews_Lottie"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/review_animation" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
