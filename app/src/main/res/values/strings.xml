@@ -74,6 +74,7 @@
     <string name="make_default">Make Default</string>
     <string name="no_addresses_found_in_your_address_book">No addresses found in your address book. Please add some</string>
     <string name="no_products_found_for_this_category">No products found</string>
+    <string name="out_of_stock">Out of stock</string>
 
 
     <string-array name="sorting_products">

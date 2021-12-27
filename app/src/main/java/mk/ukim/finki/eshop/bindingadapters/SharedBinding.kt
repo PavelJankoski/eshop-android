@@ -52,8 +52,13 @@ class SharedBinding {
         @BindingAdapter("setupOutlinedButtonStyle", "isLoggedIn", requireAll = false)
         @JvmStatic
         fun setupOutlinedButtonStyle(btn: MaterialButton, product: Product, isLoggedIn: Boolean) {
-            if(!isLoggedIn) {
-                btn.text = "Please log in"
+            if(!isLoggedIn || product.sizes.isEmpty()) {
+                if(!isLoggedIn) {
+                    btn.text = "Please log in"
+                }
+                else {
+                    btn.text = "Out of stock"
+                }
                 btn.isEnabled = false
                 btn.setTextColor(ContextCompat.getColor(btn.context, R.color.lightMediumGray))
                 btn.strokeColor = ColorStateList.valueOf(ContextCompat.getColor(btn.context, R.color.lightMediumGray))

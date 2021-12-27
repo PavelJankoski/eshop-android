@@ -2,24 +2,28 @@ package mk.ukim.finki.eshop.ui.details
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.view.ContextThemeWrapper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import me.ibrahimsn.lib.SmoothBottomBar
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.DetailsPagerAdapter
+import mk.ukim.finki.eshop.api.model.Size
 import mk.ukim.finki.eshop.databinding.FragmentCategoriesBinding
 import mk.ukim.finki.eshop.databinding.FragmentDetailsBinding
 import mk.ukim.finki.eshop.ui.details.moredetails.MoreDetailsFragment
@@ -28,6 +32,11 @@ import mk.ukim.finki.eshop.util.Constants
 import mk.ukim.finki.eshop.util.GlobalVariables
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
+
+import com.google.android.material.chip.ChipDrawable
+
+
+
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment() {
@@ -58,6 +67,7 @@ class DetailsFragment : Fragment() {
         setupAddToWishlistBtn()
         setupAddToBagBtn()
         setupViewPager()
+        setupChipGroup()
         return binding.root
     }
 
@@ -150,6 +160,28 @@ class DetailsFragment : Fragment() {
         TabLayoutMediator(binding.detailsTabLayout, binding.detailsViewPager) { tab, position ->
             tab.text = tabLayoutTitles[position]
         }.attach()
+    }
+
+    private fun setupChipGroup() {
+        if(args.product.sizes.isNotEmpty()) {
+            binding.chipGroupScrollView.visibility = View.VISIBLE
+            binding.outOfStockTextView.visibility = View.GONE
+            args.product.sizes.forEach {
+                val chip = layoutInflater.inflate(R.layout.custom_size_chip_layout, binding.sizeChipGroup, false) as Chip
+                chip.text = it.name.uppercase()
+                chip.id = ViewCompat.generateViewId()
+                chip.isCheckedIconVisible = true
+                chip.isCheckable = true
+                chip.isClickable = true
+                chip.tag = it.id
+                binding.sizeChipGroup.addView(chip)
+            }
+        }
+        else {
+            binding.chipGroupScrollView.visibility = View.GONE
+            binding.outOfStockTextView.visibility = View.VISIBLE
+        }
+
     }
 
     override fun onDestroyView() {
