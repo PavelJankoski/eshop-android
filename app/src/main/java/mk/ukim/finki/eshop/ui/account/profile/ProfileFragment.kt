@@ -77,7 +77,6 @@ class ProfileFragment : Fragment() {
         biometricPrompt = BiometricPrompt(this, executor, object: BiometricPrompt.AuthenticationCallback(){
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errorCode, errString)
-                Utils.showToast(requireContext(), "Authentication Error: $errString", Toast.LENGTH_SHORT)
             }
 
             override fun onAuthenticationFailed() {
@@ -92,7 +91,7 @@ class ProfileFragment : Fragment() {
         })
         promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle("Biometric Authentication")
-            .setSubtitle("Login to see payment methods")
+            .setSubtitle("Login to update your info")
             .setNegativeButtonText("Cancel")
             .build()
     }
