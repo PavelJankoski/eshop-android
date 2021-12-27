@@ -17,11 +17,11 @@
                motion:framePosition="100"
                android:alpha="0" />
            <KeyAttribute
-               motion:motionTarget="@+id/bag_frameLayout"
+               motion:motionTarget="@+id/share_fab"
                motion:framePosition="70"
                android:alpha="0" />
            <KeyAttribute
-               motion:motionTarget="@+id/bag_frameLayout"
+               motion:motionTarget="@+id/share_fab"
                motion:framePosition="100"
                android:alpha="0" />
            <KeyAttribute

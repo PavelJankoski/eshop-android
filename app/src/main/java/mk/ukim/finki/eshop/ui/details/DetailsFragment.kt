@@ -1,41 +1,29 @@
 package mk.ukim.finki.eshop.ui.details
 
-import android.content.res.ColorStateList
+import android.content.Intent
 import android.os.Bundle
-import android.view.ContextThemeWrapper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
-import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import me.ibrahimsn.lib.SmoothBottomBar
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.DetailsPagerAdapter
-import mk.ukim.finki.eshop.api.model.Size
-import mk.ukim.finki.eshop.databinding.FragmentCategoriesBinding
 import mk.ukim.finki.eshop.databinding.FragmentDetailsBinding
 import mk.ukim.finki.eshop.ui.details.moredetails.MoreDetailsFragment
 import mk.ukim.finki.eshop.ui.details.reviews.ReviewsFragment
 import mk.ukim.finki.eshop.util.Constants
-import mk.ukim.finki.eshop.util.GlobalVariables
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
-
-import com.google.android.material.chip.ChipDrawable
-
-
 
 
 @AndroidEntryPoint
@@ -61,23 +49,27 @@ class DetailsFragment : Fragment() {
         binding.backFab.setOnClickListener {
             findNavController().popBackStack()
         }
-        Utils.setupCartItemsBadge(binding.cartBadge, GlobalVariables.productsInBagNumber.value!!)
-        observeShoppingBagActions()
         observeAddOrRemoveProductFromWishlist()
         setupAddToWishlistBtn()
         setupAddToBagBtn()
         setupViewPager()
         setupChipGroup()
+        setupShareFab()
         return binding.root
     }
 
-    private fun observeShoppingBagActions() {
-        detailsViewModel.addProductToBagResponse.observe(viewLifecycleOwner, {
-            if(it.data!!) {
-                addProductToBagSuccess()
+    private fun setupShareFab() {
+        binding.shareFab.setOnClickListener {
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, args.product.images[0])
+                type = "text/plain"
             }
-        })
+            val shareIntent = Intent.createChooser(sendIntent, "Share product using...")
+            startActivity(shareIntent)
+        }
     }
+
 
     private fun observeAddOrRemoveProductFromWishlist() {
         detailsViewModel.removeProductFromWishlistResponse.observe(viewLifecycleOwner, {
@@ -104,11 +96,6 @@ class DetailsFragment : Fragment() {
         })
     }
 
-
-    private fun addProductToBagSuccess() {
-        Utils.setupCartItemsBadge(binding.cartBadge, GlobalVariables.productsInBagNumber.value!!)
-        Utils.showSnackbar(binding.addToBagBtn, "Added product to shopping bag!", Snackbar.LENGTH_SHORT)
-    }
 
     private fun addProductToWishlistSuccess() {
         binding.addToWishlistFab.setImageResource(R.drawable.ic_heart_full)
@@ -148,8 +135,8 @@ class DetailsFragment : Fragment() {
 
 
     private fun setupViewPager() {
-        val fragments = arrayListOf<Fragment>(MoreDetailsFragment(), ReviewsFragment())
-        val tabLayoutTitles = arrayListOf<String>("More details", "Reviews")
+        val fragments = arrayListOf(MoreDetailsFragment(), ReviewsFragment())
+        val tabLayoutTitles = arrayListOf("More details", "Reviews")
         val resultBundle = Bundle()
         resultBundle.putParcelable(Constants.PRODUCT_RESULT_KEY, args.product)
         val pagerAdapter = DetailsPagerAdapter(resultBundle, fragments, requireActivity())

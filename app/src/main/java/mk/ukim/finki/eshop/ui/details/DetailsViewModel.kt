@@ -23,7 +23,6 @@ class DetailsViewModel @Inject constructor(
     application: Application
 ): AndroidViewModel(application) {
 
-    var addProductToBagResponse = shoppingBagManager.addProductToBagResponse
     var addProductToWishlistResponse: MutableLiveData<NetworkResult<Long>> = MutableLiveData()
     var removeProductFromWishlistResponse: MutableLiveData<NetworkResult<Long>> = MutableLiveData()
 
