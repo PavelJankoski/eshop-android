@@ -6,14 +6,90 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.details.reviews.ReviewsFragment">
 
+    <HorizontalScrollView
+        android:id="@+id/ratingChipGroup_scrollView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/rating_chipGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:selectionRequired="true"
+                app:singleLine="true"
+                app:checkedChip="@id/all_chip"
+                app:singleSelection="true">
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/all_chip"
+                    style="@style/CustomChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/fiveStar_chip"
+                    style="@style/CustomChipStyle"
+                    app:chipIcon="@drawable/ic_star_full"
+                    app:chipIconVisible="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/fourStar_chip"
+                    style="@style/CustomChipStyle"
+                    app:chipIcon="@drawable/ic_star_full"
+                    app:chipIconVisible="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/threeStar_chip"
+                    style="@style/CustomChipStyle"
+                    app:chipIcon="@drawable/ic_star_full"
+                    app:chipIconVisible="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/twoStar_chip"
+                    style="@style/CustomChipStyle"
+                    app:chipIcon="@drawable/ic_star_full"
+                    app:chipIconVisible="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/oneStar_chip"
+                    style="@style/CustomChipStyle"
+                    app:chipIcon="@drawable/ic_star_full"
+                    app:chipIconVisible="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1" />
+            </com.google.android.material.chip.ChipGroup>
+        </LinearLayout>
+    </HorizontalScrollView>
+
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/reviews_shimmerFrameLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/ratingChipGroup_scrollView">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -30,10 +106,11 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:visibility="gone"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/ratingChipGroup_scrollView"/>
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/reviews_Lottie"
