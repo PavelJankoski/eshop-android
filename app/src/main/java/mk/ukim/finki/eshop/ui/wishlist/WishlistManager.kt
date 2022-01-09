@@ -3,26 +3,14 @@ package mk.ukim.finki.eshop.ui.wishlist
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import dagger.hilt.android.scopes.ViewModelScoped
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import mk.ukim.finki.eshop.api.model.Address
 import mk.ukim.finki.eshop.api.model.Product
-import mk.ukim.finki.eshop.api.model.ShoppingCart
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.ui.account.LoginManager
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 import retrofit2.Response
 import javax.inject.Inject
-import kotlin.math.log
 
 @ViewModelScoped
 class WishlistManager @Inject constructor(

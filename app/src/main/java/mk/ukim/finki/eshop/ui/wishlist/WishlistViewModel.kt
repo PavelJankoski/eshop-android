@@ -9,7 +9,6 @@ import mk.ukim.finki.eshop.api.model.Product
 import mk.ukim.finki.eshop.data.model.WishlistEntity
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.ui.account.LoginManager
-import mk.ukim.finki.eshop.ui.shoppingBag.ShoppingBagManager
 import mk.ukim.finki.eshop.util.GlobalVariables
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
@@ -22,7 +21,6 @@ class WishlistViewModel @Inject constructor(
     private val repository: Repository,
     private val loginManager: LoginManager,
     private val wishlistManager: WishlistManager,
-    private val shoppingBagManager: ShoppingBagManager,
     application: Application
 ): AndroidViewModel(application) {
 
@@ -45,9 +43,5 @@ class WishlistViewModel @Inject constructor(
         wishlistProductsResponse.value = NetworkResult.Success(wishlistProductsResponse.value?.data!!.filter { p -> p.id != productId })
     }
 
-    fun removeFromBag(id: Long) {
-        shoppingBagManager.removeProductFromShoppingCart(id)
-
-    }
 
 }

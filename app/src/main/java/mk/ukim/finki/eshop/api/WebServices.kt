@@ -130,45 +130,12 @@ interface WebServices {
         @Path("userId") userId: Long
     ): Response<Boolean>
 
-    @GET("/api/shopping-cart/get-active/{userId}")
-    suspend fun getActiveShoppingCart(
-        @Path("userId") userId: Long
-    ): Response<ShoppingCart>
-
-    @GET("/api/shopping-cart/products-fixed-order/{userId}")
-    suspend fun getCartItems(
-        @Path("userId") userId: Long
-    ): Response<List<CartItem>>
-
-    @PATCH("/api/shopping-cart/add-product/{productId}/{userId}/{copies}")
-    suspend fun addProductToShoppingCart(
-        @Path("productId") productId: Long,
-        @Path("userId") userId: Long,
-        @Path("copies") copies: Int
-    ): Response<ShoppingCart>
-
-    @PATCH("/api/shopping-cart/remove-product/{productId}/{userId}")
-    suspend fun removeFromShoppingCart(
-        @Path("productId") productId: Long,
-        @Path("userId") userId: Long
-    ): Response<ShoppingCart>
-
-    @GET("/api/shopping-cart/fav-cart/{productId}/{userId}")
-    suspend fun isFavAndInCart(
-        @Path("productId") productId: Long,
-        @Path("userId") userId: Long
-    ): Response<FavCartDto>
-
 
     @POST("/api/strpe-mobile-endpoint/payment-sheet/{amount}")
     suspend fun getPaymentSheetParams(
         @Path("amount") amount: Int
     ): Response<Map<String, String>>
 
-    @GET("/api/shopping-cart/all/{userId}")
-    suspend fun getShoppingCarts(
-        @Path("userId") userId: Long
-    ): Response<List<ShoppingCart>>
 
 
 }

@@ -107,33 +107,10 @@ class RemoteDataSource @Inject constructor(
                 return webServices.userHaveActiveShoppingCart(userId)
         }
 
-        suspend fun getActiveShoppingCart(userId: Long): Response<ShoppingCart> {
-                return  webServices.getActiveShoppingCart(userId)
-        }
-
-        suspend fun getCartItems(userId: Long): Response<List<CartItem>> {
-                return webServices.getCartItems(userId)
-        }
-
-        suspend fun addProductToShoppingCart(userId: Long, productId: Long): Response<ShoppingCart> {
-                return webServices.addProductToShoppingCart(productId, userId, 1)
-        }
-
-        suspend fun removeProductFromShoppingCart(userId: Long, productId: Long): Response<ShoppingCart> {
-                return webServices.removeFromShoppingCart(productId, userId)
-        }
-
-        suspend fun isInCartAndFave(userId: Long, productId: Long): Response<FavCartDto> {
-                return webServices.isFavAndInCart(productId, userId)
-        }
-
 
         suspend fun getPaymentSheetParams(amount: Int): Response<Map<String, String>> {
                 return webServices.getPaymentSheetParams(amount)
         }
 
-        suspend fun getShoppingCarts(userId: Long): Response<List<ShoppingCart>> {
-                return webServices.getShoppingCarts(userId)
-        }
 
 }

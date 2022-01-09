@@ -51,7 +51,6 @@ class DetailsFragment : Fragment() {
         }
         observeAddOrRemoveProductFromWishlist()
         setupAddToWishlistBtn()
-        setupAddToBagBtn()
         setupViewPager()
         setupChipGroup()
         setupShareFab()
@@ -126,13 +125,6 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private fun setupAddToBagBtn() {
-        binding.addToBagBtn.setOnClickListener {
-            detailsViewModel.addProductToShoppingCart(args.product.id, args.product.price.toInt())
-        }
-    }
-
-
 
     private fun setupViewPager() {
         val fragments = arrayListOf(MoreDetailsFragment(), ReviewsFragment())
@@ -150,10 +142,10 @@ class DetailsFragment : Fragment() {
     }
 
     private fun setupChipGroup() {
-        if(args.product.sizes.isNotEmpty()) {
+        if(args.product.sizes.any { s -> s.quantity > 0 }) {
             binding.chipGroupScrollView.visibility = View.VISIBLE
             binding.outOfStockTextView.visibility = View.GONE
-            args.product.sizes.forEach {
+            args.product.sizes.filter { s -> s.quantity > 0 }.forEach {
                 val chip = layoutInflater.inflate(R.layout.custom_size_chip_layout, binding.sizeChipGroup, false) as Chip
                 chip.text = it.name.uppercase()
                 chip.id = ViewCompat.generateViewId()

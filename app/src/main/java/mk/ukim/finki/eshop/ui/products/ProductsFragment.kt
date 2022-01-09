@@ -69,7 +69,6 @@ class ProductsFragment : Fragment() {
         }
         observeProductsResponse()
         observeAddOrRemoveFromWishlistResponse()
-        observeAddOrRemoveToShoppingCartResponse()
         setupSwipeToRefresh()
         return binding.root
     }
@@ -107,20 +106,6 @@ class ProductsFragment : Fragment() {
         binding.productsSwipeRefresh.setOnRefreshListener {
             getProducts()
         }
-    }
-
-    private fun observeAddOrRemoveToShoppingCartResponse() {
-        productsViewModel.addOrRemoveProductResponse.observe(viewLifecycleOwner, { response ->
-            if (response is NetworkResult.Success) {
-                productsViewModel.addOrRemoveProductShoppingCart()
-            } else if (response is NetworkResult.Error) {
-                var errorMessage = ""
-                if (response.message.equals("")) {
-                    errorMessage = ""
-                } else errorMessage = "Due to technical problems at the moment we can not execute you're action"
-                Utils.showToast(requireContext(), errorMessage, Toast.LENGTH_SHORT)
-            }
-        })
     }
 
 
@@ -203,27 +188,12 @@ class ProductsFragment : Fragment() {
         })
     }
 
-    private fun observeSetBagBadge() {
-        productsViewModel.addProductResponse.observe(viewLifecycleOwner, {
-            if(it.data!!) {
-                val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
-                Utils.setupCartItemsBadge(tv, productsInBagNumber.value!!)
-            }
-        })
-        productsViewModel.removeProductResponse.observe(viewLifecycleOwner, {
-            if(it.data!!) {
-                val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
-                Utils.setupCartItemsBadge(tv, productsInBagNumber.value!!)
-            }
-        })
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.products_toolbar_menu, menu)
         menuItem = menu.findItem(R.id.shoppingCart_menuItem)
         val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
         Utils.setupCartItemsBadge(tv, productsInBagNumber.value!!)
-        observeSetBagBadge()
         menuItem.actionView.setOnClickListener {
             onOptionsItemSelected(menuItem)
         }
@@ -236,7 +206,7 @@ class ProductsFragment : Fragment() {
                 if (!loginManager.loggedIn.value) {
                     findNavController().navigate(R.id.action_productsFragment_to_loginPrompt)
                 } else {
-                    findNavController().navigate(R.id.action_productsFragment_to_shoppingBagFragment)
+                    // findNavController().navigate(R.id.action_productsFragment_to_shoppingBagFragment)
                 }
                 true
             }

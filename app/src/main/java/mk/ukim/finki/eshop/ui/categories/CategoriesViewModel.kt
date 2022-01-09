@@ -6,13 +6,10 @@ import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import mk.ukim.finki.eshop.MyApplication
-import mk.ukim.finki.eshop.api.model.CartItem
 import mk.ukim.finki.eshop.api.model.Category
 import mk.ukim.finki.eshop.data.model.CategoriesEntity
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.ui.account.LoginManager
-import mk.ukim.finki.eshop.ui.shoppingBag.ShoppingBagManager
 import mk.ukim.finki.eshop.util.GlobalVariables.Companion.productsInBagNumber
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
@@ -23,7 +20,6 @@ import javax.inject.Inject
 class CategoriesViewModel @Inject constructor(
     private val repository: Repository,
     private val loginManager: LoginManager,
-    private val shoppingBagManager: ShoppingBagManager,
     application: Application
 ): AndroidViewModel(application) {
 
@@ -74,21 +70,6 @@ class CategoriesViewModel @Inject constructor(
             }
             else -> {
                 NetworkResult.Error(response.message())
-            }
-        }
-    }
-
-    fun getCartItems() = viewModelScope.launch {
-        if (Utils.hasInternetConnection(getApplication<Application>()) && productsInBagNumber.value == 0) {
-            try {
-                val userId = loginManager.readUserId()
-                val response = repository.remote.getCartItems(userId)
-                if(response.isSuccessful) {
-                    productsInBagNumber.value = response.body()!!.size
-                }
-
-            } catch (e: java.lang.Exception) {
-                Log.e("CategoriesViewModel","Error loading cart items...")
             }
         }
     }

@@ -151,7 +151,7 @@ class WishlistFragment : Fragment() {
                 if (!loginManager.loggedIn.value) {
                     showLoginPrompt()
                 } else {
-                    findNavController().navigate(R.id.action_wishlistFragment_to_shoppingBagFragment)
+                    // findNavController().navigate(R.id.action_wishlistFragment_to_shoppingBagFragment)
                 }
                 true
             }

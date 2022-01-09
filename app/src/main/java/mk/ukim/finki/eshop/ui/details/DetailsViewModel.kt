@@ -9,7 +9,6 @@ import kotlinx.coroutines.launch
 import mk.ukim.finki.eshop.api.model.Product
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.ui.account.LoginManager
-import mk.ukim.finki.eshop.ui.shoppingBag.ShoppingBagManager
 import mk.ukim.finki.eshop.ui.wishlist.WishlistManager
 import mk.ukim.finki.eshop.util.NetworkResult
 import javax.inject.Inject
@@ -17,7 +16,6 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
     private val repository: Repository,
-    private val shoppingBagManager: ShoppingBagManager,
     val loginManager: LoginManager,
     private val wishlistManager: WishlistManager,
     application: Application
@@ -34,10 +32,6 @@ class DetailsViewModel @Inject constructor(
     fun removeProductFromWishlistForUser(productId: Long) = viewModelScope.launch {
         removeProductFromWishlistResponse.value = NetworkResult.Loading()
         removeProductFromWishlistResponse.value = wishlistManager.removeProductFromWishlistForUserSafeCall(productId)
-    }
-
-    fun addProductToShoppingCart(id: Long, price: Int) {
-        shoppingBagManager.addProductToShoppingCart(id, price)
     }
 
 }

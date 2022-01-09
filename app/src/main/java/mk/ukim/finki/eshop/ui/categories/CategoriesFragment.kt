@@ -43,7 +43,6 @@ class CategoriesFragment : Fragment() {
         setHasOptionsMenu(true)
         setupViewPager()
         categoriesViewModel.getCategories()
-        categoriesViewModel.getCartItems()
         return binding.root
     }
 
@@ -85,16 +84,12 @@ class CategoriesFragment : Fragment() {
                 if (!loginManager.loggedIn.value) {
                     showLoginPrompt()
                 } else {
-                    navigateToShoppingBag()
+                    // navigateToShoppingBag()
                 }
                 true
             }
             else -> return super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun navigateToShoppingBag() {
-        findNavController().navigate(R.id.action_categoriesFragment_to_shoppingBagFragment)
     }
 
     private fun showLoginPrompt() {

@@ -50,7 +50,6 @@ class WishlistBinding {
         fun onMoveToBagBtnListener(btn: MaterialButton, product: Product, vm: WishlistViewModel) {
             val sb = SharedBinding()
             btn.setOnClickListener {
-                vm.removeFromBag(product.id)
                 sb.setupButtonMoveToBag(btn)
             }
         }
