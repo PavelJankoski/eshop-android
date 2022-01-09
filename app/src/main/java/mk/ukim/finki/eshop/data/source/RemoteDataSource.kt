@@ -103,14 +103,8 @@ class RemoteDataSource @Inject constructor(
                 return webServices.getReviewsByRatingForProduct(productId, rating)
         }
 
-        suspend fun userHasActiveShoppingCart(userId: Long): Response<Boolean> {
-                return webServices.userHaveActiveShoppingCart(userId)
+        suspend fun getOrderItemsForUser(userId: Long): Response<List<OrderItem>> {
+                return webServices.getOrderItemsForUser(userId)
         }
-
-
-        suspend fun getPaymentSheetParams(amount: Int): Response<Map<String, String>> {
-                return webServices.getPaymentSheetParams(amount)
-        }
-
 
 }

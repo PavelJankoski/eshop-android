@@ -1,23 +1,17 @@
 package mk.ukim.finki.eshop.ui.products
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import me.ibrahimsn.lib.SmoothBottomBar
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.ProductsGridAdapter
 import mk.ukim.finki.eshop.adapters.ProductsListAdapter
@@ -111,7 +105,7 @@ class ProductsFragment : Fragment() {
 
     private fun setupSortingDropdown() {
         val sortingCriteria = resources.getStringArray(R.array.sorting_products)
-        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.sorting_dropdown_item, sortingCriteria)
+        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, sortingCriteria)
         binding.sortingAutocomplete.setAdapter(arrayAdapter)
         binding.sortingAutocomplete.setOnItemClickListener { _, _, position, _ ->
             productsViewModel.orderProductsByCriteria(position)

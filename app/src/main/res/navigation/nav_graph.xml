@@ -20,6 +20,13 @@
         <action
             android:id="@+id/action_categoriesFragment_to_loginPrompt"
             app:destination="@id/loginPrompt" />
+        <action
+            android:id="@+id/action_categoriesFragment_to_shoppingBagFragment"
+            app:destination="@id/shoppingBagFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/wishlistFragment"
@@ -213,4 +220,9 @@
             app:nullable="true"
             android:defaultValue="@null" />
     </fragment>
+    <fragment
+        android:id="@+id/shoppingBagFragment"
+        android:name="mk.ukim.finki.eshop.ui.shoppingbag.ShoppingBagFragment"
+        android:label="Shopping bag"
+        tools:layout="@layout/fragment_shopping_bag" />
 </navigation>

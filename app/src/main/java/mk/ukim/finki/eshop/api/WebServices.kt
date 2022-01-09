@@ -125,17 +125,9 @@ interface WebServices {
         @Query(value = Constants.RATING_PARAM) rating: Float
     ) : Response<List<Review>>
 
-    @GET("/api/shopping-cart/exists-active/{userId}")
-    suspend fun userHaveActiveShoppingCart(
-        @Path("userId") userId: Long
-    ): Response<Boolean>
-
-
-    @POST("/api/strpe-mobile-endpoint/payment-sheet/{amount}")
-    suspend fun getPaymentSheetParams(
-        @Path("amount") amount: Int
-    ): Response<Map<String, String>>
-
-
+    @GET("/api/order-management-service/orders/{userId}")
+    suspend fun getOrderItemsForUser(
+        @Path(value = Constants.USER_ID_PARAM) userId: Long,
+    ) : Response<List<OrderItem>>
 
 }
