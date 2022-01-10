@@ -65,8 +65,14 @@ class WishlistAdapter(private val vm: WishlistViewModel): RecyclerView.Adapter<W
         return products.size
     }
 
+    fun getProduct(position: Int): Product {
+        return products[position]
+    }
+
     fun setData(newData: List<Product>) {
+        val diffUtil = DiffUtil(products, newData)
+        val diffUtilResult = androidx.recyclerview.widget.DiffUtil.calculateDiff(diffUtil)
         products = newData
-        notifyDataSetChanged()
+        diffUtilResult.dispatchUpdatesTo(this)
     }
 }

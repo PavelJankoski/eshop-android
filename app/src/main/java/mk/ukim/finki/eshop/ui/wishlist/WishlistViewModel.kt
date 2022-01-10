@@ -39,7 +39,7 @@ class WishlistViewModel @Inject constructor(
     }
 
     fun moveProductToShoppingBag(productId: Long, sizeId: Long) = viewModelScope.launch {
-        val body: AddProductToBagDto = AddProductToBagDto(loginManager.readUserId(), productId, sizeId, 1)
+        val body = AddProductToBagDto(loginManager.readUserId(), productId, sizeId, 1)
         addProductToShoppingBagResponse.value = NetworkResult.Loading()
         addProductToShoppingBagResponse.value = shoppingBagManager.addProductToShoppingBagForUserSafeCall(body)
     }

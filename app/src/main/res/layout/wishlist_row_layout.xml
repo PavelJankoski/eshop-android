@@ -104,27 +104,6 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/wishlistDelete_btn"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                onTrashClickListener="@{product}"
-                setViewModel="@{vm}"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:insetLeft="0dp"
-                android:insetRight="0dp"
-                android:minWidth="0dp"
-                android:layout_marginTop="8dp"
-                android:text=""
-                app:icon="@drawable/ic_trash"
-                app:iconGravity="textStart"
-                app:iconPadding="0dp"
-                app:iconTint="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:strokeColor="@color/black" />
-
-            <com.google.android.material.button.MaterialButton
                 android:id="@+id/wishlistBag_btn"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 setupOutlinedButtonStyle="@{product}"

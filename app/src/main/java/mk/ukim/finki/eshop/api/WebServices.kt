@@ -132,5 +132,9 @@ interface WebServices {
         @Body body: AddProductToBagDto
     ) : Response<Unit>
 
+    @PATCH("/api/order-management-service/order-items/remove-from-order")
+    suspend fun removeProductFromBag(
+        @Body body: RemoveProductFromBagDto
+    ) : Response<Unit>
 
 }

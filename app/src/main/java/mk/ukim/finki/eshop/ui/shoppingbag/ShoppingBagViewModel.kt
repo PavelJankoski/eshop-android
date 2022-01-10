@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import mk.ukim.finki.eshop.api.dto.request.AddProductToBagDto
+import mk.ukim.finki.eshop.api.dto.request.RemoveProductFromBagDto
 import mk.ukim.finki.eshop.api.model.OrderItem
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.ui.account.LoginManager
@@ -24,9 +25,16 @@ class ShoppingBagViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
     var orderItemsResponse: MutableLiveData<NetworkResult<List<OrderItem>>> = MutableLiveData()
+    var removeProductFromShoppingBagResponse: MutableLiveData<NetworkResult<Long>> = MutableLiveData()
 
     fun getOrderItemsForUser() = viewModelScope.launch {
         getOrderItemsSafeCall()
+    }
+
+    fun removeProductFromShoppingBag(productId: Long, sizeId: Long) = viewModelScope.launch {
+        val body = RemoveProductFromBagDto(loginManager.readUserId(), productId, sizeId)
+        removeProductFromShoppingBagResponse.value = NetworkResult.Loading()
+        removeProductFromShoppingBagResponse.value = shoppingBagManager.removeProductFromShoppingBagForUserSafeCall(body)
     }
 
     private suspend fun getOrderItemsSafeCall() {

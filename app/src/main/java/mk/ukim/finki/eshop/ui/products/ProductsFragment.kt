@@ -198,9 +198,9 @@ class ProductsFragment : Fragment() {
         return when (item.itemId) {
             R.id.shoppingCart_menuItem -> {
                 if (!loginManager.loggedIn.value) {
-                    findNavController().navigate(R.id.action_productsFragment_to_loginPrompt)
+                    findNavController().navigate(ProductsFragmentDirections.actionProductsFragmentToLoginPrompt())
                 } else {
-                    // findNavController().navigate(R.id.action_productsFragment_to_shoppingBagFragment)
+                    findNavController().navigate(ProductsFragmentDirections.actionProductsFragmentToShoppingBagFragment())
                 }
                 true
             }

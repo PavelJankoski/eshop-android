@@ -1,19 +1,21 @@
 package mk.ukim.finki.eshop.ui.shoppingbag
 
+import android.app.AlertDialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import mk.ukim.finki.eshop.R
-import mk.ukim.finki.eshop.adapters.AddressBookAdapter
 import mk.ukim.finki.eshop.adapters.ShoppingBagAdapter
-import mk.ukim.finki.eshop.databinding.FragmentDetailsBinding
+import mk.ukim.finki.eshop.adapters.WishlistAdapter
 import mk.ukim.finki.eshop.databinding.FragmentShoppingBagBinding
-import mk.ukim.finki.eshop.ui.addressbook.AddressBookViewModel
+import mk.ukim.finki.eshop.ui.wishlist.WishlistSwipeToDeleteCallback
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 
@@ -32,8 +34,35 @@ class ShoppingBagFragment : Fragment() {
         _binding = FragmentShoppingBagBinding.inflate(inflater, container, false)
         setupRecyclerView()
         observeOrderItemsResponse()
+        observeRemoveProductFromBag()
+        observeSwipeRemoveProduct()
         shoppingBagViewModel.getOrderItemsForUser()
         return binding.root
+    }
+
+    private fun observeRemoveProductFromBag() {
+        shoppingBagViewModel.removeProductFromShoppingBagResponse.value = NetworkResult.Loading()
+        shoppingBagViewModel.removeProductFromShoppingBagResponse.observe(viewLifecycleOwner, {
+            when (it) {
+                is NetworkResult.Success -> {
+                    shoppingBagViewModel.getOrderItemsForUser()
+                    Utils.showSnackbar(
+                        binding.root,
+                        "Removed product from shopping bag!",
+                        Snackbar.LENGTH_SHORT
+                    )
+                }
+                is NetworkResult.Error -> {
+                    Utils.showSnackbar(
+                        binding.root,
+                        "Error removing product from shoppingg bag!",
+                        Snackbar.LENGTH_SHORT
+                    )
+                }
+                else -> {}
+            }
+        })
+
     }
 
     private fun setupRecyclerView() {
@@ -42,18 +71,17 @@ class ShoppingBagFragment : Fragment() {
     }
 
     private fun observeOrderItemsResponse() {
-        shoppingBagViewModel.orderItemsResponse.observe(viewLifecycleOwner, {response ->
-            when(response) {
+        shoppingBagViewModel.orderItemsResponse.observe(viewLifecycleOwner, { response ->
+            when (response) {
                 is NetworkResult.Success -> {
                     Utils.hideShimmerEffect(
                         binding.shoppingBagShimmerFrameLayout,
                         binding.shoppingBagRecyclerView
                     )
-                    if(!response.data.isNullOrEmpty()) {
+                    if (!response.data.isNullOrEmpty()) {
                         shoppingBagNotEmpty()
                         mAdapter.setData(response.data)
-                    }
-                    else {
+                    } else {
                         shoppingBagEmpty()
                     }
                 }
@@ -62,6 +90,7 @@ class ShoppingBagFragment : Fragment() {
                         binding.shoppingBagShimmerFrameLayout,
                         binding.shoppingBagRecyclerView
                     )
+                    shoppingBagEmpty()
                 }
                 is NetworkResult.Loading -> {
                     Utils.showShimmerEffect(
@@ -71,6 +100,32 @@ class ShoppingBagFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun observeSwipeRemoveProduct() {
+        val swipeHandler = object : ShoppingBagSwipeToDeleteCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = binding.shoppingBagRecyclerView.adapter as ShoppingBagAdapter
+                val position = viewHolder.absoluteAdapterPosition
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Delete product from shopping bag")
+                    .setMessage("Are you sure you want to remove this product from your shopping bag?")
+                    .setPositiveButton("Yes") { _, _ ->
+                        val orderItem = adapter.getProduct(
+                            position
+                        )
+                        shoppingBagViewModel.removeProductFromShoppingBag(
+                            orderItem.productId, orderItem.sizes.find { s -> s.name == orderItem.selectedSize}!!.id
+                        )
+                    }
+                    .setNegativeButton("Cancel") { _, _ -> adapter.notifyItemChanged(position) }
+                    .show()
+
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(binding.shoppingBagRecyclerView)
     }
 
     private fun shoppingBagEmpty() {

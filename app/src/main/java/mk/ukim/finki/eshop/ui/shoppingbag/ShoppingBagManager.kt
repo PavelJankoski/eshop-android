@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import dagger.hilt.android.scopes.ViewModelScoped
 import mk.ukim.finki.eshop.api.dto.request.AddProductToBagDto
-import mk.ukim.finki.eshop.api.model.Product
+import mk.ukim.finki.eshop.api.dto.request.RemoveProductFromBagDto
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.ui.account.LoginManager
 import mk.ukim.finki.eshop.util.NetworkResult
@@ -35,20 +35,20 @@ class ShoppingBagManager @Inject constructor(
         }
     }
 
-//    suspend fun removeProductFromShoppingBagForUserSafeCall(productId: Long): NetworkResult<Long> {
-//        return if(Utils.hasInternetConnection(getApplication<Application>())) {
-//            try {
-//                val response = repository.remote.removeProductFromWishlistForUser(productId, loginManager.readUserId())
-//                handleAddOrRemoveProductFromWishlistResponse(response)
-//            } catch (e: Exception) {
-//                Log.e("WishlistManager:removeProductFromWishlistForUserSafeCall", "Error removing product from wishlist for user")
-//                NetworkResult.Error("Error removing product from wishlist for user")
-//            }
-//        } else {
-//            Log.e("WishlistManager:removeProductFromWishlistForUserSafeCall", "No internet connection.")
-//            NetworkResult.Error("No internet connection, please try again.")
-//        }
-//    }
+    suspend fun removeProductFromShoppingBagForUserSafeCall(body: RemoveProductFromBagDto): NetworkResult<Long> {
+        return if(Utils.hasInternetConnection(getApplication<Application>())) {
+            try {
+                val response = repository.remote.removeProductFromBag(body)
+                handleAddOrRemoveProductFromShoppingBagResponse(response, body.productId)
+            } catch (e: Exception) {
+                Log.e("ShoppingBagManager:removeProductFromShoppingBagForUserSafeCall", "Error removing product from bag for user")
+                NetworkResult.Error("Error removing product from bag for user")
+            }
+        } else {
+            Log.e("ShoppingBagManager:removeProductFromShoppingBagForUserSafeCall", "No internet connection.")
+            NetworkResult.Error("No internet connection, please try again.")
+        }
+    }
 
     private fun handleAddOrRemoveProductFromShoppingBagResponse(response: Response<Unit>, productId: Long): NetworkResult<Long> {
         return when {

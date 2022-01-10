@@ -30,21 +30,6 @@ class WishlistBinding {
             }
         }
 
-        @BindingAdapter("onTrashClickListener", "setViewModel", requireAll = true)
-        @JvmStatic
-        fun onTrashClickListener(btn: MaterialButton, product: Product, vm: WishlistViewModel) {
-            btn.setOnClickListener {
-                AlertDialog.Builder(btn.context)
-                    .setTitle("Delete wishlist product")
-                    .setMessage("Are you sure you want to remove this product from wishlist?")
-                    .setPositiveButton("Yes") { _, _ ->
-                        vm.removeProductFromWishlistForUser(product.id)
-                    }
-                    .setNegativeButton("Cancel", null)
-                    .show()
-            }
-        }
-
     }
 
 }

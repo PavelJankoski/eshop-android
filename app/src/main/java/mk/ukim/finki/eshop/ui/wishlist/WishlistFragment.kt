@@ -1,31 +1,21 @@
 package mk.ukim.finki.eshop.ui.wishlist
 
+import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.findFragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.NavigationUI
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import me.ibrahimsn.lib.SmoothBottomBar
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.WishlistAdapter
 import mk.ukim.finki.eshop.databinding.FragmentWishlistBinding
 import mk.ukim.finki.eshop.ui.account.LoginManager
-import mk.ukim.finki.eshop.util.Constants
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 import mk.ukim.finki.eshop.util.Utils.Companion.hideShimmerEffect
@@ -34,7 +24,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class WishlistFragment : Fragment() {
 
-    @Inject lateinit var loginManager: LoginManager
+    @Inject
+    lateinit var loginManager: LoginManager
 
     private var _binding: FragmentWishlistBinding? = null
     private val binding get() = _binding!!
@@ -55,6 +46,7 @@ class WishlistFragment : Fragment() {
             setupRecyclerView()
             observeWishlistProducts()
             observeRemoveProductFromWishlist()
+            observeSwipeRemoveProduct()
             observeMoveProductToBag()
             setHasOptionsMenu(true)
             wishlistViewModel.getWishlistProductsForUser()
@@ -63,16 +55,50 @@ class WishlistFragment : Fragment() {
         return binding.root
     }
 
+    private fun observeSwipeRemoveProduct() {
+        val swipeHandler = object : WishlistSwipeToDeleteCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = binding.wishlistRecyclerView.adapter as WishlistAdapter
+                val position = viewHolder.absoluteAdapterPosition
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Delete wishlist product")
+                    .setMessage("Are you sure you want to remove this product from wishlist?")
+                    .setPositiveButton("Yes") { _, _ ->
+                        wishlistViewModel.removeProductFromWishlistForUser(
+                            adapter.getProduct(
+                                position
+                            ).id
+                        )
+                    }
+                    .setNegativeButton("Cancel") { _, _ -> adapter.notifyItemChanged(position) }
+                    .show()
+
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(binding.wishlistRecyclerView)
+
+    }
+
     private fun observeMoveProductToBag() {
         wishlistViewModel.addProductToShoppingBagResponse.value = NetworkResult.Loading()
         wishlistViewModel.addProductToShoppingBagResponse.observe(viewLifecycleOwner, {
             when (it) {
                 is NetworkResult.Success -> {
                     wishlistViewModel.removeProductFromWishlistAfterResponse(it.data!!)
-                    Utils.showSnackbar(binding.root, "Moved product to shopping bag!", Snackbar.LENGTH_SHORT)
+                    Utils.showSnackbar(
+                        binding.root,
+                        "Moved product to shopping bag!",
+                        Snackbar.LENGTH_SHORT
+                    )
                 }
                 is NetworkResult.Error -> {
-                    Utils.showSnackbar(binding.root, "Error moving product to shopping bag!", Snackbar.LENGTH_SHORT)
+                    Utils.showSnackbar(
+                        binding.root,
+                        "Error moving product to shopping bag!",
+                        Snackbar.LENGTH_SHORT
+                    )
                 }
                 else -> {}
             }
@@ -98,11 +124,14 @@ class WishlistFragment : Fragment() {
         binding.wishlistRecyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    private fun observeWishlistProducts()  {
+    private fun observeWishlistProducts() {
         wishlistViewModel.wishlistProductsResponse.observe(viewLifecycleOwner, { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                    hideShimmerEffect(binding.wishlistShimmerFrameLayout, binding.wishlistRecyclerView)
+                    hideShimmerEffect(
+                        binding.wishlistShimmerFrameLayout,
+                        binding.wishlistRecyclerView
+                    )
                     if (!response.data.isNullOrEmpty()) {
                         setupWishlistNotEmpty()
                         mAdapter.setData(response.data)
@@ -111,10 +140,16 @@ class WishlistFragment : Fragment() {
                     }
                 }
                 is NetworkResult.Error -> {
-                    hideShimmerEffect(binding.wishlistShimmerFrameLayout, binding.wishlistRecyclerView)
+                    hideShimmerEffect(
+                        binding.wishlistShimmerFrameLayout,
+                        binding.wishlistRecyclerView
+                    )
                 }
                 is NetworkResult.Loading -> {
-                    Utils.showShimmerEffect(binding.wishlistShimmerFrameLayout, binding.wishlistRecyclerView)
+                    Utils.showShimmerEffect(
+                        binding.wishlistShimmerFrameLayout,
+                        binding.wishlistRecyclerView
+                    )
                 }
             }
         })
@@ -126,10 +161,18 @@ class WishlistFragment : Fragment() {
             when (it) {
                 is NetworkResult.Success -> {
                     wishlistViewModel.removeProductFromWishlistAfterResponse(it.data!!)
-                    Utils.showSnackbar(binding.root, "Removed product from wishlist!", Snackbar.LENGTH_SHORT)
+                    Utils.showSnackbar(
+                        binding.root,
+                        "Removed product from wishlist!",
+                        Snackbar.LENGTH_SHORT
+                    )
                 }
                 is NetworkResult.Error -> {
-                    Utils.showSnackbar(binding.root, "Error removing product from wishlist!", Snackbar.LENGTH_SHORT)
+                    Utils.showSnackbar(
+                        binding.root,
+                        "Error removing product from wishlist!",
+                        Snackbar.LENGTH_SHORT
+                    )
                 }
                 else -> {}
             }
@@ -168,7 +211,7 @@ class WishlistFragment : Fragment() {
                 if (!loginManager.loggedIn.value) {
                     showLoginPrompt()
                 } else {
-                    // findNavController().navigate(R.id.action_wishlistFragment_to_shoppingBagFragment)
+                    findNavController().navigate(WishlistFragmentDirections.actionWishlistFragmentToShoppingBagFragment())
                 }
                 true
             }

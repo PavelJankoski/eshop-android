@@ -57,6 +57,9 @@ class ShoppingBagAdapter : RecyclerView.Adapter<ShoppingBagAdapter.MyViewHolder>
         return orderItems.size
     }
 
+    fun getProduct(position: Int): OrderItem {
+        return orderItems[position]
+    }
 
     fun setData(newData: List<OrderItem>) {
         val diffUtil = DiffUtil(orderItems, newData)

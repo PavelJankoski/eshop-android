@@ -108,4 +108,8 @@ class RemoteDataSource @Inject constructor(
                 return webServices.addProductToBag(body)
         }
 
+        suspend fun removeProductFromBag(body: RemoveProductFromBagDto): Response<Unit> {
+                return webServices.removeProductFromBag(body)
+        }
+
 }
