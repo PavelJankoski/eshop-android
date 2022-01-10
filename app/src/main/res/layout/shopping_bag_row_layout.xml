@@ -14,8 +14,6 @@
         app:cardCornerRadius="10dp"
         app:strokeColor="@color/strokeColor"
         app:strokeWidth="1dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -28,8 +26,8 @@
             android:scaleType="centerCrop"
             loadImageFromUrl="@{orderItem.imageUrl}"
             android:id="@+id/imageView2"
-            android:layout_width="120dp"
-            android:layout_height="180dp"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -39,7 +37,7 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             tools:text="200"
             priceToString="@{orderItem.price}"
             android:textColor="@color/black"
@@ -65,7 +63,7 @@
             android:id="@+id/name_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             tools:text="Plain blue t-shirt"
             android:text="@{orderItem.name}"
             app:layout_constraintStart_toStartOf="@id/textView3"
@@ -76,6 +74,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/name_textView"
             app:layout_constraintEnd_toEndOf="parent"
@@ -96,31 +95,19 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     />
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/size_textInput"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                <TextView
+                    android:id="@+id/selectedSize_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
-                    app:endIconDrawable="@drawable/ic_arrow_down"
-                    app:endIconTint="@color/black"
+                    android:layout_marginTop="23dp"
+                    android:text="@{orderItem.selectedSize}"
+                    tools:text="S"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@id/size_textView"
                     app:layout_constraintTop_toBottomOf="@id/size_textView"
-                    >
-
-                    <AutoCompleteTextView
-                        android:id="@+id/size_autocomplete"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:inputType="none"
-                        android:text="@string/size"
-                        android:textAllCaps="true"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -136,6 +123,7 @@
                     android:text="@string/quantity"
                     android:textStyle="bold"
                     android:textSize="14sp"
+                    android:layout_marginStart="14dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     />
@@ -149,7 +137,7 @@
                     app:boxStrokeWidthFocused="0dp"
                     app:endIconDrawable="@drawable/ic_arrow_down"
                     app:endIconTint="@color/black"
-                    app:layout_constraintStart_toStartOf="@id/quantity_textView"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/quantity_textView"
                     >
 

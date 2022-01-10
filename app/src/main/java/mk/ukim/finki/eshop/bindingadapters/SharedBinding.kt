@@ -1,29 +1,16 @@
 package mk.ukim.finki.eshop.bindingadapters
 
 import android.content.res.ColorStateList
-import android.graphics.Bitmap
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import coil.load
-import coil.transition.CrossfadeTransition
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import de.hdodenhof.circleimageview.CircleImageView
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.api.model.Product
-import org.w3c.dom.Text
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatterBuilder
-import java.util.*
 
 class SharedBinding {
     companion object {
@@ -40,7 +27,11 @@ class SharedBinding {
         @BindingAdapter("onlyFirstLetterCapital")
         @JvmStatic
         fun onlyFirstLetterCapital(tv: TextView, word: String) {
-            tv.text = String.format("%s%s", word.substring(0, 1).uppercase(), word.substring(1).lowercase())
+            tv.text = String.format(
+                "%s%s",
+                word.substring(0, 1).uppercase(),
+                word.substring(1).lowercase()
+            )
         }
 
         @BindingAdapter("errorMessage")
@@ -52,32 +43,26 @@ class SharedBinding {
         @BindingAdapter("setupOutlinedButtonStyle", "isLoggedIn", requireAll = false)
         @JvmStatic
         fun setupOutlinedButtonStyle(btn: MaterialButton, product: Product, isLoggedIn: Boolean) {
-            if(!isLoggedIn || product.sizes.isEmpty()) {
-                if(!isLoggedIn) {
-                    btn.text = "Please log in"
-                }
-                else {
-                    btn.text = "Out of stock"
-                }
-                btn.isEnabled = false
-                btn.setTextColor(ContextCompat.getColor(btn.context, R.color.lightMediumGray))
-                btn.strokeColor = ColorStateList.valueOf(ContextCompat.getColor(btn.context, R.color.lightMediumGray))
+            if (!isLoggedIn) {
+                btn.text = "Please log in"
+            } else if (product.sizes.isEmpty()) {
+                btn.text = "Out of stock"
+            } else {
+                btn.text = "Please select size"
             }
-            else {
-                btn.isEnabled = true
-                val sb = SharedBinding()
-                sb.setupButtonMoveToBag(btn)
-            }
-
+            btn.isEnabled = false
+            btn.setTextColor(ContextCompat.getColor(btn.context, R.color.lightMediumGray))
+            btn.strokeColor =
+                ColorStateList.valueOf(ContextCompat.getColor(btn.context, R.color.lightMediumGray))
         }
+
         @BindingAdapter("isDisabledFab")
         @JvmStatic
         fun isDisabledFab(btn: FloatingActionButton, isLoggedIn: Boolean) {
-            if(!isLoggedIn) {
+            if (!isLoggedIn) {
                 btn.isEnabled = false
                 btn.setColorFilter(ContextCompat.getColor(btn.context, R.color.lightMediumGray))
-            }
-            else {
+            } else {
                 btn.isEnabled = true
                 btn.setColorFilter(ContextCompat.getColor(btn.context, R.color.black))
             }
@@ -94,8 +79,11 @@ class SharedBinding {
 //        }
 
     }
+
     fun setupButtonMoveToBag(btn: MaterialButton) {
-        btn.text = "Move to bag"
-        btn.strokeColor = ColorStateList.valueOf(ContextCompat.getColor(btn.context, R.color.green))
+        btn.text = "Please select size"
+        // btn.strokeColor = ColorStateList.valueOf(ContextCompat.getColor(btn.context, R.color.green))
+        btn.strokeColor =
+            ColorStateList.valueOf(ContextCompat.getColor(btn.context, R.color.lightMediumGray))
     }
 }

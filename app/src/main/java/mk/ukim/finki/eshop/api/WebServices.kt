@@ -1,10 +1,7 @@
 package mk.ukim.finki.eshop.api
 
 import mk.ukim.finki.eshop.api.dto.*
-import mk.ukim.finki.eshop.api.dto.request.CreateEditAddressDto
-import mk.ukim.finki.eshop.api.dto.request.FilterProductDto
-import mk.ukim.finki.eshop.api.dto.request.RegisterDto
-import mk.ukim.finki.eshop.api.dto.request.TokenDto
+import mk.ukim.finki.eshop.api.dto.request.*
 import mk.ukim.finki.eshop.api.dto.response.LoginDto
 import mk.ukim.finki.eshop.api.model.*
 import mk.ukim.finki.eshop.util.Constants
@@ -129,5 +126,11 @@ interface WebServices {
     suspend fun getOrderItemsForUser(
         @Path(value = Constants.USER_ID_PARAM) userId: Long,
     ) : Response<List<OrderItem>>
+
+    @POST("/api/order-management-service/order-items/add-to-order")
+    suspend fun addProductToBag(
+        @Body body: AddProductToBagDto
+    ) : Response<Unit>
+
 
 }

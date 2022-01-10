@@ -2,10 +2,7 @@ package mk.ukim.finki.eshop.data.source
 
 import mk.ukim.finki.eshop.api.WebServices
 import mk.ukim.finki.eshop.api.dto.*
-import mk.ukim.finki.eshop.api.dto.request.CreateEditAddressDto
-import mk.ukim.finki.eshop.api.dto.request.FilterProductDto
-import mk.ukim.finki.eshop.api.dto.request.RegisterDto
-import mk.ukim.finki.eshop.api.dto.request.TokenDto
+import mk.ukim.finki.eshop.api.dto.request.*
 import mk.ukim.finki.eshop.api.dto.response.LoginDto
 import mk.ukim.finki.eshop.api.model.*
 import mk.ukim.finki.eshop.util.Constants
@@ -105,6 +102,10 @@ class RemoteDataSource @Inject constructor(
 
         suspend fun getOrderItemsForUser(userId: Long): Response<List<OrderItem>> {
                 return webServices.getOrderItemsForUser(userId)
+        }
+
+        suspend fun addProductToBag(body: AddProductToBagDto): Response<Unit> {
+                return webServices.addProductToBag(body)
         }
 
 }

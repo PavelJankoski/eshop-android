@@ -1,32 +1,31 @@
 package mk.ukim.finki.eshop.ui.wishlist
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import mk.ukim.finki.eshop.api.dto.request.AddProductToBagDto
 import mk.ukim.finki.eshop.api.model.Product
-import mk.ukim.finki.eshop.data.model.WishlistEntity
-import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.ui.account.LoginManager
+import mk.ukim.finki.eshop.ui.shoppingbag.ShoppingBagManager
 import mk.ukim.finki.eshop.util.GlobalVariables
 import mk.ukim.finki.eshop.util.NetworkResult
-import mk.ukim.finki.eshop.util.Utils
-import retrofit2.Response
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
 class WishlistViewModel @Inject constructor(
-    private val repository: Repository,
-    private val loginManager: LoginManager,
     private val wishlistManager: WishlistManager,
+    private val shoppingBagManager: ShoppingBagManager,
+    val loginManager: LoginManager,
     application: Application
 ): AndroidViewModel(application) {
 
     /** RETROFIT */
     var wishlistProductsResponse: MutableLiveData<NetworkResult<List<Product>>> = MutableLiveData()
     var removeProductFromWishlistResponse: MutableLiveData<NetworkResult<Long>> = MutableLiveData()
+    var addProductToShoppingBagResponse: MutableLiveData<NetworkResult<Long>> = MutableLiveData()
     var productsInBagNumber = GlobalVariables.productsInBagNumber
 
     fun getWishlistProductsForUser() = viewModelScope.launch {
@@ -37,6 +36,12 @@ class WishlistViewModel @Inject constructor(
     fun removeProductFromWishlistForUser(productId: Long) = viewModelScope.launch {
         removeProductFromWishlistResponse.value = NetworkResult.Loading()
         removeProductFromWishlistResponse.value = wishlistManager.removeProductFromWishlistForUserSafeCall(productId)
+    }
+
+    fun moveProductToShoppingBag(productId: Long, sizeId: Long) = viewModelScope.launch {
+        val body: AddProductToBagDto = AddProductToBagDto(loginManager.readUserId(), productId, sizeId, 1)
+        addProductToShoppingBagResponse.value = NetworkResult.Loading()
+        addProductToShoppingBagResponse.value = shoppingBagManager.addProductToShoppingBagForUserSafeCall(body)
     }
 
     fun removeProductFromWishlistAfterResponse(productId: Long) {

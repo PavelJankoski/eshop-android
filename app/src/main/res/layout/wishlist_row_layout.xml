@@ -44,17 +44,17 @@
                 android:maxLines="2"
                 tools:text="Classic fit t-shirt"
                 android:layout_marginEnd="16dp"
-                android:text="@{product.description}"
-                app:layout_constraintBottom_toBottomOf="@+id/wishlistDelete_btn"
-                app:layout_constraintEnd_toStartOf="@+id/wishlistDelete_btn"
-                app:layout_constraintStart_toEndOf="@+id/imageView2"
-                app:layout_constraintTop_toTopOf="@+id/wishlistDelete_btn" />
+                android:text="@{product.name}"
+                app:layout_constraintTop_toTopOf="@id/imageView2"
+                app:layout_constraintStart_toEndOf="@id/imageView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 priceToString="@{product.price}"
                 tools:text="100"
                 android:textColor="@color/black"
@@ -76,11 +76,39 @@
                 app:layout_constraintStart_toEndOf="@+id/textView3"
                 app:layout_constraintTop_toTopOf="@+id/textView3" />
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/size_textInput"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:endIconDrawable="@drawable/ic_arrow_down"
+                app:endIconTint="@color/black"
+                app:layout_constraintTop_toTopOf="@id/textView4"
+                app:layout_constraintBottom_toBottomOf="@id/textView4"
+                app:layout_constraintEnd_toEndOf="parent"
+                >
+
+                <AutoCompleteTextView
+                    android:id="@+id/size_autocomplete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="@string/size"
+                    android:textAllCaps="true"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/wishlistDelete_btn"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 onTrashClickListener="@{product}"
                 setViewModel="@{vm}"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:insetLeft="0dp"
@@ -99,8 +127,6 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/wishlistBag_btn"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                onMoveToBagBtnListener="@{product}"
-                setViewModel="@{vm}"
                 setupOutlinedButtonStyle="@{product}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

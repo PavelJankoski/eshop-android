@@ -1,11 +1,13 @@
 package mk.ukim.finki.eshop.ui.details
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -18,6 +20,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.DetailsPagerAdapter
+import mk.ukim.finki.eshop.api.model.Size
 import mk.ukim.finki.eshop.databinding.FragmentDetailsBinding
 import mk.ukim.finki.eshop.ui.details.moredetails.MoreDetailsFragment
 import mk.ukim.finki.eshop.ui.details.reviews.ReviewsFragment
@@ -32,6 +35,7 @@ class DetailsFragment : Fragment() {
     private val binding get() = _binding!!
     private val detailsViewModel by viewModels<DetailsViewModel>()
     private val args by navArgs<DetailsFragmentArgs>()
+    var checkedSizeId: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,11 +54,36 @@ class DetailsFragment : Fragment() {
             findNavController().popBackStack()
         }
         observeAddOrRemoveProductFromWishlist()
+        observeMoveProductToBag()
+        handleOnChipChange()
         setupAddToWishlistBtn()
         setupViewPager()
         setupChipGroup()
         setupShareFab()
+        handleAddToBag()
         return binding.root
+    }
+
+    private fun handleAddToBag() {
+        binding.addToBagBtn.setOnClickListener {
+            detailsViewModel.addProductToShoppingBag(args.product.id, checkedSizeId.toLong())
+        }
+    }
+
+    private fun observeMoveProductToBag() {
+        detailsViewModel.addProductToShoppingBagResponse.value = NetworkResult.Loading()
+        detailsViewModel.addProductToShoppingBagResponse.observe(viewLifecycleOwner, {
+            when (it) {
+                is NetworkResult.Success -> {
+                    findNavController().popBackStack()
+                    Utils.showSnackbar(binding.root, "Added product to shopping bag!", Snackbar.LENGTH_SHORT)
+                }
+                is NetworkResult.Error -> {
+                    Utils.showSnackbar(binding.root, "Error adding product to shopping bag!", Snackbar.LENGTH_SHORT)
+                }
+                else -> {}
+            }
+        })
     }
 
     private fun setupShareFab() {
@@ -93,6 +122,16 @@ class DetailsFragment : Fragment() {
                 else -> {}
             }
         })
+    }
+
+    private fun handleOnChipChange() {
+        binding.sizeChipGroup.setOnCheckedChangeListener { group, checkedId ->
+            checkedSizeId = checkedId
+            binding.addToBagBtn.isEnabled = true
+            binding.addToBagBtn.text = "Add to bag"
+            binding.addToBagBtn.strokeColor = ColorStateList.valueOf(ContextCompat.getColor(binding.addToBagBtn.context, R.color.green))
+            binding.addToBagBtn.setTextColor(ContextCompat.getColor(binding.addToBagBtn.context, R.color.black))
+        }
     }
 
 
@@ -148,7 +187,7 @@ class DetailsFragment : Fragment() {
             args.product.sizes.filter { s -> s.quantity > 0 }.forEach {
                 val chip = layoutInflater.inflate(R.layout.custom_size_chip_layout, binding.sizeChipGroup, false) as Chip
                 chip.text = it.name.uppercase()
-                chip.id = ViewCompat.generateViewId()
+                chip.id = it.id.toInt()
                 chip.isCheckedIconVisible = true
                 chip.isCheckable = true
                 chip.isClickable = true

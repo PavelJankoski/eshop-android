@@ -5,23 +5,18 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.RecyclerView
 import mk.ukim.finki.eshop.R
-import mk.ukim.finki.eshop.api.model.Address
 import mk.ukim.finki.eshop.api.model.OrderItem
-import mk.ukim.finki.eshop.databinding.AddressBookRowLayoutBinding
 import mk.ukim.finki.eshop.databinding.ShoppingBagRowLayoutBinding
-import mk.ukim.finki.eshop.ui.addressbook.AddressBookViewModel
 import mk.ukim.finki.eshop.util.DiffUtil
 
-class ShoppingBagAdapter: RecyclerView.Adapter<ShoppingBagAdapter.MyViewHolder>() {
+class ShoppingBagAdapter : RecyclerView.Adapter<ShoppingBagAdapter.MyViewHolder>() {
     private var orderItems = emptyList<OrderItem>()
 
     class MyViewHolder(
         private val binding: ShoppingBagRowLayoutBinding
-    ): RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(orderItem: OrderItem) {
             binding.orderItem = orderItem
-            setupSizeDropdown(orderItem)
-            binding.sizeAutocomplete.setText(orderItem.selectedSize, false)
             setupQuantityDropdown(orderItem)
             binding.quantityAutocomplete.setText(orderItem.selectedQuantity.toString(), false)
             binding.executePendingBindings()
@@ -35,17 +30,13 @@ class ShoppingBagAdapter: RecyclerView.Adapter<ShoppingBagAdapter.MyViewHolder>(
             }
         }
 
-        private fun setupSizeDropdown(orderItem: OrderItem) {
-            val arrayAdapter = ArrayAdapter(binding.root.context, R.layout.dropdown_item, orderItem.sizes.map { s -> s.name })
-            binding.sizeAutocomplete.setAdapter(arrayAdapter)
-            binding.sizeAutocomplete.setOnItemClickListener { _, _, position, _ ->
-                //
-            }
-        }
         private fun setupQuantityDropdown(orderItem: OrderItem) {
             val size = orderItem.sizes.find { s -> s.name == orderItem.selectedSize }
             val qtyArray: List<Int> = IntRange(1, size!!.quantity).step(1).toList()
-            val arrayAdapter = ArrayAdapter(binding.root.context, R.layout.dropdown_item, qtyArray.map { qty -> qty.toString() })
+            val arrayAdapter = ArrayAdapter(
+                binding.root.context,
+                R.layout.dropdown_item,
+                qtyArray.map { qty -> qty.toString() })
             binding.quantityAutocomplete.setAdapter(arrayAdapter)
             binding.quantityAutocomplete.setOnItemClickListener { _, _, position, _ ->
                 //

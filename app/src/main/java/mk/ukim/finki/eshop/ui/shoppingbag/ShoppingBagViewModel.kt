@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import mk.ukim.finki.eshop.api.dto.request.AddProductToBagDto
 import mk.ukim.finki.eshop.api.model.OrderItem
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.ui.account.LoginManager
@@ -19,6 +20,7 @@ import javax.inject.Inject
 class ShoppingBagViewModel @Inject constructor(
     private val repository: Repository,
     val loginManager: LoginManager,
+    private val shoppingBagManager: ShoppingBagManager,
     application: Application
 ) : AndroidViewModel(application) {
     var orderItemsResponse: MutableLiveData<NetworkResult<List<OrderItem>>> = MutableLiveData()

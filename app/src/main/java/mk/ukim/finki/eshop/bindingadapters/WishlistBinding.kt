@@ -45,15 +45,6 @@ class WishlistBinding {
             }
         }
 
-        @BindingAdapter("onMoveToBagBtnListener", "setViewModel", requireAll = true)
-        @JvmStatic
-        fun onMoveToBagBtnListener(btn: MaterialButton, product: Product, vm: WishlistViewModel) {
-            val sb = SharedBinding()
-            btn.setOnClickListener {
-                sb.setupButtonMoveToBag(btn)
-            }
-        }
-
     }
 
 }

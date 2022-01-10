@@ -55,11 +55,28 @@ class WishlistFragment : Fragment() {
             setupRecyclerView()
             observeWishlistProducts()
             observeRemoveProductFromWishlist()
+            observeMoveProductToBag()
             setHasOptionsMenu(true)
             wishlistViewModel.getWishlistProductsForUser()
 
         }
         return binding.root
+    }
+
+    private fun observeMoveProductToBag() {
+        wishlistViewModel.addProductToShoppingBagResponse.value = NetworkResult.Loading()
+        wishlistViewModel.addProductToShoppingBagResponse.observe(viewLifecycleOwner, {
+            when (it) {
+                is NetworkResult.Success -> {
+                    wishlistViewModel.removeProductFromWishlistAfterResponse(it.data!!)
+                    Utils.showSnackbar(binding.root, "Moved product to shopping bag!", Snackbar.LENGTH_SHORT)
+                }
+                is NetworkResult.Error -> {
+                    Utils.showSnackbar(binding.root, "Error moving product to shopping bag!", Snackbar.LENGTH_SHORT)
+                }
+                else -> {}
+            }
+        })
     }
 
     private fun setupUserNotAuthenticatedInterface() {
