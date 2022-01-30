@@ -2,28 +2,20 @@ package mk.ukim.finki.eshop.ui.account.profile
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.navigation.fragment.findNavController
-import com.facebook.shimmer.ShimmerFrameLayout
 import dagger.hilt.android.AndroidEntryPoint
-import mk.ukim.finki.eshop.R
-import mk.ukim.finki.eshop.api.model.User
 import mk.ukim.finki.eshop.databinding.FragmentProfileBinding
-import mk.ukim.finki.eshop.ui.account.AccountFragment
 import mk.ukim.finki.eshop.ui.account.AccountViewModel
 import mk.ukim.finki.eshop.ui.account.HomeAccountFragmentDirections
 import mk.ukim.finki.eshop.ui.account.LoginManager
-import mk.ukim.finki.eshop.ui.userinfo.UserInfoFragment
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 import java.util.concurrent.Executor
@@ -59,9 +51,13 @@ class ProfileFragment : Fragment() {
     }
 
     private fun observeUserData() {
-        accountViewModel.userInfoResponse.observe(viewLifecycleOwner, { response ->
+        accountViewModel.userInfoResponse.observe(viewLifecycleOwner) { response ->
             if (response is NetworkResult.Error) {
-                Utils.showToast(requireContext(), "There seems to be a problem. Try again later", Toast.LENGTH_SHORT)
+                Utils.showToast(
+                    requireContext(),
+                    "There seems to be a problem. Try again later",
+                    Toast.LENGTH_SHORT
+                )
             } else if (response is NetworkResult.Success) {
                 response.data?.let {
                     binding.user = response.data
@@ -69,7 +65,7 @@ class ProfileFragment : Fragment() {
             } else {
                 Log.i("ProfileFragment: observeUserData", "Loading user data")
             }
-        })
+        }
     }
 
     private fun setupBiometricPrompt() {
@@ -97,7 +93,7 @@ class ProfileFragment : Fragment() {
     }
 
     fun onOrderHistoryClick() {
-        Log.i("sd", "asdsd");
+        findNavController().navigate(HomeAccountFragmentDirections.actionHomeAccountFragmentToOrderHistoryFragment())
     }
 
     fun onMyDetailsClick() {

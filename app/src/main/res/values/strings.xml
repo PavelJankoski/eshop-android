@@ -79,6 +79,7 @@
     <string name="size">Size</string>
     <string name="quantity">Qty</string>
     <string name="shopping_bag_empty">Shopping bag empty</string>
+    <string name="order_history">Order history</string>
 
 
     <string-array name="sorting_products">

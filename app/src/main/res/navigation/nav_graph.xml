@@ -154,6 +154,13 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_homeAccountFragment_to_orderHistoryFragment"
+            app:destination="@id/orderHistoryFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
@@ -238,5 +245,18 @@
         android:id="@+id/shoppingBagFragment"
         android:name="mk.ukim.finki.eshop.ui.shoppingbag.ShoppingBagFragment"
         android:label="Shopping bag"
-        tools:layout="@layout/fragment_shopping_bag" />
+        tools:layout="@layout/fragment_shopping_bag">
+        <action
+            android:id="@+id/action_shoppingBagFragment_to_orderHistoryFragment"
+            app:destination="@id/orderHistoryFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderHistoryFragment"
+        android:name="mk.ukim.finki.eshop.ui.orderhistory.OrderHistoryFragment"
+        android:label="Orders history"
+        tools:layout="@layout/fragment_order_history" />
 </navigation>

@@ -2,16 +2,16 @@ package mk.ukim.finki.eshop.ui.shoppingbag
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.ShoppingBagAdapter
 import mk.ukim.finki.eshop.databinding.FragmentShoppingBagBinding
 import mk.ukim.finki.eshop.util.NetworkResult
@@ -30,6 +30,7 @@ class ShoppingBagFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentShoppingBagBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
         setupRecyclerView()
         observeOrderItemsResponse()
         observeRemoveProductFromBag()
@@ -141,6 +142,21 @@ class ShoppingBagFragment : Fragment() {
         binding.checkoutConstraintLayout.visibility = View.VISIBLE
         binding.shoppingBagErrorShoppingBagLottie.visibility = View.GONE
         binding.emptyTextView.visibility = View.GONE
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.shopping_bag_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.history_menuItem -> {
+                findNavController().navigate(ShoppingBagFragmentDirections.actionShoppingBagFragmentToOrderHistoryFragment())
+                true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroyView() {
