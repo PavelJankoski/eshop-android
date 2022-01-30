@@ -2,9 +2,9 @@ package mk.ukim.finki.eshop.ui.products
 
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import mk.ukim.finki.eshop.MyApplication
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.ProductsGridAdapter
 import mk.ukim.finki.eshop.adapters.ProductsListAdapter
 import mk.ukim.finki.eshop.databinding.FragmentProductsBinding
 import mk.ukim.finki.eshop.ui.account.LoginManager
-import mk.ukim.finki.eshop.util.GlobalVariables.Companion.productsInBagNumber
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 import mk.ukim.finki.eshop.util.Utils.Companion.hideShimmerEffect
@@ -44,7 +44,7 @@ class ProductsFragment : Fragment() {
         setupSortingDropdown()
         if(this::menuItem.isInitialized) {
             val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
-            Utils.setupCartItemsBadge(tv, productsInBagNumber.value!!)
+            Utils.setupCartItemsBadge(tv, MyApplication.itemsInBag)
         }
         getProducts()
     }
@@ -187,7 +187,7 @@ class ProductsFragment : Fragment() {
         inflater.inflate(R.menu.products_toolbar_menu, menu)
         menuItem = menu.findItem(R.id.shoppingCart_menuItem)
         val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
-        Utils.setupCartItemsBadge(tv, productsInBagNumber.value!!)
+        Utils.setupCartItemsBadge(tv, MyApplication.itemsInBag)
         menuItem.actionView.setOnClickListener {
             onOptionsItemSelected(menuItem)
         }

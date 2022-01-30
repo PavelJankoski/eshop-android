@@ -112,4 +112,8 @@ class RemoteDataSource @Inject constructor(
                 return webServices.changeQuantityInBag(body)
         }
 
+        suspend fun getItemsInBagForUser(userId: Long): Response<Int> {
+                return webServices.getItemsInBagForUser(userId)
+        }
+
 }

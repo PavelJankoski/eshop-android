@@ -2,9 +2,7 @@ package mk.ukim.finki.eshop.ui.addressbook
 
 import android.os.Bundle
 import android.view.*
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,11 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.AddressBookAdapter
-import mk.ukim.finki.eshop.adapters.CategoriesAdapter
 import mk.ukim.finki.eshop.databinding.FragmentAddressBookBinding
-import mk.ukim.finki.eshop.databinding.FragmentCategoriesBinding
-import mk.ukim.finki.eshop.ui.products.ProductsViewModel
-import mk.ukim.finki.eshop.util.GlobalVariables
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 

@@ -34,17 +34,22 @@ class ShoppingBagViewModel @Inject constructor(
         getOrderItemsSafeCall()
     }
 
+    fun getItemsInBagForUser() = viewModelScope.launch {
+        shoppingBagManager.getItemsInBagForUserSafeCall()
+    }
+
     fun changeQuantityForProductInBag(productId: Long, sizeId: Long, quantity: Int) =
         viewModelScope.launch {
             changeQuantityForProductInBagSafeCall(productId, sizeId, quantity)
         }
 
-    fun removeProductFromShoppingBag(productId: Long, sizeId: Long) = viewModelScope.launch {
-        val body = RemoveProductFromBagDto(loginManager.readUserId(), productId, sizeId)
-        removeProductFromShoppingBagResponse.value = NetworkResult.Loading()
-        removeProductFromShoppingBagResponse.value =
-            shoppingBagManager.removeProductFromShoppingBagForUserSafeCall(body)
-    }
+    fun removeProductFromShoppingBag(productId: Long, sizeId: Long, quantity: Int) =
+        viewModelScope.launch {
+            val body = RemoveProductFromBagDto(loginManager.readUserId(), productId, sizeId)
+            removeProductFromShoppingBagResponse.value = NetworkResult.Loading()
+            removeProductFromShoppingBagResponse.value =
+                shoppingBagManager.removeProductFromShoppingBagForUserSafeCall(body, quantity)
+        }
 
     private suspend fun changeQuantityForProductInBagSafeCall(
         productId: Long,

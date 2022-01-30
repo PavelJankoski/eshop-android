@@ -1,7 +1,6 @@
 package mk.ukim.finki.eshop.ui.categories
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -10,7 +9,6 @@ import mk.ukim.finki.eshop.api.model.Category
 import mk.ukim.finki.eshop.data.model.CategoriesEntity
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.ui.account.LoginManager
-import mk.ukim.finki.eshop.util.GlobalVariables.Companion.productsInBagNumber
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 import retrofit2.Response

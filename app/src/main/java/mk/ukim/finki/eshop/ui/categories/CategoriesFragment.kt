@@ -8,13 +8,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import mk.ukim.finki.eshop.MyApplication
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.PagerAdapter
 import mk.ukim.finki.eshop.databinding.FragmentCategoriesBinding
 import mk.ukim.finki.eshop.ui.account.LoginManager
 import mk.ukim.finki.eshop.ui.categories.man.CategoriesManFragment
 import mk.ukim.finki.eshop.ui.categories.woman.CategoriesWomanFragment
-import mk.ukim.finki.eshop.util.GlobalVariables.Companion.productsInBagNumber
 import mk.ukim.finki.eshop.util.Utils.Companion.setupCartItemsBadge
 import javax.inject.Inject
 
@@ -44,14 +44,6 @@ class CategoriesFragment : Fragment() {
         return binding.root
     }
 
-
-    private fun observeSetBadge() {
-        productsInBagNumber.observe(viewLifecycleOwner, {
-            val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
-            setupCartItemsBadge(tv, it)
-        })
-    }
-
     private fun setupViewPager() {
         val fragments = arrayListOf<Fragment>(CategoriesManFragment(), CategoriesWomanFragment())
         val tabLayoutTitles = arrayListOf<String>("Man", "Woman")
@@ -69,8 +61,7 @@ class CategoriesFragment : Fragment() {
         inflater.inflate(R.menu.shopping_cart_toolbar_menu, menu)
         menuItem = menu.findItem(R.id.shoppingCart_menuItem)
         val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
-        setupCartItemsBadge(tv, productsInBagNumber.value!!)
-        observeSetBadge()
+        setupCartItemsBadge(tv, MyApplication.itemsInBag)
         menuItem.actionView.setOnClickListener {
             onOptionsItemSelected(menuItem)
         }

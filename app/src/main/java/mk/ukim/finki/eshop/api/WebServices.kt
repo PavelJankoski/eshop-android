@@ -141,4 +141,8 @@ interface WebServices {
         @Body body: ChangeQuantityInBagDto
     ): Response<Unit>
 
+    @GET("/api/order-management-service/orders/items-in-bag/{userId}")
+    suspend fun getItemsInBagForUser(
+        @Path(value = Constants.USER_ID_PARAM) userId: Long
+    ): Response<Int>
 }

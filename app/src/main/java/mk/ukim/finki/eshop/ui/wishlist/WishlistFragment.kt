@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import mk.ukim.finki.eshop.MyApplication
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.WishlistAdapter
 import mk.ukim.finki.eshop.databinding.FragmentWishlistBinding
@@ -69,6 +70,7 @@ class WishlistFragment : Fragment() {
                                 position
                             ).id
                         )
+                        adapter.notifyItemChanged(position)
                     }
                     .setNegativeButton("Cancel") { _, _ -> adapter.notifyItemChanged(position) }
                     .show()
@@ -83,10 +85,12 @@ class WishlistFragment : Fragment() {
 
     private fun observeMoveProductToBag() {
         wishlistViewModel.addProductToShoppingBagResponse.value = NetworkResult.Loading()
-        wishlistViewModel.addProductToShoppingBagResponse.observe(viewLifecycleOwner, {
+        wishlistViewModel.addProductToShoppingBagResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkResult.Success -> {
-                    wishlistViewModel.removeProductFromWishlistAfterResponse(it.data!!)
+                    wishlistViewModel.removeProductFromWishlistForUser(it.data!!)
+                    val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
+                    Utils.setupCartItemsBadge(tv, MyApplication.itemsInBag)
                     Utils.showSnackbar(
                         binding.root,
                         "Moved product to shopping bag!",
@@ -102,7 +106,7 @@ class WishlistFragment : Fragment() {
                 }
                 else -> {}
             }
-        })
+        }
     }
 
     private fun setupUserNotAuthenticatedInterface() {
@@ -125,7 +129,7 @@ class WishlistFragment : Fragment() {
     }
 
     private fun observeWishlistProducts() {
-        wishlistViewModel.wishlistProductsResponse.observe(viewLifecycleOwner, { response ->
+        wishlistViewModel.wishlistProductsResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
                     hideShimmerEffect(
@@ -152,12 +156,12 @@ class WishlistFragment : Fragment() {
                     )
                 }
             }
-        })
+        }
     }
 
     private fun observeRemoveProductFromWishlist() {
         wishlistViewModel.removeProductFromWishlistResponse.value = NetworkResult.Loading()
-        wishlistViewModel.removeProductFromWishlistResponse.observe(viewLifecycleOwner, {
+        wishlistViewModel.removeProductFromWishlistResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkResult.Success -> {
                     wishlistViewModel.removeProductFromWishlistAfterResponse(it.data!!)
@@ -176,7 +180,7 @@ class WishlistFragment : Fragment() {
                 }
                 else -> {}
             }
-        })
+        }
     }
 
     private fun setupWishlistEmpty() {
@@ -197,8 +201,7 @@ class WishlistFragment : Fragment() {
         inflater.inflate(R.menu.shopping_cart_toolbar_menu, menu)
         menuItem = menu.findItem(R.id.shoppingCart_menuItem)
         val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
-        Utils.setupCartItemsBadge(tv, wishlistViewModel.productsInBagNumber.value!!)
-        // observeSetBagBadge()
+        Utils.setupCartItemsBadge(tv, MyApplication.itemsInBag)
         menuItem.actionView.setOnClickListener {
             onOptionsItemSelected(menuItem)
         }

@@ -40,7 +40,7 @@ class ShoppingBagFragment : Fragment() {
 
     private fun observeRemoveProductFromBag() {
         shoppingBagViewModel.removeProductFromShoppingBagResponse.value = NetworkResult.Loading()
-        shoppingBagViewModel.removeProductFromShoppingBagResponse.observe(viewLifecycleOwner, {
+        shoppingBagViewModel.removeProductFromShoppingBagResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkResult.Success -> {
                     shoppingBagViewModel.getOrderItemsForUser()
@@ -59,7 +59,7 @@ class ShoppingBagFragment : Fragment() {
                 }
                 else -> {}
             }
-        })
+        }
 
     }
 
@@ -69,7 +69,7 @@ class ShoppingBagFragment : Fragment() {
     }
 
     private fun observeOrderItemsResponse() {
-        shoppingBagViewModel.orderItemsResponse.observe(viewLifecycleOwner, { response ->
+        shoppingBagViewModel.orderItemsResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
                     Utils.hideShimmerEffect(
@@ -97,7 +97,7 @@ class ShoppingBagFragment : Fragment() {
                     )
                 }
             }
-        })
+        }
     }
 
     private fun observeSwipeRemoveProduct() {
@@ -113,8 +113,11 @@ class ShoppingBagFragment : Fragment() {
                             position
                         )
                         shoppingBagViewModel.removeProductFromShoppingBag(
-                            orderItem.productId, orderItem.sizes.find { s -> s.name == orderItem.selectedSize}!!.id
+                            orderItem.productId,
+                            orderItem.sizes.find { s -> s.name == orderItem.selectedSize }!!.id,
+                            orderItem.selectedQuantity
                         )
+                        adapter.notifyItemChanged(position)
                     }
                     .setNegativeButton("Cancel") { _, _ -> adapter.notifyItemChanged(position) }
                     .show()

@@ -12,8 +12,8 @@ import mk.ukim.finki.eshop.api.dto.request.RegisterDto
 import mk.ukim.finki.eshop.api.dto.request.TokenDto
 import mk.ukim.finki.eshop.api.dto.response.LoginDto
 import mk.ukim.finki.eshop.api.model.User
-import mk.ukim.finki.eshop.data.datastore.UserId
 import mk.ukim.finki.eshop.data.source.Repository
+import mk.ukim.finki.eshop.ui.shoppingbag.ShoppingBagManager
 import mk.ukim.finki.eshop.util.Constants.Companion.CLIENT_ID_PARAM
 import mk.ukim.finki.eshop.util.Constants.Companion.CLIENT_SECRET_PARAM
 import mk.ukim.finki.eshop.util.Constants.Companion.FACEBOOK_TYPE
@@ -32,6 +32,7 @@ import javax.inject.Inject
 class AccountViewModel @Inject constructor(
     private val loginManager: LoginManager,
     private val repository: Repository,
+    private val shoppingBagManager: ShoppingBagManager,
     application: Application
 ): AndroidViewModel(application) {
 
@@ -131,6 +132,7 @@ class AccountViewModel @Inject constructor(
             }
             response.isSuccessful -> {
                 loginManager.saveUser(response.body()!!)
+                getItemsInBagForUser()
                 NetworkResult.Success(response.body()!!)
             }
             else -> {
@@ -164,6 +166,10 @@ class AccountViewModel @Inject constructor(
 
     fun logout() {
         loginManager.logoutUser()
+    }
+
+    private fun getItemsInBagForUser() = viewModelScope.launch {
+        shoppingBagManager.getItemsInBagForUserSafeCall()
     }
 
 }

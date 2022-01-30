@@ -3,12 +3,11 @@ package mk.ukim.finki.eshop.ui.details
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -20,7 +19,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.DetailsPagerAdapter
-import mk.ukim.finki.eshop.api.model.Size
 import mk.ukim.finki.eshop.databinding.FragmentDetailsBinding
 import mk.ukim.finki.eshop.ui.details.moredetails.MoreDetailsFragment
 import mk.ukim.finki.eshop.ui.details.reviews.ReviewsFragment
@@ -72,18 +70,26 @@ class DetailsFragment : Fragment() {
 
     private fun observeMoveProductToBag() {
         detailsViewModel.addProductToShoppingBagResponse.value = NetworkResult.Loading()
-        detailsViewModel.addProductToShoppingBagResponse.observe(viewLifecycleOwner, {
+        detailsViewModel.addProductToShoppingBagResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkResult.Success -> {
                     findNavController().popBackStack()
-                    Utils.showSnackbar(binding.root, "Added product to shopping bag!", Snackbar.LENGTH_SHORT)
+                    Utils.showSnackbar(
+                        binding.root,
+                        "Added product to shopping bag!",
+                        Snackbar.LENGTH_SHORT
+                    )
                 }
                 is NetworkResult.Error -> {
-                    Utils.showSnackbar(binding.root, "Error adding product to shopping bag!", Snackbar.LENGTH_SHORT)
+                    Utils.showSnackbar(
+                        binding.root,
+                        "Error adding product to shopping bag!",
+                        Snackbar.LENGTH_SHORT
+                    )
                 }
                 else -> {}
             }
-        })
+        }
     }
 
     private fun setupShareFab() {
@@ -100,37 +106,55 @@ class DetailsFragment : Fragment() {
 
 
     private fun observeAddOrRemoveProductFromWishlist() {
-        detailsViewModel.removeProductFromWishlistResponse.observe(viewLifecycleOwner, {
+        detailsViewModel.removeProductFromWishlistResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkResult.Success -> {
                     removeProductFromWishlistSuccess()
                 }
                 is NetworkResult.Error -> {
-                    Utils.showSnackbar(binding.root, "Error removing product from wishlist!", Snackbar.LENGTH_SHORT)
+                    Utils.showSnackbar(
+                        binding.root,
+                        "Error removing product from wishlist!",
+                        Snackbar.LENGTH_SHORT
+                    )
                 }
                 else -> {}
             }
-        })
-        detailsViewModel.addProductToWishlistResponse.observe(viewLifecycleOwner, {
+        }
+        detailsViewModel.addProductToWishlistResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkResult.Success -> {
-                   addProductToWishlistSuccess()
+                    addProductToWishlistSuccess()
                 }
                 is NetworkResult.Error -> {
-                    Utils.showSnackbar(binding.root, "Error adding product to wishlist!", Snackbar.LENGTH_SHORT)
+                    Utils.showSnackbar(
+                        binding.root,
+                        "Error adding product to wishlist!",
+                        Snackbar.LENGTH_SHORT
+                    )
                 }
                 else -> {}
             }
-        })
+        }
     }
 
     private fun handleOnChipChange() {
-        binding.sizeChipGroup.setOnCheckedChangeListener { group, checkedId ->
+        binding.sizeChipGroup.setOnCheckedChangeListener { _, checkedId ->
             checkedSizeId = checkedId
             binding.addToBagBtn.isEnabled = true
             binding.addToBagBtn.text = "Add to bag"
-            binding.addToBagBtn.strokeColor = ColorStateList.valueOf(ContextCompat.getColor(binding.addToBagBtn.context, R.color.green))
-            binding.addToBagBtn.setTextColor(ContextCompat.getColor(binding.addToBagBtn.context, R.color.black))
+            binding.addToBagBtn.strokeColor = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    binding.addToBagBtn.context,
+                    R.color.green
+                )
+            )
+            binding.addToBagBtn.setTextColor(
+                ContextCompat.getColor(
+                    binding.addToBagBtn.context,
+                    R.color.black
+                )
+            )
         }
     }
 

@@ -10,7 +10,6 @@ import mk.ukim.finki.eshop.api.dto.request.AddProductToBagDto
 import mk.ukim.finki.eshop.api.model.Product
 import mk.ukim.finki.eshop.ui.account.LoginManager
 import mk.ukim.finki.eshop.ui.shoppingbag.ShoppingBagManager
-import mk.ukim.finki.eshop.util.GlobalVariables
 import mk.ukim.finki.eshop.util.NetworkResult
 import javax.inject.Inject
 
@@ -26,7 +25,6 @@ class WishlistViewModel @Inject constructor(
     var wishlistProductsResponse: MutableLiveData<NetworkResult<List<Product>>> = MutableLiveData()
     var removeProductFromWishlistResponse: MutableLiveData<NetworkResult<Long>> = MutableLiveData()
     var addProductToShoppingBagResponse: MutableLiveData<NetworkResult<Long>> = MutableLiveData()
-    var productsInBagNumber = GlobalVariables.productsInBagNumber
 
     fun getWishlistProductsForUser() = viewModelScope.launch {
         wishlistProductsResponse.value = NetworkResult.Loading()

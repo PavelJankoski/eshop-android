@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.RecyclerView
+import mk.ukim.finki.eshop.MyApplication
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.api.model.OrderItem
 import mk.ukim.finki.eshop.databinding.ShoppingBagRowLayoutBinding
@@ -35,7 +36,7 @@ class ShoppingBagAdapter(private val vm: ShoppingBagViewModel) :
         private fun setupQuantityDropdown(orderItem: OrderItem, vm: ShoppingBagViewModel) {
             val size = orderItem.sizes.find { s -> s.name == orderItem.selectedSize }
             val maxQuantity =
-                if (size!!.quantity >= orderItem.selectedQuantity) size.quantity else orderItem.selectedQuantity
+                if (size != null && size.quantity >= orderItem.selectedQuantity) size.quantity else orderItem.selectedQuantity
             val qtyArray: List<Int> = IntRange(1, maxQuantity).step(1).toList()
             val arrayAdapter = ArrayAdapter(
                 binding.root.context,
@@ -43,7 +44,9 @@ class ShoppingBagAdapter(private val vm: ShoppingBagViewModel) :
                 qtyArray.map { qty -> qty.toString() })
             binding.quantityAutocomplete.setAdapter(arrayAdapter)
             binding.quantityAutocomplete.setOnItemClickListener { _, _, position, _ ->
-                vm.changeQuantityForProductInBag(orderItem.productId, size.id, position + 1)
+                MyApplication.itemsInBag =
+                    MyApplication.itemsInBag + (position + 1 - orderItem.selectedQuantity)
+                vm.changeQuantityForProductInBag(orderItem.productId, size!!.id, position + 1)
             }
         }
     }
