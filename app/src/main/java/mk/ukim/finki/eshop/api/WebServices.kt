@@ -1,6 +1,5 @@
 package mk.ukim.finki.eshop.api
 
-import mk.ukim.finki.eshop.api.dto.*
 import mk.ukim.finki.eshop.api.dto.request.*
 import mk.ukim.finki.eshop.api.dto.response.LoginDto
 import mk.ukim.finki.eshop.api.model.*
@@ -130,11 +129,16 @@ interface WebServices {
     @POST("/api/order-management-service/order-items/add-to-order")
     suspend fun addProductToBag(
         @Body body: AddProductToBagDto
-    ) : Response<Unit>
+    ): Response<Unit>
 
     @PATCH("/api/order-management-service/order-items/remove-from-order")
     suspend fun removeProductFromBag(
         @Body body: RemoveProductFromBagDto
-    ) : Response<Unit>
+    ): Response<Unit>
+
+    @PATCH("/api/order-management-service/order-items/change-quantity")
+    suspend fun changeQuantityInBag(
+        @Body body: ChangeQuantityInBagDto
+    ): Response<Unit>
 
 }

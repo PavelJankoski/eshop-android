@@ -13,9 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import mk.ukim.finki.eshop.adapters.ShoppingBagAdapter
-import mk.ukim.finki.eshop.adapters.WishlistAdapter
 import mk.ukim.finki.eshop.databinding.FragmentShoppingBagBinding
-import mk.ukim.finki.eshop.ui.wishlist.WishlistSwipeToDeleteCallback
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 
@@ -24,7 +22,7 @@ class ShoppingBagFragment : Fragment() {
     private var _binding: FragmentShoppingBagBinding? = null
     private val binding get() = _binding!!
     private val shoppingBagViewModel by viewModels<ShoppingBagViewModel>()
-    private val mAdapter by lazy { ShoppingBagAdapter() }
+    private val mAdapter by lazy { ShoppingBagAdapter(shoppingBagViewModel) }
 
 
     override fun onCreateView(
