@@ -120,4 +120,8 @@ class RemoteDataSource @Inject constructor(
                 return webServices.getOrderDetailsForUser(userId)
         }
 
+        suspend fun getPaymentSheetParams(amount: Float): Response<StripePaymentSheet> {
+                return webServices.getPaymentSheetParams(amount)
+        }
+
 }

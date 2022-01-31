@@ -1,14 +1,20 @@
 package mk.ukim.finki.eshop.ui.checkout
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.stripe.android.PaymentConfiguration
+import com.stripe.android.paymentsheet.PaymentSheet
+import com.stripe.android.paymentsheet.PaymentSheetResult
 import dagger.hilt.android.AndroidEntryPoint
+import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.databinding.FragmentCheckoutBinding
+import mk.ukim.finki.eshop.util.Constants.Companion.STRIPE_PUBLISHABLE_KEY
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 
@@ -17,6 +23,7 @@ class CheckoutFragment : Fragment() {
     private var _binding: FragmentCheckoutBinding? = null
     private val binding get() = _binding!!
     private val checkoutViewModel by viewModels<CheckoutViewModel>()
+    private lateinit var paymentSheet: PaymentSheet
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,9 +31,72 @@ class CheckoutFragment : Fragment() {
     ): View {
         _binding = FragmentCheckoutBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
+        setupStripe()
+        binding.placeOrderBtn.setOnClickListener {
+            presentPaymentSheet()
+        }
         checkoutViewModel.getOrderDetailsForUser()
         observeOrderDetails()
+        observePaymentSheetParams()
         return binding.root
+    }
+
+    private fun setupStripe() {
+        PaymentConfiguration.init(requireContext(), STRIPE_PUBLISHABLE_KEY)
+
+        paymentSheet = PaymentSheet(this) { result ->
+            onPaymentSheetResult(result)
+        }
+    }
+
+    private fun presentPaymentSheet() {
+        paymentSheet.presentWithPaymentIntent(
+            checkoutViewModel.paymentSheetParamsResponse.value!!.data!!.paymentIntent,
+            PaymentSheet.Configuration(
+                merchantDisplayName = "Example, Inc.",
+                customer = PaymentSheet.CustomerConfiguration(
+                    id = checkoutViewModel.paymentSheetParamsResponse.value!!.data!!.customer,
+                    ephemeralKeySecret = checkoutViewModel.paymentSheetParamsResponse.value!!.data!!.ephemeralKey,
+                )
+            )
+        )
+    }
+
+    private fun onPaymentSheetResult(paymentSheetResult: PaymentSheetResult) {
+        when (paymentSheetResult) {
+            is PaymentSheetResult.Canceled -> {
+                Utils.showToast(requireContext(), "Payment cancelled", Toast.LENGTH_SHORT)
+            }
+            is PaymentSheetResult.Failed -> {
+                Utils.showSnackbar(
+                    binding.root,
+                    "Due to technical problems the payment failed, try again later...",
+                    Toast.LENGTH_SHORT
+                )
+                Log.e("App", "Got error: ${paymentSheetResult.error}")
+            }
+            is PaymentSheetResult.Completed -> {
+                Utils.showToast(requireContext(), "Payment Complete", Toast.LENGTH_SHORT)
+            }
+        }
+    }
+
+    private fun observePaymentSheetParams() {
+        checkoutViewModel.paymentSheetParamsResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    enableCheckoutButton()
+                }
+                is NetworkResult.Error -> {
+                    disableCheckoutButton()
+                    Utils.showToast(requireContext(), response.message!!, Toast.LENGTH_LONG)
+                }
+                is NetworkResult.Loading -> {
+                    disableCheckoutButton()
+                    showShimmerEffect()
+                }
+            }
+        }
     }
 
     private fun observeOrderDetails() {
@@ -58,6 +128,16 @@ class CheckoutFragment : Fragment() {
             binding.checkoutShimmerFrameLayout.stopShimmer()
         }
         binding.cardViewsConstraintLayout.visibility = View.VISIBLE
+    }
+
+    private fun enableCheckoutButton() {
+        binding.placeOrderBtn.isEnabled = true
+        binding.placeOrderBtn.setBackgroundColor(binding.placeOrderBtn.context.resources.getColor(R.color.green))
+    }
+
+    private fun disableCheckoutButton() {
+        binding.placeOrderBtn.isEnabled = false
+        binding.placeOrderBtn.setBackgroundColor(binding.placeOrderBtn.context.resources.getColor(R.color.lightMediumGray))
     }
 
     override fun onDestroyView() {

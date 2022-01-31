@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import mk.ukim.finki.eshop.api.model.OrderDetails
+import mk.ukim.finki.eshop.api.model.StripePaymentSheet
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.ui.account.LoginManager
 import mk.ukim.finki.eshop.util.NetworkResult
@@ -22,9 +23,15 @@ class CheckoutViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
     var orderDetailsResponse: MutableLiveData<NetworkResult<OrderDetails>> = MutableLiveData()
+    var paymentSheetParamsResponse: MutableLiveData<NetworkResult<StripePaymentSheet>> =
+        MutableLiveData()
 
     fun getOrderDetailsForUser() = viewModelScope.launch {
         getOrderDetailsForUserSafeCall()
+    }
+
+    fun getStripePaymentSheetParams(amount: Float) = viewModelScope.launch {
+        getStripePaymentSheetParamsSafeCall(amount)
     }
 
     private suspend fun getOrderDetailsForUserSafeCall() {
@@ -44,7 +51,39 @@ class CheckoutViewModel @Inject constructor(
         }
     }
 
+    private suspend fun getStripePaymentSheetParamsSafeCall(amount: Float) {
+        paymentSheetParamsResponse.value = NetworkResult.Loading()
+        if (Utils.hasInternetConnection(getApplication<Application>())) {
+            try {
+                val response = repository.remote.getPaymentSheetParams(amount)
+                paymentSheetParamsResponse.value = handlePaymentSheetParamsResponse(response)
+            } catch (e: Exception) {
+                Log.e(
+                    "CheckoutViewModel:getStripePaymentSheetParamsSafeCall",
+                    "Error fetching payment sheet params"
+                )
+                paymentSheetParamsResponse.value =
+                    NetworkResult.Error("Error fetching payment sheet params.")
+            }
+        }
+    }
+
     private fun handleOrderDetailsResponse(response: Response<OrderDetails>): NetworkResult<OrderDetails> {
+        return when {
+            response.message().toString().contains("timeout") -> {
+                NetworkResult.Error("Timeout")
+            }
+            response.isSuccessful -> {
+                getStripePaymentSheetParams(response.body()!!.totalPrice)
+                NetworkResult.Success(response.body()!!)
+            }
+            else -> {
+                NetworkResult.Error(response.message())
+            }
+        }
+    }
+
+    private fun handlePaymentSheetParamsResponse(response: Response<StripePaymentSheet>): NetworkResult<StripePaymentSheet> {
         return when {
             response.message().toString().contains("timeout") -> {
                 NetworkResult.Error("Timeout")

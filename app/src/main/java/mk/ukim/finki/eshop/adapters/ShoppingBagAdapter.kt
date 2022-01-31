@@ -36,7 +36,7 @@ class ShoppingBagAdapter(private val vm: ShoppingBagViewModel) :
         private fun setupQuantityDropdown(orderItem: OrderItem, vm: ShoppingBagViewModel) {
             val size = orderItem.sizes.find { s -> s.name == orderItem.selectedSize }
             val maxQuantity =
-                if (size != null && size.quantity >= orderItem.selectedQuantity) size.quantity else orderItem.selectedQuantity
+                if (size != null && size.quantity >= orderItem.selectedQuantity) size.quantity + 1 else orderItem.selectedQuantity
             val qtyArray: List<Int> = IntRange(1, maxQuantity).step(1).toList()
             val arrayAdapter = ArrayAdapter(
                 binding.root.context,
