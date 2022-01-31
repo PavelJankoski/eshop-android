@@ -27,7 +27,8 @@ class Constants {
         const val FACEBOOK_TYPE = "facebook"
 
         // Stripe publishable key
-        const val STRIPE_PUBLISHABLE_KEY = "pk_test_51H0AUpKlrDn4L6TppUjWu90nNVVYxLPfCctgG9DoaMIdMB4SSGbM4SIb1vvxldSyzw7f9k2TRGnZ2OnHYJFGXEO300ZAVYUir2"
+        const val STRIPE_PUBLISHABLE_KEY =
+            "pk_test_51KNnzhJzZYu9pfEvZ1eZzMQ1raUfrs0nUa9ayGlefRCuJVrXHBsgitAWYj09NAXjK5GLOKONlz06h2af4VCwLpmv00fDOW7BQN"
 
         // RETROFIT PARAMS
         const val CATEGORY_ID_PARAM = "categoryId"
