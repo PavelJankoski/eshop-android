@@ -1,19 +1,17 @@
 package mk.ukim.finki.eshop.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.PopupMenu
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.databinding.ActivityMainBinding
 import mk.ukim.finki.eshop.ui.account.LoginManager
-import mk.ukim.finki.eshop.util.Constants
 import mk.ukim.finki.eshop.util.Constants.Companion.LOGIN_STATE
 import javax.inject.Inject
 
@@ -63,16 +61,14 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfig)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.shoppingBagFragment) {
+            if (destination.id == R.id.shoppingBagFragment || destination.id == R.id.checkoutFragment) {
                 binding.bottomNavigationView.visibility = View.GONE
                 binding.borderBlackView.visibility = View.GONE
-            }
-            else if(destination.id==R.id.detailsFragment || destination.id == R.id.searchFragment || destination.id == R.id.qrCodeFragment) {
+            } else if (destination.id == R.id.detailsFragment || destination.id == R.id.searchFragment || destination.id == R.id.qrCodeFragment) {
                 binding.bottomNavigationView.visibility = View.GONE
                 binding.borderBlackView.visibility = View.GONE
                 binding.appBar.visibility = View.GONE
-            }
-            else {
+            } else {
                 binding.appBar.visibility = View.VISIBLE
                 binding.bottomNavigationView.visibility = View.VISIBLE
                 binding.borderBlackView.visibility = View.VISIBLE

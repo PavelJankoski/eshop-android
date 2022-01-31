@@ -36,6 +36,9 @@ class ShoppingBagFragment : Fragment() {
         observeRemoveProductFromBag()
         observeSwipeRemoveProduct()
         shoppingBagViewModel.getOrderItemsForUser()
+        binding.checkoutBtn.setOnClickListener {
+            findNavController().navigate(ShoppingBagFragmentDirections.actionShoppingBagFragmentToCheckoutFragment())
+        }
         return binding.root
     }
 

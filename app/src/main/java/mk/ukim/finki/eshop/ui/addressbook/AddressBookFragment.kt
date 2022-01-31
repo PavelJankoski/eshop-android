@@ -37,29 +37,32 @@ class AddressBookFragment : Fragment() {
 
     private fun observeDeleteAddressResponse() {
         addressBookViewModel.deleteAddressResponse.value = NetworkResult.Loading()
-        addressBookViewModel.deleteAddressResponse.observe(viewLifecycleOwner, {
-            when(it) {
+        addressBookViewModel.deleteAddressResponse.observe(viewLifecycleOwner) {
+            when (it) {
                 is NetworkResult.Success -> {
-                    Utils.showSnackbar(binding.root, "Successfully deleted address.", Snackbar.LENGTH_SHORT)
+                    Utils.showSnackbar(
+                        binding.root,
+                        "Successfully deleted address.",
+                        Snackbar.LENGTH_SHORT
+                    )
                 }
                 else -> {}
             }
-        })
+        }
     }
 
     private fun observeAddressesResponse() {
-        addressBookViewModel.addressesResponse.observe(viewLifecycleOwner, {response ->
-            when(response) {
+        addressBookViewModel.addressesResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
                 is NetworkResult.Success -> {
                     Utils.hideShimmerEffect(
                         binding.addressBookShimmerFrameLayout,
                         binding.addressBookRecyclerView
                     )
-                    if(!response.data.isNullOrEmpty()) {
+                    if (!response.data.isNullOrEmpty()) {
                         addressesNotEmpty()
                         mAdapter.setData(response.data)
-                    }
-                    else {
+                    } else {
                         addressesEmpty()
                     }
                 }
@@ -76,7 +79,7 @@ class AddressBookFragment : Fragment() {
                     )
                 }
             }
-        })
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

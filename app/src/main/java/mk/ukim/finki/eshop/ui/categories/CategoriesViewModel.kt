@@ -8,7 +8,6 @@ import kotlinx.coroutines.launch
 import mk.ukim.finki.eshop.api.model.Category
 import mk.ukim.finki.eshop.data.model.CategoriesEntity
 import mk.ukim.finki.eshop.data.source.Repository
-import mk.ukim.finki.eshop.ui.account.LoginManager
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 import retrofit2.Response
@@ -17,7 +16,6 @@ import javax.inject.Inject
 @HiltViewModel
 class CategoriesViewModel @Inject constructor(
     private val repository: Repository,
-    private val loginManager: LoginManager,
     application: Application
 ): AndroidViewModel(application) {
 

@@ -12,4 +12,8 @@ data class Address(
     val country: String,
     val postalCode: Int,
     val isDefault: Boolean
-): Parcelable
+) : Parcelable {
+    fun getCityWithPostalCode(): String {
+        return postalCode.toString().plus(", ").plus(city)
+    }
+}

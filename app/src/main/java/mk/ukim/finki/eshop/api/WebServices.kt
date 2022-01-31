@@ -145,4 +145,9 @@ interface WebServices {
     suspend fun getItemsInBagForUser(
         @Path(value = Constants.USER_ID_PARAM) userId: Long
     ): Response<Int>
+
+    @GET("/api/order-management-service/order-details/{userId}")
+    suspend fun getOrderDetailsForUser(
+        @Path(value = Constants.USER_ID_PARAM) userId: Long
+    ): Response<OrderDetails>
 }

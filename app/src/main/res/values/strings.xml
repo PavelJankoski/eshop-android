@@ -80,6 +80,10 @@
     <string name="quantity">Qty</string>
     <string name="shopping_bag_empty">Shopping bag empty</string>
     <string name="order_history">Order history</string>
+    <string name="place_order">Place order</string>
+    <string name="user_info">User info</string>
+    <string name="shipping_address">Shipping address</string>
+    <string name="change">Change</string>
 
 
     <string-array name="sorting_products">

@@ -68,6 +68,18 @@ class SharedBinding {
             }
         }
 
+        @BindingAdapter("safeTextOrDash")
+        @JvmStatic
+        fun safeTextOrDash(
+            textView: TextView, text: String?
+        ) {
+            if (text.isNullOrBlank()) {
+                textView.text = "-"
+            } else {
+                textView.text = text
+            }
+        }
+
 //        @BindingAdapter("formatDateFromString")
 //        @JvmStatic
 //        fun formatDateFromString(tv: TextView, date: String) {
