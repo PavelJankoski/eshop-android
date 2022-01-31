@@ -124,4 +124,7 @@ class RemoteDataSource @Inject constructor(
                 return webServices.getPaymentSheetParams(amount)
         }
 
+        suspend fun placeOrder(userId: Long): Response<Unit> {
+                return webServices.placeOrder(userId)
+        }
 }

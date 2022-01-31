@@ -155,4 +155,9 @@ interface WebServices {
     suspend fun getPaymentSheetParams(
         @Query(value = "amount") amount: Float
     ): Response<StripePaymentSheet>
+
+    @POST("/api/order-management-service/orders/{userId}/place-order")
+    suspend fun placeOrder(
+        @Path(value = Constants.USER_ID_PARAM) userId: Long
+    ): Response<Unit>
 }

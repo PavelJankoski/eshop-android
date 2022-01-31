@@ -84,6 +84,7 @@
     <string name="user_info">User info</string>
     <string name="shipping_address">Shipping address</string>
     <string name="change">Change</string>
+    <string name="please_choose_default_address">Please choose default address</string>
 
 
     <string-array name="sorting_products">

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
@@ -34,6 +35,9 @@ class CheckoutFragment : Fragment() {
         setupStripe()
         binding.placeOrderBtn.setOnClickListener {
             presentPaymentSheet()
+        }
+        binding.changeAddressBtn.setOnClickListener {
+            findNavController().navigate(CheckoutFragmentDirections.actionCheckoutFragmentToAddressBookFragment())
         }
         checkoutViewModel.getOrderDetailsForUser()
         observeOrderDetails()
@@ -65,7 +69,7 @@ class CheckoutFragment : Fragment() {
     private fun onPaymentSheetResult(paymentSheetResult: PaymentSheetResult) {
         when (paymentSheetResult) {
             is PaymentSheetResult.Canceled -> {
-                Utils.showToast(requireContext(), "Payment cancelled", Toast.LENGTH_SHORT)
+                Log.i("onPaymentSheetResult", "Payment cancelled")
             }
             is PaymentSheetResult.Failed -> {
                 Utils.showSnackbar(
@@ -73,7 +77,7 @@ class CheckoutFragment : Fragment() {
                     "Due to technical problems the payment failed, try again later...",
                     Toast.LENGTH_SHORT
                 )
-                Log.e("App", "Got error: ${paymentSheetResult.error}")
+                Log.e("onPaymentSheetResult", "Got error: ${paymentSheetResult.error}")
             }
             is PaymentSheetResult.Completed -> {
                 Utils.showToast(requireContext(), "Payment Complete", Toast.LENGTH_SHORT)
@@ -85,7 +89,9 @@ class CheckoutFragment : Fragment() {
         checkoutViewModel.paymentSheetParamsResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                    enableCheckoutButton()
+                    if (checkoutViewModel.orderDetailsResponse.value!!.data?.address != null) {
+                        enableCheckoutButton()
+                    }
                 }
                 is NetworkResult.Error -> {
                     disableCheckoutButton()
