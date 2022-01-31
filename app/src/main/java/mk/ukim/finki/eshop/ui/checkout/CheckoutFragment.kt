@@ -9,10 +9,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
 import dagger.hilt.android.AndroidEntryPoint
+import mk.ukim.finki.eshop.MyApplication
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.databinding.FragmentCheckoutBinding
 import mk.ukim.finki.eshop.util.Constants.Companion.STRIPE_PUBLISHABLE_KEY
@@ -42,7 +44,28 @@ class CheckoutFragment : Fragment() {
         checkoutViewModel.getOrderDetailsForUser()
         observeOrderDetails()
         observePaymentSheetParams()
+        observePlaceOrder()
         return binding.root
+    }
+
+    private fun observePlaceOrder() {
+        checkoutViewModel.placeOrderResponse.observe(viewLifecycleOwner) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    Utils.showSnackbar(
+                        binding.root,
+                        "Items purchased successfully!",
+                        Snackbar.LENGTH_SHORT
+                    )
+                    MyApplication.itemsInBag = 0
+                    findNavController().popBackStack(R.id.categoriesFragment, false)
+                }
+                is NetworkResult.Error -> {
+                    Utils.showSnackbar(binding.root, it.message!!, Snackbar.LENGTH_SHORT)
+                }
+                else -> {}
+            }
+        }
     }
 
     private fun setupStripe() {
@@ -57,7 +80,7 @@ class CheckoutFragment : Fragment() {
         paymentSheet.presentWithPaymentIntent(
             checkoutViewModel.paymentSheetParamsResponse.value!!.data!!.paymentIntent,
             PaymentSheet.Configuration(
-                merchantDisplayName = "Example, Inc.",
+                merchantDisplayName = "Clothing shop, Inc.",
                 customer = PaymentSheet.CustomerConfiguration(
                     id = checkoutViewModel.paymentSheetParamsResponse.value!!.data!!.customer,
                     ephemeralKeySecret = checkoutViewModel.paymentSheetParamsResponse.value!!.data!!.ephemeralKey,
@@ -80,7 +103,7 @@ class CheckoutFragment : Fragment() {
                 Log.e("onPaymentSheetResult", "Got error: ${paymentSheetResult.error}")
             }
             is PaymentSheetResult.Completed -> {
-                Utils.showToast(requireContext(), "Payment Complete", Toast.LENGTH_SHORT)
+                checkoutViewModel.placeOrder()
             }
         }
     }

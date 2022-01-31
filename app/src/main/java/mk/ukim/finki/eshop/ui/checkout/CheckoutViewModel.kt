@@ -25,13 +25,36 @@ class CheckoutViewModel @Inject constructor(
     var orderDetailsResponse: MutableLiveData<NetworkResult<OrderDetails>> = MutableLiveData()
     var paymentSheetParamsResponse: MutableLiveData<NetworkResult<StripePaymentSheet>> =
         MutableLiveData()
+    var placeOrderResponse: MutableLiveData<NetworkResult<Unit>> = MutableLiveData()
+
 
     fun getOrderDetailsForUser() = viewModelScope.launch {
         getOrderDetailsForUserSafeCall()
     }
 
-    fun getStripePaymentSheetParams(amount: Float) = viewModelScope.launch {
+    private fun getStripePaymentSheetParams(amount: Float) = viewModelScope.launch {
         getStripePaymentSheetParamsSafeCall(amount)
+    }
+
+    fun placeOrder() = viewModelScope.launch {
+        placeOrderSafeCall()
+    }
+
+    private suspend fun placeOrderSafeCall() {
+        placeOrderResponse.value = NetworkResult.Loading()
+        if (Utils.hasInternetConnection(getApplication<Application>())) {
+            try {
+                val response = repository.remote.placeOrder(loginManager.readUserId())
+                placeOrderResponse.value = handlePlaceOrderResponse(response)
+            } catch (e: Exception) {
+                Log.e(
+                    "CheckoutViewModel:placeOrderSafeCall",
+                    "Error placing order for user"
+                )
+                placeOrderResponse.value =
+                    NetworkResult.Error("Error placing order for user.")
+            }
+        }
     }
 
     private suspend fun getOrderDetailsForUserSafeCall() {
@@ -84,6 +107,20 @@ class CheckoutViewModel @Inject constructor(
     }
 
     private fun handlePaymentSheetParamsResponse(response: Response<StripePaymentSheet>): NetworkResult<StripePaymentSheet> {
+        return when {
+            response.message().toString().contains("timeout") -> {
+                NetworkResult.Error("Timeout")
+            }
+            response.isSuccessful -> {
+                NetworkResult.Success(response.body()!!)
+            }
+            else -> {
+                NetworkResult.Error(response.message())
+            }
+        }
+    }
+
+    private fun handlePlaceOrderResponse(response: Response<Unit>): NetworkResult<Unit> {
         return when {
             response.message().toString().contains("timeout") -> {
                 NetworkResult.Error("Timeout")
