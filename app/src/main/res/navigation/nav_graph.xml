@@ -265,7 +265,15 @@
         android:id="@+id/orderHistoryFragment"
         android:name="mk.ukim.finki.eshop.ui.orderhistory.OrderHistoryFragment"
         android:label="Orders history"
-        tools:layout="@layout/fragment_order_history" />
+        tools:layout="@layout/fragment_order_history">
+        <action
+            android:id="@+id/action_orderHistoryFragment_to_orderHistoryDetailsFragment"
+            app:destination="@id/orderHistoryDetailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
     <fragment
         android:id="@+id/checkoutFragment"
         android:name="mk.ukim.finki.eshop.ui.checkout.CheckoutFragment"
@@ -278,5 +286,14 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderHistoryDetailsFragment"
+        android:name="mk.ukim.finki.eshop.ui.orderhistory.orderhistorydetails.OrderHistoryDetailsFragment"
+        android:label="Order details"
+        tools:layout="@layout/fragment_order_history_details">
+        <argument
+            android:name="orderId"
+            app:argType="long" />
     </fragment>
 </navigation>

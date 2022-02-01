@@ -3,11 +3,13 @@ package mk.ukim.finki.eshop.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.api.model.OrderHistoryItem
 import mk.ukim.finki.eshop.databinding.OrderHistoryRowLayoutBinding
+import mk.ukim.finki.eshop.ui.orderhistory.OrderHistoryFragmentDirections
 import mk.ukim.finki.eshop.util.DiffUtil
 
 
@@ -19,6 +21,13 @@ class OrderHistoryAdapter : RecyclerView.Adapter<OrderHistoryAdapter.MyViewHolde
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(orderHistoryItem: OrderHistoryItem) {
             binding.orderHistoryItem = orderHistoryItem
+            binding.viewButton.setOnClickListener {
+                binding.viewButton.findNavController().navigate(
+                    OrderHistoryFragmentDirections.actionOrderHistoryFragmentToOrderHistoryDetailsFragment(
+                        orderHistoryItem.orderId
+                    )
+                )
+            }
             setImagesInLinearLayout(orderHistoryItem)
             binding.executePendingBindings()
         }
