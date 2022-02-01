@@ -53,6 +53,7 @@
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_home_account.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_login.xml" value="0.264" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_more_details.xml" value="0.13125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_order_history.xml" value="0.3432971014492754" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_payment.xml" value="0.3532608695652174" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_products.xml" value="0.17685185185185184" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
@@ -64,10 +65,12 @@
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_user_info.xml" value="0.264" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/fragment_wishlist.xml" value="0.21603260869565216" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/history_row_layout.xml" value="0.13125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/order_history_row_layout.xml" value="0.3432971014492754" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/placeholder_adress_book_row_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/placeholder_categories_row_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/placeholder_checkout_layout.xml" value="0.18020833333333333" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/placeholder_history_row.xml" value="0.13125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/placeholder_order_history_row_layout.xml" value="0.18020833333333333" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/placeholder_products_row_layout.xml" value="0.15670289855072464" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/placeholder_profile.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/layout/placeholder_reviews_row_layout.xml" value="0.3582427536231884" />

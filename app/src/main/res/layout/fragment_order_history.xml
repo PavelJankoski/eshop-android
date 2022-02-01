@@ -1,14 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.orderhistory.OrderHistoryFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/amount_textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="5 orders" />
 
-</FrameLayout>
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/orderHistory_shimmerFrameLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/amount_textView"
+        app:layout_constraintStart_toStartOf="@+id/amount_textView"
+        app:layout_constraintTop_toBottomOf="@+id/amount_textView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/placeholder_order_history_row_layout" />
+
+            <include layout="@layout/placeholder_order_history_row_layout" />
+
+            <include layout="@layout/placeholder_order_history_row_layout" />
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/orderHistory_recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/amount_textView"
+        app:layout_constraintStart_toStartOf="@+id/amount_textView"
+        app:layout_constraintTop_toBottomOf="@+id/amount_textView" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/shoppingBagErrorOrderHistory_Lottie"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/shopping_bag_error"
+        app:lottie_speed="1.4" />
+
+    <TextView
+        android:id="@+id/empty_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/you_haven_t_ordered_items_yet"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/shoppingBagErrorOrderHistory_Lottie"
+        app:layout_constraintStart_toStartOf="@id/shoppingBagErrorOrderHistory_Lottie"
+        app:layout_constraintTop_toBottomOf="@id/shoppingBagErrorOrderHistory_Lottie" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

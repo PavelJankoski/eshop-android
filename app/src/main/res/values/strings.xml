@@ -85,6 +85,9 @@
     <string name="shipping_address">Shipping address</string>
     <string name="change">Change</string>
     <string name="please_choose_default_address">Please choose default address</string>
+    <string name="it_s_delivered">It\'s delivered!</string>
+    <string name="view">View</string>
+    <string name="you_haven_t_ordered_items_yet">You haven\'t ordered items yet</string>
 
 
     <string-array name="sorting_products">

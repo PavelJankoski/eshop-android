@@ -127,4 +127,8 @@ class RemoteDataSource @Inject constructor(
         suspend fun placeOrder(userId: Long): Response<Unit> {
                 return webServices.placeOrder(userId)
         }
+
+        suspend fun getOrderHistory(userId: Long): Response<OrderHistory> {
+                return webServices.getOrderHistory(userId)
+        }
 }

@@ -160,4 +160,9 @@ interface WebServices {
     suspend fun placeOrder(
         @Path(value = Constants.USER_ID_PARAM) userId: Long
     ): Response<Unit>
+
+    @GET("/api/order-management-service/orders/{userId}/order-history")
+    suspend fun getOrderHistory(
+        @Path(value = Constants.USER_ID_PARAM) userId: Long
+    ): Response<OrderHistory>
 }
