@@ -171,4 +171,9 @@ interface WebServices {
     suspend fun getOrderHistoryDetails(
         @Path(value = Constants.ORDER_ID_PARAM) orderId: Long
     ): Response<OrderHistoryDetails>
+
+    @POST("/api/product-catalog-service/reviews")
+    suspend fun leaveReview(
+        @Body dto: LeaveReviewDto
+    ): Response<Unit>
 }

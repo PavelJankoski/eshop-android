@@ -96,6 +96,8 @@
     <string name="size_dots">Size:</string>
     <string name="qty">Qty:</string>
     <string name="leave_review">Leave review</string>
+    <string name="how_satisfied_are_you_with_our_product">How satisfied are you with our product?</string>
+    <string name="tell_us_more">Tell us more</string>
 
 
     <string-array name="sorting_products">
