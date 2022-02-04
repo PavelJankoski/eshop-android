@@ -88,6 +88,14 @@
     <string name="it_s_delivered">It\'s delivered!</string>
     <string name="view">View</string>
     <string name="you_haven_t_ordered_items_yet">You haven\'t ordered items yet</string>
+    <string name="delivery_address">Delivery address</string>
+    <string name="order_total">Order total</string>
+    <string name="sub_total">Sub-total</string>
+    <string name="delivery">Delivery</string>
+    <string name="free">FREE</string>
+    <string name="size_dots">Size:</string>
+    <string name="qty">Qty:</string>
+    <string name="leave_review">Leave review</string>
 
 
     <string-array name="sorting_products">

@@ -2,6 +2,7 @@ package mk.ukim.finki.eshop.api
 
 import mk.ukim.finki.eshop.api.dto.request.*
 import mk.ukim.finki.eshop.api.dto.response.LoginDto
+import mk.ukim.finki.eshop.api.dto.response.orderhistorydetails.OrderHistoryDetails
 import mk.ukim.finki.eshop.api.model.*
 import mk.ukim.finki.eshop.util.Constants
 import okhttp3.MultipartBody
@@ -165,4 +166,9 @@ interface WebServices {
     suspend fun getOrderHistory(
         @Path(value = Constants.USER_ID_PARAM) userId: Long
     ): Response<OrderHistory>
+
+    @GET("/api/order-management-service/orders/{orderId}/order-history-details")
+    suspend fun getOrderHistoryDetails(
+        @Path(value = Constants.ORDER_ID_PARAM) orderId: Long
+    ): Response<OrderHistoryDetails>
 }

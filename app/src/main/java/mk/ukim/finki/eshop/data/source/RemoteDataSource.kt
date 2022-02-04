@@ -3,6 +3,7 @@ package mk.ukim.finki.eshop.data.source
 import mk.ukim.finki.eshop.api.WebServices
 import mk.ukim.finki.eshop.api.dto.request.*
 import mk.ukim.finki.eshop.api.dto.response.LoginDto
+import mk.ukim.finki.eshop.api.dto.response.orderhistorydetails.OrderHistoryDetails
 import mk.ukim.finki.eshop.api.model.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -121,14 +122,18 @@ class RemoteDataSource @Inject constructor(
         }
 
         suspend fun getPaymentSheetParams(amount: Float): Response<StripePaymentSheet> {
-                return webServices.getPaymentSheetParams(amount)
+            return webServices.getPaymentSheetParams(amount)
         }
 
-        suspend fun placeOrder(userId: Long): Response<Unit> {
-                return webServices.placeOrder(userId)
-        }
+    suspend fun placeOrder(userId: Long): Response<Unit> {
+        return webServices.placeOrder(userId)
+    }
 
-        suspend fun getOrderHistory(userId: Long): Response<OrderHistory> {
-                return webServices.getOrderHistory(userId)
-        }
+    suspend fun getOrderHistory(userId: Long): Response<OrderHistory> {
+        return webServices.getOrderHistory(userId)
+    }
+
+    suspend fun getOrderHistoryDetails(orderId: Long): Response<OrderHistoryDetails> {
+        return webServices.getOrderHistoryDetails(orderId)
+    }
 }

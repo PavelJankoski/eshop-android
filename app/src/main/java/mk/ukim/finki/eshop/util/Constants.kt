@@ -34,6 +34,7 @@ class Constants {
         const val CATEGORY_ID_PARAM = "categoryId"
         const val PRODUCT_ID_PARAM = "productId"
         const val USER_ID_PARAM = "userId"
+        const val ORDER_ID_PARAM = "orderId"
         const val ADDRESS_ID_PARAM = "addressId"
         const val SEARCH_TEXT_PARAM = "searchText"
         const val CODE_PARAM = "code"

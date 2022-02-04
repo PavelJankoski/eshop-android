@@ -251,16 +251,29 @@
                 android:id="@+id/totalCost_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:text="@{String.valueOf(orderDetails.totalPrice) + ` MKD`}"
+                priceToString="@{orderDetails.totalPrice}"
+                android:layout_marginEnd="4dp"
+                android:textAlignment="viewStart"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/mkd_textView"
+                app:layout_constraintEnd_toStartOf="@id/mkd_textView"
+                app:layout_constraintTop_toTopOf="@+id/mkd_textView"
+                tools:text="900" />
+
+            <TextView
+                android:id="@+id/mkd_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mkd"
                 android:textAlignment="viewStart"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/textView_totalCostLabel"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView_totalCostLabel"
-                tools:text="@string/price_default_string" />
+                app:layout_constraintTop_toTopOf="@+id/textView_totalCostLabel" />
 
             <View
                 android:id="@+id/shadowView"
