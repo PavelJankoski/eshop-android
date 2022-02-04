@@ -2,9 +2,11 @@ package mk.ukim.finki.eshop.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import mk.ukim.finki.eshop.api.dto.response.orderhistorydetails.OrderProduct
 import mk.ukim.finki.eshop.databinding.OrderHistoryDetailsRowLayoutBinding
+import mk.ukim.finki.eshop.ui.orderhistory.orderhistorydetails.OrderHistoryDetailsFragmentDirections
 import mk.ukim.finki.eshop.util.DiffUtil
 
 class OrderHistoryDetailsAdapter : RecyclerView.Adapter<OrderHistoryDetailsAdapter.MyViewHolder>() {
@@ -15,6 +17,13 @@ class OrderHistoryDetailsAdapter : RecyclerView.Adapter<OrderHistoryDetailsAdapt
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(product: OrderProduct) {
             binding.product = product
+            binding.reviewButton.setOnClickListener {
+                binding.root.findNavController().navigate(
+                    OrderHistoryDetailsFragmentDirections.actionOrderHistoryDetailsFragmentToReviewProductFragment(
+                        product.productId
+                    )
+                )
+            }
             binding.executePendingBindings()
         }
 

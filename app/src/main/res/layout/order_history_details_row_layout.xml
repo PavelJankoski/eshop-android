@@ -125,7 +125,7 @@
             tools:text="2" />
 
         <Button
-            android:id="@+id/view_button"
+            android:id="@+id/review_button"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             reviewProductBtnText="@{product.isReviewed}"
             android:layout_width="0dp"

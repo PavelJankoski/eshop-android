@@ -1,25 +1,20 @@
 package mk.ukim.finki.eshop.ui.details.reviews
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
-import mk.ukim.finki.eshop.R
-import mk.ukim.finki.eshop.adapters.ProductsListAdapter
 import mk.ukim.finki.eshop.adapters.ReviewsAdapter
 import mk.ukim.finki.eshop.api.model.Product
 import mk.ukim.finki.eshop.databinding.FragmentReviewsBinding
-import mk.ukim.finki.eshop.databinding.FragmentWishlistBinding
-import mk.ukim.finki.eshop.ui.addressbook.AddressBookViewModel
 import mk.ukim.finki.eshop.util.Constants
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
-import java.util.*
 
 @AndroidEntryPoint
 class ReviewsFragment : Fragment() {
@@ -50,18 +45,17 @@ class ReviewsFragment : Fragment() {
     }
 
     private fun observeReviewsResponse() {
-        reviewsViewModel.reviewsResponse.observe(viewLifecycleOwner, {response ->
-            when(response) {
+        reviewsViewModel.reviewsResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
                 is NetworkResult.Success -> {
                     Utils.hideShimmerEffect(
                         binding.reviewsShimmerFrameLayout,
                         binding.reviewsRecyclerView
                     )
-                    if(!response.data.isNullOrEmpty()) {
+                    if (!response.data.isNullOrEmpty()) {
                         reviewsNotEmpty()
                         mAdapter.setData(response.data)
-                    }
-                    else {
+                    } else {
                         reviewsEmpty()
                     }
                 }
@@ -81,8 +75,7 @@ class ReviewsFragment : Fragment() {
                     binding.reviewsLottie.visibility = View.GONE
                 }
             }
-            binding.root.requestLayout()
-        })
+        }
     }
 
     private fun handleOnChipChange() {
