@@ -27,22 +27,33 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ProductsFragment : Fragment() {
 
-    @Inject lateinit var loginManager: LoginManager
+    @Inject
+    lateinit var loginManager: LoginManager
 
     private val args by navArgs<ProductsFragmentArgs>()
     private var _binding: FragmentProductsBinding? = null
     private val binding get() = _binding!!
     private val productsViewModel by viewModels<ProductsViewModel>()
     private var menuItemType = true
-    private val mAdapterList by lazy { ProductsListAdapter(productsViewModel, productsViewModel.loginManager.loggedIn.value) }
-    private val mAdapterGrid by lazy { ProductsGridAdapter(productsViewModel, productsViewModel.loginManager.loggedIn.value) }
+    private val mAdapterList by lazy {
+        ProductsListAdapter(
+            productsViewModel,
+            MyApplication.loggedIn.value
+        )
+    }
+    private val mAdapterGrid by lazy {
+        ProductsGridAdapter(
+            productsViewModel,
+            MyApplication.loggedIn.value
+        )
+    }
     private lateinit var menuItem: MenuItem
 
 
     override fun onResume() {
         super.onResume()
         setupSortingDropdown()
-        if(this::menuItem.isInitialized) {
+        if (this::menuItem.isInitialized) {
             val tv = menuItem.actionView.findViewById<TextView>(R.id.cart_badge)
             Utils.setupCartItemsBadge(tv, MyApplication.itemsInBag)
         }
@@ -197,7 +208,7 @@ class ProductsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.shoppingCart_menuItem -> {
-                if (!loginManager.loggedIn.value) {
+                if (!MyApplication.loggedIn.value) {
                     findNavController().navigate(ProductsFragmentDirections.actionProductsFragmentToLoginPrompt())
                 } else {
                     findNavController().navigate(ProductsFragmentDirections.actionProductsFragmentToShoppingBagFragment())

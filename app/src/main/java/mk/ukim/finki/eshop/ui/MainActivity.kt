@@ -8,17 +8,26 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import mk.ukim.finki.eshop.MyApplication
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.databinding.ActivityMainBinding
 import mk.ukim.finki.eshop.ui.account.LoginManager
 import mk.ukim.finki.eshop.util.Constants.Companion.LOGIN_STATE
+import mk.ukim.finki.eshop.util.Utils
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject lateinit var loginManager: LoginManager
+    @Inject
+    lateinit var loginManager: LoginManager
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
@@ -28,32 +37,56 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         loginManager.updateAuthState()
+        observeLoggedIn()
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         setupBottomNavigation()
+    }
+
+    private fun observeLoggedIn() {
+        CoroutineScope(Dispatchers.IO).launch {
+            MyApplication.loggedIn.collect {
+                withContext(Dispatchers.Main) {
+                    if (!MyApplication.firstRender) {
+                        if (!it) {
+                            Utils.showSnackbar(
+                                binding.root,
+                                "User logged out",
+                                Snackbar.LENGTH_SHORT
+                            )
+                            loginManager.logoutUser()
+                        }
+                    } else {
+                        MyApplication.firstRender = false
+                    }
+                }
+            }
+        }
     }
 
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         val loggedIn = savedInstanceState.getBoolean(LOGIN_STATE, false)
-        loginManager.loggedIn.value = loggedIn
+        MyApplication.loggedIn.value = loggedIn
         loginManager.updateAuthState()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putBoolean(LOGIN_STATE, loginManager.loggedIn.value)
+        outState.putBoolean(LOGIN_STATE, MyApplication.loggedIn.value)
         super.onSaveInstanceState(outState)
     }
 
     private fun setupBottomNavigation() {
         navController = findNavController(R.id.navHostFragment)
-        val appBarConfig = AppBarConfiguration(setOf(
-            /*R.id.homeFragment,*/
-            R.id.categoriesFragment,
-            R.id.wishlistFragment,
-            R.id.homeAccountFragment
-        ))
+        val appBarConfig = AppBarConfiguration(
+            setOf(
+                /*R.id.homeFragment,*/
+                R.id.categoriesFragment,
+                R.id.wishlistFragment,
+                R.id.homeAccountFragment
+            )
+        )
         val popupMenu = PopupMenu(this, null)
         popupMenu.inflate(R.menu.bottom_nav_menu)
         val menu = popupMenu.menu

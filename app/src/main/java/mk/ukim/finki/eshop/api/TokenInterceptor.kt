@@ -2,6 +2,7 @@ package mk.ukim.finki.eshop.api
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
+import mk.ukim.finki.eshop.MyApplication
 import mk.ukim.finki.eshop.data.sharedpreferences.SecureStorage
 import mk.ukim.finki.eshop.util.Constants.Companion.PREFERENCE_TOKEN
 import okhttp3.Interceptor
@@ -18,7 +19,14 @@ class TokenInterceptor @Inject constructor(@ApplicationContext private val conte
         if(!token.isNullOrBlank()) {
             val requestBuilder: Request.Builder = original.newBuilder()
                 .addHeader("Authorization", "Bearer $token")
-            return chain.proceed(requestBuilder.build())
+            val response = chain.proceed(requestBuilder.build())
+            return if (response.code() != 401) {
+                response
+            } else {
+                MyApplication.loggedIn.value = false
+                response.close()
+                chain.proceed(original)
+            }
         }
         return chain.proceed(original)
     }

@@ -19,25 +19,25 @@ interface WebServices {
     @GET("/api/product-catalog-service/products/{categoryId}")
     suspend fun getProductsByCategory(
         @Path(Constants.CATEGORY_ID_PARAM) categoryId: Long,
-        @Query(Constants.USER_ID_PARAM) userId: Long
+        @Query(Constants.USER_ID_PARAM) userId: Long?
     ) : Response<List<Product>>
 
     @POST("/api/product-catalog-service/products/filter")
     suspend fun getFilteredProductsForCategory(
         @Body dto: FilterProductDto,
-        @Query(value = Constants.USER_ID_PARAM) userId: Long
+        @Query(value = Constants.USER_ID_PARAM) userId: Long?
     ): Response<List<Product>>
 
     @GET("/api/product-catalog-service/products/search")
     suspend fun getSearchedProducts(
         @Query(value = Constants.SEARCH_TEXT_PARAM) searchText: String,
-        @Query(value = Constants.USER_ID_PARAM) userId: Long
+        @Query(value = Constants.USER_ID_PARAM) userId: Long?
     ): Response<List<Product>>
 
     @GET("/api/product-catalog-service/products/code/{code}")
     suspend fun getProductByProductCode(
         @Path(value = Constants.CODE_PARAM) productCode: String,
-        @Query(value = Constants.USER_ID_PARAM) userId: Long
+        @Query(value = Constants.USER_ID_PARAM) userId: Long?
     ): Response<Product>
 
     @POST("/api/users-api-gateway/oauth/token")
@@ -60,13 +60,13 @@ interface WebServices {
 
     @GET("/api/users-api-gateway/users/{userId}")
     suspend fun getUserInfo(
-        @Path(value = Constants.USER_ID_PARAM) userId: Long,
+        @Path(value = Constants.USER_ID_PARAM) userId: Long?,
     ): Response<User>
 
     @Multipart
     @PATCH("/api/users-api-gateway/users/{userId}")
     suspend fun updateUserInfo(
-        @Path(value = Constants.USER_ID_PARAM) userId: Long,
+        @Path(value = Constants.USER_ID_PARAM) userId: Long?,
         @Part image: MultipartBody.Part?,
         @Part("name") name: RequestBody,
         @Part("surname") surname: RequestBody,
@@ -75,19 +75,19 @@ interface WebServices {
 
     @GET("/api/users-api-gateway/addresses/{userId}")
     suspend fun getAddressesForUser(
-        @Path(value = Constants.USER_ID_PARAM) userId: Long,
+        @Path(value = Constants.USER_ID_PARAM) userId: Long?,
     ): Response<List<Address>>
 
     @POST("/api/users-api-gateway/addresses/{userId}")
     suspend fun createAddressesForUser(
-        @Path(value = Constants.USER_ID_PARAM) userId: Long,
+        @Path(value = Constants.USER_ID_PARAM) userId: Long?,
         @Body body: CreateEditAddressDto
     ): Response<Address>
 
     @PATCH("/api/users-api-gateway/addresses/{addressId}/users/{userId}")
     suspend fun editAddressesForUser(
         @Path(value = Constants.ADDRESS_ID_PARAM) addressId: Long,
-        @Path(value = Constants.USER_ID_PARAM) userId: Long,
+        @Path(value = Constants.USER_ID_PARAM) userId: Long?,
         @Body body: CreateEditAddressDto
     ): Response<Address>
 
@@ -98,19 +98,19 @@ interface WebServices {
 
     @GET("/api/product-catalog-service/wishlists/{userId}")
     suspend fun getWishlistProductsForUser(
-        @Path(value = Constants.USER_ID_PARAM) userId: Long
+        @Path(value = Constants.USER_ID_PARAM) userId: Long?
     ) : Response<List<Product>>
 
     @PATCH("/api/product-catalog-service/wishlists/add/{productId}/users/{userId}")
     suspend fun addProductToWishlistForUser(
         @Path(value = Constants.PRODUCT_ID_PARAM) productId: Long,
-        @Path(value = Constants.USER_ID_PARAM) userId: Long
+        @Path(value = Constants.USER_ID_PARAM) userId: Long?
     ) : Response<Long>
 
     @PATCH("/api/product-catalog-service/wishlists/remove/{productId}/users/{userId}")
     suspend fun removeProductFromWishlistForUser(
         @Path(value = Constants.PRODUCT_ID_PARAM) productId: Long,
-        @Path(value = Constants.USER_ID_PARAM) userId: Long
+        @Path(value = Constants.USER_ID_PARAM) userId: Long?
     ) : Response<Long>
 
     @GET("/api/product-catalog-service/reviews/{productId}")
@@ -126,7 +126,7 @@ interface WebServices {
 
     @GET("/api/order-management-service/orders/{userId}")
     suspend fun getOrderItemsForUser(
-        @Path(value = Constants.USER_ID_PARAM) userId: Long,
+        @Path(value = Constants.USER_ID_PARAM) userId: Long?,
     ) : Response<List<OrderItem>>
 
     @POST("/api/order-management-service/order-items/add-to-order")
@@ -146,12 +146,12 @@ interface WebServices {
 
     @GET("/api/order-management-service/orders/items-in-bag/{userId}")
     suspend fun getItemsInBagForUser(
-        @Path(value = Constants.USER_ID_PARAM) userId: Long
+        @Path(value = Constants.USER_ID_PARAM) userId: Long?
     ): Response<Int>
 
     @GET("/api/order-management-service/order-details/{userId}")
     suspend fun getOrderDetailsForUser(
-        @Path(value = Constants.USER_ID_PARAM) userId: Long
+        @Path(value = Constants.USER_ID_PARAM) userId: Long?
     ): Response<OrderDetails>
 
     @GET("/api/order-management-service/stripe/payment-sheet")
@@ -161,12 +161,12 @@ interface WebServices {
 
     @POST("/api/order-management-service/orders/{userId}/place-order")
     suspend fun placeOrder(
-        @Path(value = Constants.USER_ID_PARAM) userId: Long
+        @Path(value = Constants.USER_ID_PARAM) userId: Long?
     ): Response<Unit>
 
     @GET("/api/order-management-service/orders/{userId}/order-history")
     suspend fun getOrderHistory(
-        @Path(value = Constants.USER_ID_PARAM) userId: Long
+        @Path(value = Constants.USER_ID_PARAM) userId: Long?
     ): Response<OrderHistory>
 
     @GET("/api/order-management-service/orders/{orderId}/order-history-details")

@@ -30,7 +30,6 @@ import mk.ukim.finki.eshop.api.dto.request.TokenDto
 import mk.ukim.finki.eshop.databinding.FragmentAccountBinding
 import mk.ukim.finki.eshop.ui.account.login.LoginFragment
 import mk.ukim.finki.eshop.ui.account.register.RegisterFragment
-import mk.ukim.finki.eshop.util.Constants
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 
@@ -113,16 +112,19 @@ class AccountFragment : Fragment() {
     }
 
     private fun setupRegistrationObserver() {
-        accountViewModel.registerResponse.observe(viewLifecycleOwner, { response ->
-            if (response is NetworkResult.Success){
+        accountViewModel.registerResponse.observe(viewLifecycleOwner) { response ->
+            if (response is NetworkResult.Success) {
                 binding.accountViewPager.setCurrentItem(0, true)
-                Utils.showToast(requireContext(), "Successfully registered. Please log in", Toast.LENGTH_LONG)
-            }
-            else {
+                Utils.showToast(
+                    requireContext(),
+                    "Successfully registered. Please log in",
+                    Toast.LENGTH_LONG
+                )
+            } else {
                 Utils.showToast(requireContext(), response.message!!, Toast.LENGTH_LONG)
             }
 
-        })
+        }
     }
 
     private fun setupViewPager() {

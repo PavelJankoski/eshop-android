@@ -71,7 +71,7 @@ class CategoriesFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.shoppingCart_menuItem -> {
-                if (!loginManager.loggedIn.value) {
+                if (!MyApplication.loggedIn.value) {
                     findNavController().navigate(R.id.action_categoriesFragment_to_loginPrompt)
                 } else {
                     findNavController().navigate(CategoriesFragmentDirections.actionCategoriesFragmentToShoppingBagFragment())

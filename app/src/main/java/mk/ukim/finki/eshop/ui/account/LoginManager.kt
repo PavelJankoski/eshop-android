@@ -2,8 +2,8 @@ package mk.ukim.finki.eshop.ui.account
 
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import dagger.hilt.android.scopes.ActivityRetainedScoped
-import kotlinx.coroutines.flow.MutableStateFlow
 import mk.ukim.finki.eshop.MyApplication
+import mk.ukim.finki.eshop.MyApplication.Companion.loggedIn
 import mk.ukim.finki.eshop.api.dto.response.LoginDto
 import mk.ukim.finki.eshop.data.sharedpreferences.SecureStorage
 import mk.ukim.finki.eshop.util.Constants.Companion.FACEBOOK_TYPE
@@ -20,8 +20,6 @@ class LoginManager @Inject constructor(
 
     var loginType = ""
     lateinit var googleClient: GoogleSignInClient
-    var loggedIn: MutableStateFlow<Boolean> = MutableStateFlow(false)
-
     fun logoutUser() {
         secureStorage.clearStorage()
         if (loginType.equals(GOOGLE_TYPE, true)) {
@@ -55,22 +53,26 @@ class LoginManager @Inject constructor(
 
     fun readToken(): String {
         val token = secureStorage.getString(PREFERENCE_TOKEN)
-        if(token.isNullOrBlank()) return ""
+        if (token.isNullOrBlank()) return ""
         return "Bearer $token"
     }
 
-    fun readUserId(): Long {
-        return secureStorage.getString(PREFERENCE_USER_ID)!!.toLong()
+    fun readUserId(): Long? {
+        val userId = secureStorage.getString(PREFERENCE_USER_ID)
+        return if (userId.isNullOrBlank()) {
+            null
+        } else {
+            secureStorage.getString(PREFERENCE_USER_ID)!!.toLong()
+        }
     }
 
 
-    fun readUserEmail(): String
-    {
+    fun readUserEmail(): String {
         return secureStorage.getString(PREFERENCE_EMAIL) ?: ""
     }
 
     fun getLoggedInUser(): LoginDto {
-        return LoginDto(this.readToken(), this.readUserId(), this.readUserEmail())
+        return LoginDto(this.readToken(), this.readUserId()!!, this.readUserEmail())
     }
 
     fun updateAuthState() {

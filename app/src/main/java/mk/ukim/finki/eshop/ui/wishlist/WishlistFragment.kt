@@ -40,7 +40,7 @@ class WishlistFragment : Fragment() {
     ): View {
         _binding = FragmentWishlistBinding.inflate(inflater, container, false)
 
-        if (!loginManager.loggedIn.value) {
+        if (!MyApplication.loggedIn.value) {
             setupUserNotAuthenticatedInterface()
             showLoginPrompt()
         } else {
@@ -211,7 +211,7 @@ class WishlistFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.shoppingCart_menuItem -> {
-                if (!loginManager.loggedIn.value) {
+                if (!MyApplication.loggedIn.value) {
                     showLoginPrompt()
                 } else {
                     findNavController().navigate(WishlistFragmentDirections.actionWishlistFragmentToShoppingBagFragment())

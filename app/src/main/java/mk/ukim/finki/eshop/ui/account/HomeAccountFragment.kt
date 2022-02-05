@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import mk.ukim.finki.eshop.MyApplication
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.databinding.FragmentHomeAccountBinding
 import mk.ukim.finki.eshop.ui.account.profile.ProfileFragment
@@ -32,15 +33,13 @@ class HomeAccountFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeAccountBinding.inflate(inflater, container, false)
-        if (savedInstanceState == null) {
-            setupLoginListener()
-            setupInterface()
-        }
+        setupLoginListener()
+
         return binding.root
     }
 
     private fun setupInterface() {
-        val isLoggedIn = loginManager.loggedIn
+        val isLoggedIn = MyApplication.loggedIn
         lifecycleScope.launchWhenResumed {
             parentFragmentManager.commit {
                 setReorderingAllowed(true)
@@ -58,7 +57,7 @@ class HomeAccountFragment : Fragment() {
 
     private fun setupLoginListener() {
         CoroutineScope(Dispatchers.IO).launch {
-            loginManager.loggedIn.collect { _ ->
+            MyApplication.loggedIn.collect { _ ->
                 withContext(Main) {
                     setupInterface()
                 }

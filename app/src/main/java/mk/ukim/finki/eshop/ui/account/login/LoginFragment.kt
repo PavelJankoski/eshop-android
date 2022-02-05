@@ -1,17 +1,15 @@
 package mk.ukim.finki.eshop.ui.account.login
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import mk.ukim.finki.eshop.databinding.FragmentLoginBinding
 import mk.ukim.finki.eshop.ui.account.AccountViewModel
-import mk.ukim.finki.eshop.ui.addressbook.AddressBookViewModel
 import mk.ukim.finki.eshop.util.NetworkResult
 import mk.ukim.finki.eshop.util.Utils
 
@@ -38,7 +36,7 @@ class LoginFragment : Fragment() {
         binding.loginBtn.setOnClickListener {
             login()
         }
-        accountViewModel.loginResponse.observe(viewLifecycleOwner, {response ->
+        accountViewModel.loginResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Error -> {
                     binding.alertTextView.text = response.message!!
@@ -46,10 +44,15 @@ class LoginFragment : Fragment() {
                     accountViewModel.logout()
                 }
                 else -> {
+                    Utils.showSnackbar(
+                        binding.root,
+                        "Successfully logged in!",
+                        Snackbar.LENGTH_SHORT
+                    )
                     binding.alertConstraintLayout.visibility = View.GONE
                 }
             }
-        })
+        }
         return binding.root
     }
 

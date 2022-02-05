@@ -19,22 +19,22 @@ class RemoteDataSource @Inject constructor(
         return webServices.getCategories()
     }
 
-    suspend fun getProductsByCategory(categoryId: Long, userId: Long): Response<List<Product>> {
+    suspend fun getProductsByCategory(categoryId: Long, userId: Long?): Response<List<Product>> {
         return webServices.getProductsByCategory(categoryId, userId)
     }
 
     suspend fun getFilteredProductsForCategory(
         dto: FilterProductDto,
-        userId: Long
+        userId: Long?
     ): Response<List<Product>> {
         return webServices.getFilteredProductsForCategory(dto, userId)
     }
 
-    suspend fun getSearchedProducts(searchText: String, userId: Long): Response<List<Product>> {
+    suspend fun getSearchedProducts(searchText: String, userId: Long?): Response<List<Product>> {
         return webServices.getSearchedProducts(searchText, userId)
     }
 
-    suspend fun getProductByProductCode(productCode: String, userId: Long): Response<Product> {
+    suspend fun getProductByProductCode(productCode: String, userId: Long?): Response<Product> {
         return webServices.getProductByProductCode(productCode, userId)
     }
 
@@ -54,12 +54,12 @@ class RemoteDataSource @Inject constructor(
         return webServices.registerUser(dto)
     }
 
-    suspend fun getUserInfo(userId: Long): Response<User> {
+    suspend fun getUserInfo(userId: Long?): Response<User> {
         return webServices.getUserInfo(userId)
     }
 
     suspend fun updateUserInfo(
-        userId: Long,
+        userId: Long?,
         image: MultipartBody.Part?,
         name: RequestBody,
         surname: RequestBody,
@@ -68,17 +68,17 @@ class RemoteDataSource @Inject constructor(
         return webServices.updateUserInfo(userId, image, name, surname, phoneNumber)
     }
 
-    suspend fun getAddressesForUser(userId: Long): Response<List<Address>> {
+    suspend fun getAddressesForUser(userId: Long?): Response<List<Address>> {
         return webServices.getAddressesForUser(userId)
     }
 
-    suspend fun createAddressForUser(userId: Long, body: CreateEditAddressDto): Response<Address> {
+    suspend fun createAddressForUser(userId: Long?, body: CreateEditAddressDto): Response<Address> {
         return webServices.createAddressesForUser(userId, body)
     }
 
     suspend fun editAddressForUser(
         addressId: Long,
-        userId: Long,
+        userId: Long?,
         body: CreateEditAddressDto
     ): Response<Address> {
         return webServices.editAddressesForUser(addressId, userId, body)
@@ -88,15 +88,15 @@ class RemoteDataSource @Inject constructor(
         return webServices.deleteAddress(addressId)
     }
 
-    suspend fun getWishlistProductsForUser(userId: Long): Response<List<Product>> {
+    suspend fun getWishlistProductsForUser(userId: Long?): Response<List<Product>> {
         return webServices.getWishlistProductsForUser(userId)
     }
 
-    suspend fun addProductToWishlistForUser(productId: Long, userId: Long): Response<Long> {
+    suspend fun addProductToWishlistForUser(productId: Long, userId: Long?): Response<Long> {
         return webServices.addProductToWishlistForUser(productId, userId)
     }
 
-    suspend fun removeProductFromWishlistForUser(productId: Long, userId: Long): Response<Long> {
+    suspend fun removeProductFromWishlistForUser(productId: Long, userId: Long?): Response<Long> {
         return webServices.removeProductFromWishlistForUser(productId, userId)
     }
 
@@ -111,7 +111,7 @@ class RemoteDataSource @Inject constructor(
         return webServices.getReviewsByRatingForProduct(productId, rating)
     }
 
-    suspend fun getOrderItemsForUser(userId: Long): Response<List<OrderItem>> {
+    suspend fun getOrderItemsForUser(userId: Long?): Response<List<OrderItem>> {
         return webServices.getOrderItemsForUser(userId)
     }
 
@@ -127,11 +127,11 @@ class RemoteDataSource @Inject constructor(
         return webServices.changeQuantityInBag(body)
     }
 
-    suspend fun getItemsInBagForUser(userId: Long): Response<Int> {
+    suspend fun getItemsInBagForUser(userId: Long?): Response<Int> {
         return webServices.getItemsInBagForUser(userId)
     }
 
-    suspend fun getOrderDetailsForUser(userId: Long): Response<OrderDetails> {
+    suspend fun getOrderDetailsForUser(userId: Long?): Response<OrderDetails> {
         return webServices.getOrderDetailsForUser(userId)
     }
 
@@ -139,11 +139,11 @@ class RemoteDataSource @Inject constructor(
         return webServices.getPaymentSheetParams(amount)
     }
 
-    suspend fun placeOrder(userId: Long): Response<Unit> {
+    suspend fun placeOrder(userId: Long?): Response<Unit> {
         return webServices.placeOrder(userId)
     }
 
-    suspend fun getOrderHistory(userId: Long): Response<OrderHistory> {
+    suspend fun getOrderHistory(userId: Long?): Response<OrderHistory> {
         return webServices.getOrderHistory(userId)
     }
 

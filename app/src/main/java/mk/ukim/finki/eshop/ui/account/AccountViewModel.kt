@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import mk.ukim.finki.eshop.MyApplication
 import mk.ukim.finki.eshop.api.dto.request.RegisterDto
 import mk.ukim.finki.eshop.api.dto.request.TokenDto
 import mk.ukim.finki.eshop.api.dto.response.LoginDto
@@ -68,7 +69,7 @@ class AccountViewModel @Inject constructor(
             try {
                 userInfoResponse.value = handleGetUserInfoResponse(repository.remote.getUserInfo(loginManager.readUserId()))
             } catch (e: Exception) {
-                loginResponse.value = NetworkResult.Error("Cannot authenticate user")
+                userInfoResponse.value = NetworkResult.Error("Cannot fetch user info")
             }
         }
     }
@@ -100,7 +101,7 @@ class AccountViewModel @Inject constructor(
     }
 
     fun checkLoggedInUser() {
-        if(loginManager.loggedIn.value) {
+        if (MyApplication.loggedIn.value) {
             loginResponse.value = NetworkResult.Success(loginManager.getLoggedInUser())
         }
     }

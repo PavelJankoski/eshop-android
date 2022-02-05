@@ -15,9 +15,7 @@ class Constants {
         const val PREFERENCE_NAME = "eshop-preferences"
         const val PREFERENCE_TOKEN = "token"
         const val PREFERENCE_USER_ID = "userId"
-        const val PREFERENCE_FULL_NAME = "fullName"
         const val PREFERENCE_EMAIL = "email"
-        const val PREFERENCE_IMAGE_URL = "imageUrl"
 
         // STATE KEYS
         const val LOGIN_STATE = "authenticated"
