@@ -13,8 +13,11 @@
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_cart.xml" value="0.2703125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_edit.xml" value="0.2234375" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_exit.xml" value="0.2703125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_hanger.xml" value="0.2495" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_heart.xml" value="0.2703125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_home.xml" value="0.2703125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2495" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.2495" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_log_out.xml" value="0.2703125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_login.xml" value="0.2703125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/drawable/ic_pay.xml" value="0.2703125" />
@@ -95,6 +98,8 @@
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/menu/products_toolbar_menu.xml" value="0.2078125" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/menu/shopping_bag_menu.xml" value="0.3625" />
         <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/menu/shopping_cart_toolbar_menu.xml" value="0.2078125" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2495" />
+        <entry key="..\:/Users/Pavel/Documents/Programming projects/Android projects/eshop/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1965" />
       </map>
     </option>
   </component>
