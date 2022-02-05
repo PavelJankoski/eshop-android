@@ -2,6 +2,8 @@ package mk.ukim.finki.eshop.api
 
 import mk.ukim.finki.eshop.api.dto.request.*
 import mk.ukim.finki.eshop.api.dto.response.LoginDto
+import mk.ukim.finki.eshop.api.dto.response.StripePaymentSheet
+import mk.ukim.finki.eshop.api.dto.response.orderhistory.OrderHistory
 import mk.ukim.finki.eshop.api.dto.response.orderhistorydetails.OrderHistoryDetails
 import mk.ukim.finki.eshop.api.model.*
 import mk.ukim.finki.eshop.util.Constants

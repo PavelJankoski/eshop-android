@@ -7,7 +7,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import mk.ukim.finki.eshop.R
-import mk.ukim.finki.eshop.api.model.OrderHistoryItem
+import mk.ukim.finki.eshop.api.dto.response.orderhistory.OrderHistoryItem
 import mk.ukim.finki.eshop.databinding.OrderHistoryRowLayoutBinding
 import mk.ukim.finki.eshop.ui.orderhistory.OrderHistoryFragmentDirections
 import mk.ukim.finki.eshop.util.DiffUtil

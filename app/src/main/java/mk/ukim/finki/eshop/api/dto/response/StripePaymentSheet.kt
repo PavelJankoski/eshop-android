@@ -1,4 +1,4 @@
-package mk.ukim.finki.eshop.api.model
+package mk.ukim.finki.eshop.api.dto.response
 
 data class StripePaymentSheet(
     val ephemeralKey: String,

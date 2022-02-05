@@ -7,7 +7,7 @@
 
         <variable
             name="orderHistoryItem"
-            type="mk.ukim.finki.eshop.api.model.OrderHistoryItem" />
+            type="mk.ukim.finki.eshop.api.dto.response.orderhistory.OrderHistoryItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

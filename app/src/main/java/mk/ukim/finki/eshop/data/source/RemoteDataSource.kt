@@ -3,6 +3,8 @@ package mk.ukim.finki.eshop.data.source
 import mk.ukim.finki.eshop.api.WebServices
 import mk.ukim.finki.eshop.api.dto.request.*
 import mk.ukim.finki.eshop.api.dto.response.LoginDto
+import mk.ukim.finki.eshop.api.dto.response.StripePaymentSheet
+import mk.ukim.finki.eshop.api.dto.response.orderhistory.OrderHistory
 import mk.ukim.finki.eshop.api.dto.response.orderhistorydetails.OrderHistoryDetails
 import mk.ukim.finki.eshop.api.model.*
 import okhttp3.MultipartBody

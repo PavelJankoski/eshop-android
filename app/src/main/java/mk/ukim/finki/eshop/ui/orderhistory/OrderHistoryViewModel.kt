@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import mk.ukim.finki.eshop.api.dto.response.orderhistory.OrderHistory
 import mk.ukim.finki.eshop.api.dto.response.orderhistorydetails.OrderHistoryDetails
-import mk.ukim.finki.eshop.api.model.OrderHistory
 import mk.ukim.finki.eshop.data.source.Repository
 import mk.ukim.finki.eshop.ui.account.LoginManager
 import mk.ukim.finki.eshop.util.NetworkResult

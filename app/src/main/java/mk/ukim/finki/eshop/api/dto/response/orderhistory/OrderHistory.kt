@@ -1,4 +1,4 @@
-package mk.ukim.finki.eshop.api.model
+package mk.ukim.finki.eshop.api.dto.response.orderhistory
 
 import com.google.gson.annotations.SerializedName
 
