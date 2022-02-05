@@ -1,29 +1,20 @@
 package mk.ukim.finki.eshop.util
 
 import android.app.Application
-import android.app.Notification
 import android.content.Context
 import android.database.Cursor
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
+import android.provider.MediaStore
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.snackbar.Snackbar
-import mk.ukim.finki.eshop.MyApplication
 import mk.ukim.finki.eshop.R
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.*
-import android.provider.MediaStore
-
-
 
 
 class Utils {
@@ -77,23 +68,16 @@ class Utils {
             }
         }
 
-        fun shortDateFormat(dateString: String): String {
-            val date = LocalDateTime.parse(dateString)
-            val formatter = DateTimeFormatter.ofPattern("EE dd.MM.yyyy")
-            val formattedDate = date.format(formatter)
-            return  formattedDate
-        }
-
         fun getRealPathFromURI(context: Context, contentUri: Uri?): String? {
             var cursor: Cursor? = null
             if (contentUri != null) {
                 return try {
                     val proj = arrayOf(MediaStore.Images.Media.DATA)
                     cursor = context.contentResolver.query(contentUri, proj, null, null, null)
-                    val column_index: Int =
+                    val columnIndex: Int =
                         cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
                     cursor.moveToFirst()
-                    cursor.getString(column_index)
+                    cursor.getString(columnIndex)
                 } finally {
                     cursor?.close()
                 }

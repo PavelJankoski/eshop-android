@@ -1,11 +1,11 @@
 package mk.ukim.finki.eshop.ui.qrcode
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.budiyev.android.codescanner.CodeScanner
@@ -50,17 +50,19 @@ class QrCodeFragment : Fragment() {
     }
 
     private fun observeProduct() {
-            qrCodeViewModel.product.observe(viewLifecycleOwner, {response ->
-                when(response) {
-                    is NetworkResult.Success -> {
-                        val action = QrCodeFragmentDirections.actionQrCodeFragmentToDetailsFragment(response.data!!)
-                        findNavController().navigate(action)
-                    }
-                    is NetworkResult.Error -> {
-                       Utils.showToast(requireContext(), response.message!!, Toast.LENGTH_LONG)
-                    }
+        qrCodeViewModel.product.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    val action =
+                        QrCodeFragmentDirections.actionQrCodeFragmentToDetailsFragment(response.data!!)
+                    findNavController().navigate(action)
                 }
-            })
+                is NetworkResult.Error -> {
+                    Utils.showToast(requireContext(), response.message!!, Toast.LENGTH_LONG)
+                }
+                else -> {}
+            }
+        }
     }
 
     override fun onPause() {
