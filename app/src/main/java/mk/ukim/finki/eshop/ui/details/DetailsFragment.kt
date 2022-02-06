@@ -17,6 +17,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import mk.ukim.finki.eshop.MyApplication
 import mk.ukim.finki.eshop.R
 import mk.ukim.finki.eshop.adapters.DetailsPagerAdapter
 import mk.ukim.finki.eshop.databinding.FragmentDetailsBinding
@@ -140,21 +141,23 @@ class DetailsFragment : Fragment() {
 
     private fun handleOnChipChange() {
         binding.sizeChipGroup.setOnCheckedChangeListener { _, checkedId ->
-            checkedSizeId = checkedId
-            binding.addToBagBtn.isEnabled = true
-            binding.addToBagBtn.text = "Add to bag"
-            binding.addToBagBtn.strokeColor = ColorStateList.valueOf(
-                ContextCompat.getColor(
-                    binding.addToBagBtn.context,
-                    R.color.green
+            if (MyApplication.loggedIn.value) {
+                checkedSizeId = checkedId
+                binding.addToBagBtn.isEnabled = true
+                binding.addToBagBtn.text = "Add to bag"
+                binding.addToBagBtn.strokeColor = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        binding.addToBagBtn.context,
+                        R.color.green
+                    )
                 )
-            )
-            binding.addToBagBtn.setTextColor(
-                ContextCompat.getColor(
-                    binding.addToBagBtn.context,
-                    R.color.black
+                binding.addToBagBtn.setTextColor(
+                    ContextCompat.getColor(
+                        binding.addToBagBtn.context,
+                        R.color.black
+                    )
                 )
-            )
+            }
         }
     }
 

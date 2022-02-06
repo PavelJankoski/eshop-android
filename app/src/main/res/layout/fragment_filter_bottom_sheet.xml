@@ -44,20 +44,18 @@
         app:r2minValueStep="1"
         app:r2circleTextColor="@color/black"/>
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/apply_button"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:textColor="@color/white"
-        app:backgroundTint="@color/black"
         android:text="@string/apply"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/priceRange_seekbar" />
-
     <TextView
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
@@ -74,7 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="100"
+        tools:text="100"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/priceRange_seekbar"
@@ -85,7 +83,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="3000"
+        tools:text="3000"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/priceRange_seekbar"

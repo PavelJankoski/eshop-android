@@ -140,7 +140,7 @@ dependencies {
     implementation 'com.stripe:stripe-android:17.1.1'
 
     // Custom BottomNavigation
-    implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.8'
+    implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.9'
 
     // Biometric prompt
     implementation "androidx.biometric:biometric:1.2.0-alpha04"

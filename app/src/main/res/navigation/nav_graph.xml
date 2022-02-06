@@ -19,7 +19,11 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_categoriesFragment_to_loginPrompt"
-            app:destination="@id/loginPrompt" />
+            app:destination="@id/loginPrompt"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_categoriesFragment_to_shoppingBagFragment"
             app:destination="@id/shoppingBagFragment"
@@ -35,10 +39,18 @@
         tools:layout="@layout/fragment_wishlist" >
         <action
             android:id="@+id/action_wishlistFragment_to_loginPrompt"
-            app:destination="@id/loginPrompt" />
+            app:destination="@id/loginPrompt"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_wishlistFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_wishlistFragment_to_shoppingBagFragment"
             app:destination="@id/shoppingBagFragment"
@@ -57,14 +69,22 @@
             app:argType="long" />
         <action
             android:id="@+id/action_productsFragment_to_filterBottomSheetFragment"
-            app:destination="@id/filterBottomSheetFragment" />
+            app:destination="@id/filterBottomSheetFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <argument
             android:name="filterDto"
             app:argType="mk.ukim.finki.eshop.api.dto.request.FilterProductDto"
             app:nullable="true" />
         <action
             android:id="@+id/action_productsFragment_to_loginPrompt"
-            app:destination="@id/loginPrompt" />
+            app:destination="@id/loginPrompt"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_productsFragment_to_detailsFragment"
             app:destination="@id/detailsFragment"
@@ -103,6 +123,10 @@
         <action
             android:id="@+id/action_filterBottomSheetFragment_to_productsFragment"
             app:destination="@id/productsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@id/productsFragment"
             app:popUpToInclusive="true" />
         <argument
@@ -117,21 +141,28 @@
         <action
             android:id="@+id/action_loginPrompt_to_wishlistFragment"
             app:destination="@id/wishlistFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@id/wishlistFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_loginPrompt_to_homeAccountFragment"
-            app:destination="@id/homeAccountFragment"
-            app:popUpTo="@id/homeAccountFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginPrompt_to_categoriesFragment"
             app:destination="@id/categoriesFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@id/categoriesFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginPrompt_to_productsFragment"
             app:destination="@id/productsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@id/productsFragment"
             app:popUpToInclusive="true" />
     </dialog>
