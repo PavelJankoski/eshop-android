@@ -6,12 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import mk.ukim.finki.eshop.databinding.FragmentLoginBinding
 import mk.ukim.finki.eshop.ui.account.AccountViewModel
 import mk.ukim.finki.eshop.util.NetworkResult
-import mk.ukim.finki.eshop.util.Utils
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -44,11 +42,6 @@ class LoginFragment : Fragment() {
                     accountViewModel.logout()
                 }
                 else -> {
-                    Utils.showSnackbar(
-                        binding.root,
-                        "Successfully logged in!",
-                        Snackbar.LENGTH_SHORT
-                    )
                     binding.alertConstraintLayout.visibility = View.GONE
                 }
             }
