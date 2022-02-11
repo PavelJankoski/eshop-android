@@ -39,7 +39,7 @@
     <string name="surname">Surname</string>
     <string name="username">Username</string>
     <string name="register">Register</string>
-    <string name="login_prompt_message">To proceed with the action you need to login.</string>
+    <string name="login_prompt_message">To proceed with this action you need to login.</string>
     <string name="login_go_to_message">Go to login/register screen</string>
 
     <string name="google_server_token_id">

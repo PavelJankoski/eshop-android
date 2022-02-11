@@ -31,18 +31,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView11"
         app:layout_constraintTop_toTopOf="@+id/textView11"
-        app:r2CurrentMaxValue="800"
-        app:r2CurrentMinValue="200"
+        app:r2CurrentMaxValue="2000"
+        app:r2CurrentMinValue="800"
         app:r2barHeight="5dp"
         app:r2baseColor="@color/light_gray"
         app:r2circleFillColor="@color/black"
         app:r2circleRadius="15dp"
         app:r2fillColor="@color/black"
-        app:r2maxValue="1000"
+        app:r2maxValue="3000"
         app:r2maxValueStep="1"
         app:r2minValue="0"
         app:r2minValueStep="1"
-        app:r2circleTextColor="@color/black"/>
+        app:r2circleTextColor="@color/black" />
 
     <Button
         android:id="@+id/apply_button"
